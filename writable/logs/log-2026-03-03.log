@@ -1,0 +1,21 @@
+DEBUG - 2026-03-03 18:12:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-03 18:12:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-03 19:16:38 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`vitalgym_sistema`.`membresia_extras`, CONSTRAINT `membresia_extras_Registros_Membresia_id_foreign` FOREIGN KEY (`Registros_Membresia_id`) REFERENCES `registros_membresia` (`idRegistros_Membre) in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `me...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `me...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `me...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `me...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(839): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\VitalGymSistema\system\Model.php(800): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\VitalGymSistema\app\Models\Cliente.php(95): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(63): App\Models\Cliente->registrarClienteCompleto(Array)
+#9 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\Home->MandaraBDUsuario()
+#10 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#11 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#16 {main}

@@ -1,0 +1,319 @@
+﻿/* =========================================
+   1. CONFIGURACIÓN GLOBAL Y RESET
+   ========================================= */
+body {
+    font-family: 'Segoe UI', 'Roboto', Helvetica, Arial, sans-serif;
+    background-color: #eef1f5; /* Gris suave de fondo */
+    padding: 0;
+    height: 100vh;
+    overflow: hidden; /* Evita doble scrollbar */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* 100% del alto de la ventana del navegador */
+    margin: 0;
+}
+
+/* 2. Le decimos al contenedor principal que crezca para rellenar el espacio vacío */
+body > .container {
+    flex: 1 0 auto; 
+    /* Esto es la magia: empuja automáticamente el footer hacia abajo */
+}
+
+/* =========================================
+   2. ESTRUCTURA DEL DASHBOARD (SIDEBAR + CONTENIDO)
+   ========================================= */
+.dashboard-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh; /* Ocupa toda la altura */
+}
+
+/* --- Sidebar (Menú Negro) --- */
+.sidebar {
+    width: 260px;
+    background-color: #000000;
+    color: #ffffff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0; /* No se encoge */
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    padding: 25px 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    border-bottom: 1px solid #333;
+    margin-bottom: 20px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu li {
+    padding: 15px 25px;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+    transition: all 0.3s;
+}
+
+.sidebar-menu li:hover, .sidebar-menu li.active {
+    background-color: #1a1a1a;
+    border-left-color: #0099cc; /* Acento azul */
+}
+
+.sidebar-menu li a {
+    color: #ccc;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+.sidebar-menu li:hover a {
+    color: #fff;
+}
+
+/* --- Área Principal (Donde va la tarjeta) --- */
+.main-content {
+    flex-grow: 1;
+    background-color: #eef1f5;
+    padding: 30px;
+    overflow-y: auto;
+    
+    /* Esto centra la tarjeta vertical y horizontalmente en el espacio disponible */
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+/* =========================================
+   3. TARJETA MODERNA DE REGISTRO
+   ========================================= */
+.card-modern {
+    background: #fff;
+    width: 100%;
+    max-width: 1000px; /* Ancho máximo para monitores grandes */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    display: flex;
+    overflow: hidden; /* Mantiene el gradiente dentro de los bordes redondeados */
+    flex-wrap: wrap; /* Responsivo: se adapta si la pantalla es muy pequeña */
+}
+
+/* --- Columna Izquierda: Formulario --- */
+.form-section {
+    padding: 50px;
+    flex: 1; /* Toma el espacio sobrante */
+    min-width: 320px;
+}
+
+.form-title {
+    color: #333;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    font-size: 24px;
+}
+
+.form-subtitle {
+    color: #888;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+/* Inputs personalizados */
+.custom-input-group {
+    margin-bottom: 20px;
+}
+
+.custom-input-group label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.custom-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 15px;
+    transition: all 0.3s;
+    box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+}
+
+.custom-input:focus {
+    background-color: #fff;
+    border-color: #0099cc;
+    box-shadow: 0 0 0 3px rgba(0, 153, 204, 0.1);
+    outline: none;
+}
+
+/* =========================================
+   4. SECCIÓN BIOMÉTRICA (Derecha)
+   ========================================= */
+.fingerprint-section {
+    /* Gradiente Vital Gym */
+    background: linear-gradient(135deg, #0099cc 0%, #6f42c1 100%);
+    flex: 0 0 380px; /* Ancho fijo para la sección de huella */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+/* Círculo animado */
+.fingerprint-circle {
+    width: 140px;
+    height: 140px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    border: 3px solid rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
+}
+
+.fingerprint-icon {
+    font-size: 60px;
+    color: #fff;
+}
+
+/* Estados visuales del círculo */
+.status-waiting { border-color: rgba(255,255,255,0.3); }
+.status-scanning { border-color: #ffc107; box-shadow: 0 0 20px rgba(255,193,7,0.6); }
+.status-success { border-color: #28a745; background: rgba(40, 167, 69, 0.2); }
+
+.scan-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.scan-status {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 30px;
+    min-height: 20px;
+}
+
+/* =========================================
+   5. BOTONES
+   ========================================= */
+.btn-scan {
+    background: white;
+    color: #6f42c1;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.btn-scan:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.btn-scan:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-save {
+    background: linear-gradient(90deg, #0099cc, #007bb6);
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 25px;
+    cursor: pointer;
+    opacity: 0.5;
+    pointer-events: none;
+    transition: all 0.3s;
+}
+
+.btn-save.active {
+    opacity: 1;
+    pointer-events: auto;
+    box-shadow: 0 4px 15px rgba(0, 153, 204, 0.4);
+}
+
+.btn-save:hover.active {
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   6. RESPONSIVE
+   ========================================= */
+@media (max-width: 992px) {
+    .fingerprint-section {
+        flex: 0 0 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-wrapper {
+        flex-direction: column; /* Menú arriba en móviles */
+        height: auto;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        padding-bottom: 20px;
+    }
+    .main-content {
+        height: auto;
+        display: block; /* Quitar centrado flex en móvil */
+    }
+    .card-modern {
+        flex-direction: column-reverse; /* Formulario arriba en móvil */
+    }
+    .fingerprint-section {
+        flex: 100%;
+        padding: 30px;
+    }
+    .form-section {
+        padding: 30px;
+    }
+}
+/* 3. Evitamos que el footer se encoja */
+.footer-vital {
+    flex-shrink: 0;
+    
+    /* Tus estilos que ya teníamos */
+    background-color: #2c3e50; 
+    color: #ecf0f1;
+    padding: 25px 0;
+    border-top: 4px solid #337ab7; 
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+/* Estilos internos del footer que ya hicimos */
+.footer-vital p { margin: 0; font-size: 15px; letter-spacing: 0.5px; }
+.footer-vital .separador { margin: 0 15px; color: #7f8c8d; }
+.footer-vital .link-soporte { color: #3498db; text-decoration: none; font-weight: bold; transition: color 0.3s ease; }
+.footer-vital .link-soporte:hover { color: #5dade2; text-decoration: underline; }
