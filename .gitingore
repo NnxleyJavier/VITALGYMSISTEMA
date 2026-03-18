@@ -1,0 +1,20 @@
+# Entorno de Visual Studio Code
+.vscode/
+
+# Dependencias de PHP (Composer)
+vendor/
+
+# Variables de entorno y configuraciones locales (¡muy importante para la seguridad!)
+.env
+*.local.php
+
+# Archivos temporales del sistema operativo
+Thumbs.db
+.DS_Store
+
+# Archivos autogenerados de caché, logs y sesiones (ej. CodeIgniter)
+writable/cache/
+writable/logs/
+writable/session/
+application/cache/
+application/logs/
