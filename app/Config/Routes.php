@@ -40,7 +40,10 @@ $routes->get('/renovacionesRegistro/(:num)', 'Renovaciones::index/$1');
 $routes->post('/renovacionesguardar', 'Renovaciones::guardarRenovacionAjax');
 
 $routes->get('/dashboard', 'Dashboard::paginaPrincipal');
-$routes->get('/dashboard/reporteIngresos', 'Dashboard::reporteIngresos');
+
+$routes->get('/CambioFechas', 'Dashboard::CambioFechas');
+$routes->post('/actualizarFechaMembresia', 'Dashboard::actualizarFechaMembresia');
+
+
 
 service('auth')->routes($routes);
-

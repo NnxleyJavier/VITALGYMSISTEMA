@@ -15,6 +15,16 @@ class Dashboard extends BaseController
         $pagoModel = new PagoModel();
         $membresiaModel = new RegistroMembresiaModel(); 
 
+        // --- TAREA DE MANTENIMIENTO: Actualizar membresías vencidas ---
+        // Esto es lo más optimizado porque se ejecuta en una sola consulta a la BD.
+        // Cambia el estado a 'vencido' (0) para todas las membresías cuya fecha de fin ya pasó
+        // y que todavía figuran como 'activas' (1), para mantener la integridad de los datos.
+        $membresiaModel->where('Fecha_Fin <', date('Y-m-d'))
+                       ->where('Estatus_idEstatus', 1)
+                       ->set('Estatus_idEstatus', 2)
+                       ->update();
+
+
         // 1. INGRESOS DE HOY
         $hoyMatriz = $pagoModel->ingresosMembresiasHoy('matriz');
         $hoyXoxo   = $pagoModel->ingresosMembresiasHoy('xoxo');
@@ -80,7 +90,52 @@ class Dashboard extends BaseController
              . view('html/footer');
     }
 
+    public function CambioFechas()
+    {
+        $username = obtener_username();
+        $membresiaModel = new RegistroMembresiaModel(); 
+        
+        // Capturar búsqueda si existe
+        $busqueda = $this->request->getGet('busqueda');
+
+        // Obtener datos paginados
+        $clientes = $membresiaModel->obtenerActivasParaCambioFecha($busqueda, 10);
+
+        $data = [
+            'titulo'   => 'Ajuste de Fechas | VitalGym',
+            'username' => $username,
+            'clientes' => $clientes,
+            'pager'    => $membresiaModel->pager,
+            'busqueda' => $busqueda
+        ];
+
+        return view('html/main', $data)
+             . view('html/CambiodeFechas', $data) // Cargamos la nueva vista
+             . view('html/footer');
+    }
+
+    public function actualizarFechaMembresia()
+    {
+        $idRegistro = $this->request->getPost('id');
+        $nuevaFecha = $this->request->getPost('fecha');
+
+        if (!$idRegistro || !$nuevaFecha) {
+            return $this->response->setJSON(['status' => 'error', 'mensaje' => 'Datos incompletos', 'token' => csrf_hash()]);
+        }
+
+        $membresiaModel = new RegistroMembresiaModel();
+        
+        // Actualizamos la fecha
+        $actualizado = $membresiaModel->update($idRegistro, ['Fecha_Fin' => $nuevaFecha]);
+
+        if ($actualizado) {
+            return $this->response->setJSON(['status' => 'success', 'mensaje' => 'Fecha actualizada correctamente', 'token' => csrf_hash()]);
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'mensaje' => 'No se pudo actualizar en BD', 'token' => csrf_hash()]);
+        }
+    }
 
 
 
-}
+
+   }

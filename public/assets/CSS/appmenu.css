@@ -1,0 +1,230 @@
+/* =========================================
+   1. CONFIGURACIÓN GLOBAL Y ESTRUCTURA MAESTRA
+   ========================================= */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f6f9; /* Gris suave de fondo */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+.app-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative; 
+}
+
+/* =========================================
+   2. HEADER SUPERIOR NEGRO
+   ========================================= */
+.header-vital {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    z-index: 1050; 
+    position: relative;
+}
+
+.header-left { display: flex; align-items: center; }
+
+.menu-toggle {
+    display: none; /* Oculto en PC */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.logo-box { display: flex; flex-direction: column; align-items: flex-start; }
+.logo-title { margin: 0; font-size: 26px; font-weight: 900; letter-spacing: 1px; line-height: 1; }
+.logo-subtitle { color: #c4b50d; font-size: 11px; letter-spacing: 3px; margin-top: 4px; font-weight: bold; }
+
+.user-box { display: flex; align-items: center; }
+.greeting { color: #a0a0b0; font-size: 16px; margin-right: 15px; }
+.greeting strong { color: #ffffff; font-weight: bold; }
+.avatar-img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #333; cursor: pointer; }
+
+/* =========================================
+   3. SIDEBAR (MENÚ LATERAL) Y OVERLAY
+   ========================================= */
+.sidebar-vital {
+    width: 260px;
+    background-color: #1a1a2e;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 0 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-in-out; 
+    z-index: 1000;
+    flex-shrink: 0;
+    overflow-y: auto;
+}
+
+.sidebar-label { color: #6a6a8c; font-size: 11px; font-weight: bold; letter-spacing: 2px; padding: 20px 25px 10px; text-transform: uppercase; }
+
+.sidebar-vital a {
+    color: #a0a0b0;
+    text-decoration: none;
+    padding: 15px 25px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-vital a .glyphicon { margin-right: 12px; font-size: 18px; }
+
+.sidebar-vital a:hover, 
+.sidebar-vital a.active {
+    background-color: #24243e;
+    color: #ffffff;
+    border-left: 4px solid #c4b50d;
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+
+/* =========================================
+   4. ÁREA PRINCIPAL Y TARJETA DE REGISTRO
+   ========================================= */
+.content-vital {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.container-fluid {
+    flex: 1 0 auto;
+    padding: 30px 40px;
+}
+
+/* Contenedor para centrar la tarjeta */
+.registro-container {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    width: 100%;
+    min-height: calc(100vh - 160px); /* Ocupa el alto disponible menos el header */
+}
+
+.card-modern {
+    background: #fff;
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    display: flex;
+    overflow: hidden;
+    flex-wrap: wrap; 
+}
+
+/* Formulario (Izquierda) */
+.form-section { padding: 50px; flex: 1; min-width: 320px; }
+.form-title { color: #333; font-weight: 700; margin: 0 0 10px 0; font-size: 24px; }
+.form-subtitle { color: #888; margin-bottom: 30px; font-size: 14px; }
+
+.custom-input-group { margin-bottom: 20px; }
+.custom-input-group label {
+    font-weight: 600; color: #555; margin-bottom: 8px; display: block;
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.custom-input {
+    width: 100%; padding: 12px 15px; border: 1px solid #e1e1e1;
+    border-radius: 8px; background-color: #f9f9f9; font-size: 15px;
+    transition: all 0.3s; box-sizing: border-box; 
+}
+.custom-input:focus {
+    background-color: #fff; border-color: #0099cc;
+    box-shadow: 0 0 0 3px rgba(0, 153, 204, 0.1); outline: none;
+}
+
+/* Biométrica (Derecha) */
+.fingerprint-section {
+    background: linear-gradient(135deg, #0099cc 0%, #6f42c1 100%);
+    flex: 0 0 380px; padding: 40px; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; color: white;
+    text-align: center; position: relative;
+}
+
+.fingerprint-circle {
+    width: 140px; height: 140px; background: rgba(255,255,255,0.15);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 25px; border: 3px solid rgba(255,255,255,0.3); transition: all 0.3s ease;
+}
+.fingerprint-icon { font-size: 60px; color: #fff; }
+
+.status-waiting { border-color: rgba(255,255,255,0.3); }
+.status-scanning { border-color: #ffc107; box-shadow: 0 0 20px rgba(255,193,7,0.6); }
+.status-success { border-color: #28a745; background: rgba(40, 167, 69, 0.2); }
+
+.scan-title { font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+.scan-status { font-size: 14px; opacity: 0.9; margin-bottom: 30px; min-height: 20px; }
+
+/* Botones */
+.btn-scan {
+    background: white; color: #6f42c1; border: none; padding: 12px 35px;
+    border-radius: 50px; font-weight: 700; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    font-size: 14px; text-transform: uppercase;
+}
+.btn-scan:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+.btn-scan:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.btn-save {
+    background: linear-gradient(90deg, #0099cc, #007bb6); color: white;
+    border: none; width: 100%; padding: 15px; border-radius: 8px; font-size: 16px;
+    font-weight: 600; margin-top: 25px; cursor: pointer; transition: all 0.3s;
+}
+.btn-save:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0, 153, 204, 0.4); }
+
+.opcion1 {
+    
+    margin-top: 8rem;
+}
+
+/* =========================================
+   5. RESPONSIVIDAD (MÓVILES Y TABLETS)
+   ========================================= */
+@media (max-width: 992px) {
+    .fingerprint-section { flex: 0 0 300px; }
+}
+
+@media (min-width: 200px) {
+    .header-vital { padding: 10px 20px; }
+    .menu-toggle { display: block; } 
+    .greeting { display: none; } 
+    .container-fluid { padding: 20px 15px; } 
+
+    /* Menú Móvil Desplegable */
+    .sidebar-vital {
+        position: fixed;
+        top: 0; left: 0; height: 100vh;
+        transform: translateX(-100%); 
+    }
+    .sidebar-vital.open {
+        transform: translateX(0); 
+        box-shadow: 4px 0 15px rgba(0,0,0,0.3);
+    }
+
+    /* Tarjeta Móvil (Huella arriba, formulario abajo) */
+    .card-modern { flex-direction: column-reverse; } 
+    .fingerprint-section { flex: 100%; padding: 30px; }
+    .form-section { padding: 30px; }
+}

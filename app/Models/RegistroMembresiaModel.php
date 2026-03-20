@@ -97,6 +97,27 @@ class RegistroMembresiaModel extends Model
     }
 
     // ====================================================================
+    // NUEVA FUNCIÓN: Obtener membresías activas para cambio de fecha
+    // ====================================================================
+    public function obtenerActivasParaCambioFecha($busqueda = null, $porPagina = 10)
+    {
+        $this->select('registros_membresia.idRegistros_Membresia, clientes.Nombre, clientes.ApellidoP, clientes.Telefono, registros_membresia.Fecha_Fin')
+             ->join('clientes', 'clientes.IDClientes = registros_membresia.Clientes_IDClientes')
+             ->where('registros_membresia.Estatus_idEstatus', 1); // Solo activas
+
+        if (!empty($busqueda)) {
+            $this->groupStart()
+                 ->like('clientes.Nombre', $busqueda)
+                 ->orLike('clientes.ApellidoP', $busqueda)
+                 ->orLike('clientes.Telefono', $busqueda)
+                 ->groupEnd();
+        }
+
+        $this->orderBy('registros_membresia.Fecha_Fin', 'ASC');
+        return $this->paginate($porPagina);
+    }
+
+    // ====================================================================
     // NUEVA FUNCIÓN PARA EL DASHBOARD: CONTAR MEMBRESÍAS
     // ====================================================================
     public function contarMembresias($tipo, $sucursal)
