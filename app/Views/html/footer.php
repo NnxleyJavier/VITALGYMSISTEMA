@@ -1,24 +1,30 @@
-</div> <style>
-                .footer-vital {
-                    background-color: #ffffff; /* Footer blanco para contrastar con el fondo gris */
-                    color: #555;
-                    padding: 20px 40px;
-                    border-top: 1px solid #e0e0e0;
-                    display: flex;
-                    justify-content: space-between;
-                }
-                .footer-vital p { margin: 0; font-size: 14px; }
-                .footer-vital a { color: #c4b50d; font-weight: bold; text-decoration: none; }
-                .footer-vital a:hover { text-decoration: underline; color: #a19307; }
-            </style>
+<style>
+        .footer-vital {
+            background-color: #ffffff;
+            color: #7e8299;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 16px;
+            margin: 0 30px 30px 30px;
+            box-shadow: 0 10px 30px 0 rgba(82, 63, 105, 0.03);
+            font-family: 'Poppins', sans-serif;
+        }
+        .footer-vital a { color: #c4b50d; font-weight: 600; text-decoration: none; transition: color 0.3s; }
+        .footer-vital a:hover { color: #a19307; text-decoration: none; }
+    </style>
 
-            <footer class="footer-vital">
-                <p>&copy; <?= date('Y') ?> <strong>Vital GYM Fitness</strong>. Todos los derechos reservados.</p>
-                <p><a href="<?= base_url('/soporte') ?>"><span class="glyphicon glyphicon-headphones"></span> Soporte Técnico</a></p>
-            </footer>
+    <footer class="footer-vital">
+        <p class="mb-0">&copy; <?= date('Y') ?> <strong>Vital GYM Fitness</strong>. Todos los derechos reservados.</p>
+        <p class="mb-0">
+            <a href="<?= base_url('/soporte') ?>">
+                <span class="glyphicon glyphicon-headphones" style="margin-right: 5px;"></span> Soporte Técnico
+            </a>
+        </p>
+    </footer>
 
-        </div> </div> <script src="<?= base_url('assets/lib/jquery.min.js')?>"></script> 
-    <script src="<?= base_url('assets/lib/bootstrap.min.js')?>"></script> 
-    
+    </div> </div> 
+
 </body>
 </html>

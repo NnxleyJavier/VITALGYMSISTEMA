@@ -44,6 +44,8 @@ $routes->get('/dashboard', 'Dashboard::paginaPrincipal');
 $routes->get('/CambioFechas', 'Dashboard::CambioFechas');
 $routes->post('/actualizarFechaMembresia', 'Dashboard::actualizarFechaMembresia');
 
+$routes->get('/servicios', 'Home::verMembresias');
+
 
 
 service('auth')->routes($routes);

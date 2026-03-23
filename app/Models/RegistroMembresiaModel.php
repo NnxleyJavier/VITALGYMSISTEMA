@@ -177,4 +177,28 @@ class RegistroMembresiaModel extends Model
 
         return $builder->countAllResults();
     }
+
+    // ====================================================================
+    // NUEVA FUNCIÓN: Obtener listado general de membresías con filtros
+    // ====================================================================
+    public function obtenerTodasLasMembresias($estado = 'todas', $busqueda = null, $porPagina = 1)
+    {
+        $this->select('registros_membresia.*, clientes.Nombre, clientes.ApellidoP, clientes.Telefono, servicios.NombreMembresia, estatus.EstadodeMembresia')
+             ->join('clientes', 'clientes.IDClientes = registros_membresia.Clientes_IDClientes')
+             ->join('servicios', 'servicios.IDServicios = registros_membresia.Servicios_IDServicios')
+             ->join('estatus', 'estatus.idEstatus = registros_membresia.Estatus_idEstatus');
+
+        if ($estado === 'activas') {
+            $this->where('registros_membresia.Estatus_idEstatus', 1);
+        } elseif ($estado === 'inactivas') {
+            $this->where('registros_membresia.Estatus_idEstatus !=', 1);
+        }
+
+        if (!empty($busqueda)) {
+            $this->groupStart()->like('clientes.Nombre', $busqueda)->orLike('clientes.ApellidoP', $busqueda)->orLike('clientes.Telefono', $busqueda)->groupEnd();
+        }
+
+        $this->orderBy('registros_membresia.Fecha_Fin', 'DESC'); // Ordenar por fecha de vencimiento (más recientes arriba)
+        return $this->paginate($porPagina);
+    }
 }

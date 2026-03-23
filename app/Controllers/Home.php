@@ -75,7 +75,7 @@ class Home extends BaseController
         }
     }
 
-   private function validarProducto()
+    private function validarProducto()
     {
         $Nombre = $this->request->getPost("Nombre");
         $ApellidoP = $this->request->getPost("ApellidoP");
@@ -83,55 +83,65 @@ class Home extends BaseController
         $Telefono = $this->request->getPost("Telefono");
         $Correo = $this->request->getPost("Correo");
         $Fecha = date('Y-m-d H:i:s');
-        
+
         $h1 = $this->request->getPost("huella_1");
         $h2 = $this->request->getPost("huella_2");
         $h3 = $this->request->getPost("huella_3");
         $h4 = $this->request->getPost("huella_4");
         $h5 = $this->request->getPost("huella_5");
         $h6 = $this->request->getPost("huella_6");
-
+        
         $Servicios_IDServicios = $this->request->getPost("Servicios_IDServicios");
         $Tipo_Pago = $this->request->getPost("Tipo_Pago");
-
-        // =========================================================
-        // 🔥 NUEVOS DATOS CAPTURADOS DEL HTML
-        // =========================================================
         $MontoTotal = $this->request->getPost("MontoTotal");
-       // Agregamos (array) para forzar a PHP a convertirlo en lista siempre
-        $servicios_extra = (array) $this->request->getPost("servicios_extra");// Esto llega como Array o Null
-
-        // 🔥 NUEVA LÍNEA: Capturamos el Checkbox
+        $servicios_extra = (array) $this->request->getPost("servicios_extra");
         $Acepta_WhatsApp = $this->request->getPost("Acepta_WhatsApp") ? 1 : 0;
 
-        // Validación básica (Agregamos validación para MontoTotal)
-        if (empty($Nombre) || empty($ApellidoP) || empty($Telefono) || empty($Fecha) || 
-            empty($h1) || empty($h2) || empty($h3) || empty($h4) || empty($h5) || empty($h6) ||
-            empty($Servicios_IDServicios) || empty($Tipo_Pago) || empty($MontoTotal)) {
-            return ["error" => "Faltan datos obligatorios, no se completaron las 6 capturas de huella, o el monto es inválido."];
+        // --- LÓGICA PARA PASE DIARIO ---
+        $servicioModel = new Servicios();
+        $servicio = $servicioModel->find($Servicios_IDServicios);
+        $esPaseDiario = false;
+        if ($servicio && stripos($servicio['NombreMembresia'], 'GYM 1 DÍA') !== false) {
+            $esPaseDiario = true;
         }
 
-        // Llamada a Python
-        $respuestaBiometrica = $this->generarTemplateBiometrico($h1, $h2, $h3, $h4, $h5, $h6);
+        // --- VALIDACIÓN DIFERENCIADA ---
+        if ($esPaseDiario) {
+            // Para pase diario, solo el nombre es obligatorio, además de los datos del pago.
+            if (empty($Nombre) || empty($Servicios_IDServicios) || empty($Tipo_Pago) || empty($MontoTotal)) {
+                return ["error" => "Faltan datos obligatorios para el pase diario (Nombre, Membresía, Pago)."];
+            }
+        } else {
+            // Validación original para membresías completas
+            $huellasCompletas = !empty($h1) && !empty($h2) && !empty($h3) && !empty($h4) && !empty($h5) && !empty($h6);
+            if (empty($Nombre) || empty($ApellidoP) || !$huellasCompletas) {
+                return ["error" => "Faltan datos obligatorios (Nombre, Apellido) o no se completaron las 6 capturas de huella."];
+            }
+        }
 
-        if ($respuestaBiometrica['success'] === false) {
-            return ["error" => $respuestaBiometrica['mensaje']];
+        $templateBiometrico = null;
+        // Llamada a Python solo si NO es pase diario
+        if (!$esPaseDiario) {
+            $respuestaBiometrica = $this->generarTemplateBiometrico($h1, $h2, $h3, $h4, $h5, $h6);
+
+            if ($respuestaBiometrica['success'] === false) {
+                return ["error" => $respuestaBiometrica['mensaje']];
+            }
+            $templateBiometrico = $respuestaBiometrica['template'];
         }
 
         // Armamos el arreglo para mandárselo al Modelo
         $validarformProducto = array(
             "Nombre"                => $Nombre,
-            "ApellidoP"             => $ApellidoP,
-            "ApellidoM"             => $ApellidoM,
-            "Telefono"              => $Telefono,
-            "Correo"                => $Correo,
-            "Huella"                => $respuestaBiometrica['template'], 
+            "ApellidoP"             => $ApellidoP, // Puede ir vacío
+            "ApellidoM"             => $ApellidoM, // Puede ir vacío
+            "Telefono"              => $Telefono, // Puede ir vacío
+            "Correo"                => $Correo, // Puede ir vacío
+            "Huella"                => $templateBiometrico, // Será NULL para pase diario
             "Fecha_Ingreso"         => $Fecha,
             "Acepta_WhatsApp"       => $Acepta_WhatsApp,
             "Servicios_IDServicios" => $Servicios_IDServicios,
             "Tipo_Pago"             => $Tipo_Pago,
-            
-            // 🔥 NUEVOS DATOS PARA EL MODELO
             "MontoTotal"            => $MontoTotal,
             "Servicios_Extra"       => $servicios_extra
         );
@@ -330,6 +340,32 @@ public function panel()
              . view('html/ListaRenovaciones', $data)
              . view('html/footer');
     }
+
+    public function verMembresias()
+    {
+        $username = obtener_username();
+        $membresiaModel = new RegistroMembresiaModel();
+
+        // 1. Capturamos ambos filtros de la URL (GET) para que funcionen juntos
+        // Ejemplo URL: .../servicios?estado=activas&busqueda=951263
+        $estado = $this->request->getGet('estado') ?? 'todas';
+        $busqueda = $this->request->getGet('busqueda');
+
+        // 2. El modelo aplica el WHERE estado AND (nombre LIKE %...% OR telefono LIKE %...%)
+        $membresias = $membresiaModel->obtenerTodasLasMembresias($estado, $busqueda, 1);
+
+        $data = [
+            'titulo'     => 'Historial General de Membresías | VitalGym',
+            'username'   => $username,
+            'membresias' => $membresias,
+            'pager'      => $membresiaModel->pager,
+            'estado'     => $estado,
+            'busqueda'   => $busqueda
+        ];
+
+        return view('html/main', $data) . view('html/VerMembresias', $data) . view('html/footer');
+    }
+
     
 
 }

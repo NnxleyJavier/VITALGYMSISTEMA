@@ -11,6 +11,9 @@ $(document).ready(function() {
     // 1. Inicializar SDK al cargar la página
     inicializarLector();
 
+    // Listener para el cambio de membresía
+    $('#selectServicio').on('change', manejarCambioDeMembresia);
+
     // 2. INICIALIZAR CALCULADORA DE SERVICIOS
     inicializarServiciosDinamicos();
 
@@ -29,8 +32,12 @@ $(document).ready(function() {
     // ENVÍO DEL FORMULARIO
     $("#formRegistroUsuario").submit(function(e) {
         e.preventDefault();
-      // CAMBIAR 4 POR 6
-        if (conteoMuestras < 6) {
+
+        var seleccion = $('#selectServicio').find(':selected').text();
+        var esPaseDiario = seleccion.toLowerCase().includes('1 día');
+
+        // Si NO es pase diario, se exige la huella.
+        if (!esPaseDiario && conteoMuestras < 6) {
             alert("⚠️ Debe capturar la huella 6 veces antes de guardar.");
             return;
         }
@@ -41,7 +48,38 @@ $(document).ready(function() {
 
         ajaxGuardarUsuario(datosFormulario, "MandaraBDUsuario", csrfName, csrfHash);
     });
+
+    // Ejecutar la lógica de membresía al cargar la página por si hay algo pre-seleccionado
+    manejarCambioDeMembresia();
 });
+
+/**
+ * Función que se activa cada vez que el usuario cambia la membresía.
+ * Decide si mostrar u ocultar la sección de huella y ajustar campos requeridos.
+ */
+function manejarCambioDeMembresia() {
+    var seleccion = $('#selectServicio').find(':selected').text();
+    var esPaseDiario = seleccion.toLowerCase().includes('1 día');
+
+    var tituloBiometria = $('h4.form-section-title:contains("Datos Biométricos")');
+    var seccionCaptura = tituloBiometria.next('div.col-md-12.text-center');
+    var btnGuardar = $('#btnGuardar');
+    var inputApellidoP = $('input[name="ApellidoP"]');
+
+    if (esPaseDiario) {
+        tituloBiometria.hide();
+        seccionCaptura.hide();
+        btnGuardar.prop('disabled', false).addClass('btn-success').removeClass('btn-secondary-custom');
+        inputApellidoP.prop('required', false);
+    } else {
+        tituloBiometria.show();
+        seccionCaptura.show();
+        inputApellidoP.prop('required', true);
+        if (conteoMuestras < 6) {
+            btnGuardar.prop('disabled', true).removeClass('btn-success').addClass('btn-secondary-custom');
+        }
+    }
+}
 
 /* ==========================================================
    --- LÓGICA DE SERVICIOS EXTRA Y CÁLCULO DE PAGOS ---
