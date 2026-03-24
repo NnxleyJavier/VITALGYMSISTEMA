@@ -1,0 +1,865 @@
+ERROR - 2026-03-24 17:04:40 --> Exception: Unable to prepare statement: 1, no such table: db_servicios in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(213): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(609): CodeIgniter\Model->doFind(false, NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(102): CodeIgniter\BaseModel->find(NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(49): App\Controllers\Home->validarProducto()
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\ControllerTestTrait.php(166): App\Controllers\Home->MandaraBDUsuario()
+#9 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(206): Tests\Unit\HomeTest->execute('MandaraBDUsuari...')
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testMandaraBDUsuarioPaseDiarioSuccess()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#21 {main}
+ERROR - 2026-03-24 17:13:34 --> Exception: Unable to prepare statement: 1, no such table: db_servicios in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(213): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(609): CodeIgniter\Model->doFind(false, NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(102): CodeIgniter\BaseModel->find(NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(49): App\Controllers\Home->validarProducto()
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\ControllerTestTrait.php(166): App\Controllers\Home->MandaraBDUsuario()
+#9 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(209): Tests\Unit\HomeTest->execute('MandaraBDUsuari...')
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testMandaraBDUsuarioPaseDiarioSuccess()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#21 {main}
+ERROR - 2026-03-24 17:20:07 --> Exception: Unable to prepare statement: 1, no such table: db_servicios in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(213): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(609): CodeIgniter\Model->doFind(false, NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(102): CodeIgniter\BaseModel->find(NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(49): App\Controllers\Home->validarProducto()
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\ControllerTestTrait.php(166): App\Controllers\Home->MandaraBDUsuario()
+#9 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(209): Tests\Unit\HomeTest->execute('MandaraBDUsuari...')
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testMandaraBDUsuarioPaseDiarioSuccess()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#21 {main}
+ERROR - 2026-03-24 17:29:27 --> Exception: Unable to prepare statement: 1, no such table: db_servicios in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(213): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(609): CodeIgniter\Model->doFind(false, NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(101): CodeIgniter\BaseModel->find(NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(48): App\Controllers\Home->validarProducto()
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\ControllerTestTrait.php(166): App\Controllers\Home->MandaraBDUsuario()
+#9 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(194): Tests\Unit\HomeTest->execute('MandaraBDUsuari...')
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testMandaraBDUsuarioPaseDiarioSuccess()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#21 {main}
+CRITICAL - 2026-03-24 18:31:44 --> ErrorException: Declaration of Tests\Unit\TestableHome::generarTemplateBiometrico($datos) must be compatible with App\Controllers\Home::generarTemplateBiometrico($h1, $h2, $h3, $h4, $h5, $h6)
+[Method: GET, Route: /]
+in ROOTPATH\tests\unit\HomeTest.php on line 23.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2026-03-24 17:34:08 --> Exception: Unable to prepare statement: 1, no such table: db_settings in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(186): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(51): CodeIgniter\Settings\Handlers\DatabaseHandler->hydrate(NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Settings.php(59): CodeIgniter\Settings\Handlers\DatabaseHandler->has('Config\\Auth', 'actions', NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Helpers\setting_helper.php(25): CodeIgniter\Settings\Settings->get('Auth.actions')
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(516): setting('Auth.actions')
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(507): CodeIgniter\Shield\Authentication\Authenticators\Session->getActionTypes()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(735): CodeIgniter\Shield\Authentication\Authenticators\Session->getIdentitiesForAction(Object(CodeIgniter\Shield\Entities\User))
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Test\AuthenticationTesting.php(41): CodeIgniter\Shield\Authentication\Authenticators\Session->login(Object(CodeIgniter\Shield\Entities\User))
+#12 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(66): Tests\Unit\HomeTest->actingAs(Object(CodeIgniter\Shield\Entities\User))
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testIndex()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#23 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#24 {main}
+ERROR - 2026-03-24 17:34:08 --> Exception: Unable to prepare statement: 1, no such table: db_servicios in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(213): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(609): CodeIgniter\Model->doFind(false, NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(101): CodeIgniter\BaseModel->find(NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(48): App\Controllers\Home->validarProducto()
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\ControllerTestTrait.php(166): App\Controllers\Home->MandaraBDUsuario()
+#9 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(98): Tests\Unit\HomeTest->execute('MandaraBDUsuari...')
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testMandaraBDUsuarioSuccess()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#21 {main}
+ERROR - 2026-03-24 17:34:08 --> Exception: Unable to prepare statement: 1, no such table: db_servicios in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(213): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(609): CodeIgniter\Model->doFind(false, NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(101): CodeIgniter\BaseModel->find(NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(48): App\Controllers\Home->validarProducto()
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\ControllerTestTrait.php(166): App\Controllers\Home->MandaraBDUsuario()
+#9 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(128): Tests\Unit\HomeTest->execute('MandaraBDUsuari...')
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testMandaraBDUsuarioBiometricFailure()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#21 {main}
+ERROR - 2026-03-24 17:34:08 --> Exception: Unable to prepare statement: 1, no such table: db_settings in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(186): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(51): CodeIgniter\Settings\Handlers\DatabaseHandler->hydrate(NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Settings.php(59): CodeIgniter\Settings\Handlers\DatabaseHandler->has('Config\\Auth', 'actions', NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Helpers\setting_helper.php(25): CodeIgniter\Settings\Settings->get('Auth.actions')
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(516): setting('Auth.actions')
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(507): CodeIgniter\Shield\Authentication\Authenticators\Session->getActionTypes()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(735): CodeIgniter\Shield\Authentication\Authenticators\Session->getIdentitiesForAction(Object(CodeIgniter\Shield\Entities\User))
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Test\AuthenticationTesting.php(41): CodeIgniter\Shield\Authentication\Authenticators\Session->login(Object(CodeIgniter\Shield\Entities\User))
+#12 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(153): Tests\Unit\HomeTest->actingAs(Object(CodeIgniter\Shield\Entities\User))
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testGuardarHuellaUsuarioSuccess()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#23 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#24 {main}
+DEBUG - 2026-03-24 17:34:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-24 18:34:26 --> ErrorException: Declaration of Tests\Unit\TestableHome::generarTemplateBiometrico($datos) must be compatible with App\Controllers\Home::generarTemplateBiometrico($h1, $h2, $h3, $h4, $h5, $h6)
+[Method: GET, Route: /]
+in ROOTPATH\tests\unit\HomeTest.php on line 23.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+ERROR - 2026-03-24 17:34:34 --> Exception: Unable to prepare statement: 1, no such table: db_settings in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(186): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(51): CodeIgniter\Settings\Handlers\DatabaseHandler->hydrate(NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Settings.php(59): CodeIgniter\Settings\Handlers\DatabaseHandler->has('Config\\Auth', 'actions', NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Helpers\setting_helper.php(25): CodeIgniter\Settings\Settings->get('Auth.actions')
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(516): setting('Auth.actions')
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(507): CodeIgniter\Shield\Authentication\Authenticators\Session->getActionTypes()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(735): CodeIgniter\Shield\Authentication\Authenticators\Session->getIdentitiesForAction(Object(CodeIgniter\Shield\Entities\User))
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Test\AuthenticationTesting.php(41): CodeIgniter\Shield\Authentication\Authenticators\Session->login(Object(CodeIgniter\Shield\Entities\User))
+#12 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(66): Tests\Unit\HomeTest->actingAs(Object(CodeIgniter\Shield\Entities\User))
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testIndex()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#23 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#24 {main}
+ERROR - 2026-03-24 17:34:34 --> Exception: Unable to prepare statement: 1, no such table: db_servicios in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(213): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(609): CodeIgniter\Model->doFind(false, NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(101): CodeIgniter\BaseModel->find(NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(48): App\Controllers\Home->validarProducto()
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\ControllerTestTrait.php(166): App\Controllers\Home->MandaraBDUsuario()
+#9 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(98): Tests\Unit\HomeTest->execute('MandaraBDUsuari...')
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testMandaraBDUsuarioSuccess()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#21 {main}
+ERROR - 2026-03-24 17:34:34 --> Exception: Unable to prepare statement: 1, no such table: db_servicios in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(213): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(609): CodeIgniter\Model->doFind(false, NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(101): CodeIgniter\BaseModel->find(NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(48): App\Controllers\Home->validarProducto()
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\ControllerTestTrait.php(166): App\Controllers\Home->MandaraBDUsuario()
+#9 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(128): Tests\Unit\HomeTest->execute('MandaraBDUsuari...')
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testMandaraBDUsuarioBiometricFailure()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#21 {main}
+ERROR - 2026-03-24 17:34:34 --> Exception: Unable to prepare statement: 1, no such table: db_settings in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(186): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(51): CodeIgniter\Settings\Handlers\DatabaseHandler->hydrate(NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Settings.php(59): CodeIgniter\Settings\Handlers\DatabaseHandler->has('Config\\Auth', 'actions', NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Helpers\setting_helper.php(25): CodeIgniter\Settings\Settings->get('Auth.actions')
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(516): setting('Auth.actions')
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(507): CodeIgniter\Shield\Authentication\Authenticators\Session->getActionTypes()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(735): CodeIgniter\Shield\Authentication\Authenticators\Session->getIdentitiesForAction(Object(CodeIgniter\Shield\Entities\User))
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Test\AuthenticationTesting.php(41): CodeIgniter\Shield\Authentication\Authenticators\Session->login(Object(CodeIgniter\Shield\Entities\User))
+#12 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(153): Tests\Unit\HomeTest->actingAs(Object(CodeIgniter\Shield\Entities\User))
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testGuardarHuellaUsuarioSuccess()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#23 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#24 {main}
+DEBUG - 2026-03-24 17:34:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 17:39:22 --> Exception: Unable to prepare statement: 1, no such table: db_settings in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(186): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(51): CodeIgniter\Settings\Handlers\DatabaseHandler->hydrate(NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Settings.php(59): CodeIgniter\Settings\Handlers\DatabaseHandler->has('Config\\Auth', 'actions', NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Helpers\setting_helper.php(25): CodeIgniter\Settings\Settings->get('Auth.actions')
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(516): setting('Auth.actions')
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(507): CodeIgniter\Shield\Authentication\Authenticators\Session->getActionTypes()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(735): CodeIgniter\Shield\Authentication\Authenticators\Session->getIdentitiesForAction(Object(CodeIgniter\Shield\Entities\User))
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Test\AuthenticationTesting.php(41): CodeIgniter\Shield\Authentication\Authenticators\Session->login(Object(CodeIgniter\Shield\Entities\User))
+#12 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(65): Tests\Unit\HomeTest->actingAs(Object(CodeIgniter\Shield\Entities\User))
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testIndex()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#23 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#24 {main}
+DEBUG - 2026-03-24 17:39:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:39:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 17:39:23 --> Exception: Unable to prepare statement: 1, no such table: db_settings in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(186): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(51): CodeIgniter\Settings\Handlers\DatabaseHandler->hydrate(NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Settings.php(59): CodeIgniter\Settings\Handlers\DatabaseHandler->has('Config\\Auth', 'actions', NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Helpers\setting_helper.php(25): CodeIgniter\Settings\Settings->get('Auth.actions')
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(516): setting('Auth.actions')
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(507): CodeIgniter\Shield\Authentication\Authenticators\Session->getActionTypes()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(735): CodeIgniter\Shield\Authentication\Authenticators\Session->getIdentitiesForAction(Object(CodeIgniter\Shield\Entities\User))
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Test\AuthenticationTesting.php(41): CodeIgniter\Shield\Authentication\Authenticators\Session->login(Object(CodeIgniter\Shield\Entities\User))
+#12 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(160): Tests\Unit\HomeTest->actingAs(Object(CodeIgniter\Shield\Entities\User))
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testGuardarHuellaUsuarioSuccess()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#23 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#24 {main}
+DEBUG - 2026-03-24 17:39:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 17:41:37 --> Exception: Unable to prepare statement: 1, no such table: db_settings in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(186): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(51): CodeIgniter\Settings\Handlers\DatabaseHandler->hydrate(NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Settings.php(59): CodeIgniter\Settings\Handlers\DatabaseHandler->has('Config\\Auth', 'actions', NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Helpers\setting_helper.php(25): CodeIgniter\Settings\Settings->get('Auth.actions')
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(516): setting('Auth.actions')
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(507): CodeIgniter\Shield\Authentication\Authenticators\Session->getActionTypes()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(735): CodeIgniter\Shield\Authentication\Authenticators\Session->getIdentitiesForAction(Object(CodeIgniter\Shield\Entities\User))
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Test\AuthenticationTesting.php(41): CodeIgniter\Shield\Authentication\Authenticators\Session->login(Object(CodeIgniter\Shield\Entities\User))
+#12 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(70): Tests\Unit\HomeTest->actingAs(Object(CodeIgniter\Shield\Entities\User))
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testIndex()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#23 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#24 {main}
+DEBUG - 2026-03-24 17:41:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:41:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 17:41:37 --> Exception: Unable to prepare statement: 1, no such table: db_settings in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT *\nFROM `...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(186): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Handlers\DatabaseHandler.php(51): CodeIgniter\Settings\Handlers\DatabaseHandler->hydrate(NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Settings.php(59): CodeIgniter\Settings\Handlers\DatabaseHandler->has('Config\\Auth', 'actions', NULL)
+#7 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\settings\src\Helpers\setting_helper.php(25): CodeIgniter\Settings\Settings->get('Auth.actions')
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(516): setting('Auth.actions')
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(507): CodeIgniter\Shield\Authentication\Authenticators\Session->getActionTypes()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Authentication\Authenticators\Session.php(735): CodeIgniter\Shield\Authentication\Authenticators\Session->getIdentitiesForAction(Object(CodeIgniter\Shield\Entities\User))
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\codeigniter4\shield\src\Test\AuthenticationTesting.php(41): CodeIgniter\Shield\Authentication\Authenticators\Session->login(Object(CodeIgniter\Shield\Entities\User))
+#12 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(165): Tests\Unit\HomeTest->actingAs(Object(CodeIgniter\Shield\Entities\User))
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testGuardarHuellaUsuarioSuccess()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#23 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#24 {main}
+DEBUG - 2026-03-24 17:41:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:45:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:45:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:45:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:45:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:45:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:48:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:48:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:48:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:48:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:48:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:55:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:55:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:55:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:55:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:55:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:57:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:57:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:57:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:57:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:57:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:58:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:58:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:58:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:58:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:58:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:59:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:59:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:59:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:59:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 17:59:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:02:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:02:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:02:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:02:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 18:02:17 --> Exception: no such column: Huella in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:157
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(157): SQLite3->exec('UPDATE `db_user...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('UPDATE `db_user...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `db_user...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(2516): CodeIgniter\Database\BaseConnection->query('UPDATE `db_user...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(461): CodeIgniter\Database\BaseBuilder->update()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(1027): CodeIgniter\Model->doUpdate(Array, Array)
+#6 C:\xampp\htdocs\VitalGymSistema\system\Model.php(863): CodeIgniter\BaseModel->update(Array, Array)
+#7 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Home.php(260): CodeIgniter\Model->update(123, Array)
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\ControllerTestTrait.php(166): App\Controllers\Home->guardarHuellaUsuario()
+#9 C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php(182): Tests\Unit\HomeTest->execute('guardarHuellaUs...')
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\HomeTest->testGuardarHuellaUsuarioSuccess()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\HomeTest))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#21 {main}
+DEBUG - 2026-03-24 18:02:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:07:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:07:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:07:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:07:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:07:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:09:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:09:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:09:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:09:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:09:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:10:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:10:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:10:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:10:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:10:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:10:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:10:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:10:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:10:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:10:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:12:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:12:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:12:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:12:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:12:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:25:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:25:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:25:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:25:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:25:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 18:25:35 --> Exception: Unable to prepare statement: 1, no such table: db_registros_membresia in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:158
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(158): SQLite3->query('SELECT COUNT(*)...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+#6 C:\xampp\htdocs\VitalGymSistema\app\Models\RegistroMembresiaModel.php(58): CodeIgniter\BaseModel->paginate(10)
+#7 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(38): App\Models\RegistroMembresiaModel->obtenerClientesPorVencer(3, 10)
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\RegistroMembresiaModelTest->testObtenerClientesPorVencerTraeDatosCorrectos()
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#19 {main}
+DEBUG - 2026-03-24 18:30:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:30:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:30:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:30:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:30:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 18:30:51 --> Exception: no such table: Gymnasios in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:157
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(157): SQLite3->exec('ALTER TABLE `Gy...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('ALTER TABLE `Gy...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('ALTER TABLE `Gy...')
+#3 C:\xampp\htdocs\VitalGymSistema\app\Database\Migrations\2026-02-26-202245_ModificarGymnasiosYCrearAsistencia.php(65): CodeIgniter\Database\BaseConnection->query('ALTER TABLE `Gy...')
+#4 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(866): App\Database\Migrations\ModificarGymnasiosYCrearAsistencia->up()
+#5 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#6 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(175): CodeIgniter\Database\MigrationRunner->latest('tests')
+#7 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(120): Tests\Unit\RegistroMembresiaModelTest->migrateDatabase()
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(60): Tests\Unit\RegistroMembresiaModelTest->setUpMigrate()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Test\CIUnitTestCase.php(251): Tests\Unit\RegistroMembresiaModelTest->setUpDatabase()
+#10 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(23): CodeIgniter\Test\CIUnitTestCase->setUp()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2467): Tests\Unit\RegistroMembresiaModelTest->setUp()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2370): PHPUnit\Framework\TestCase->invokeHookMethods(Object(PHPUnit\Runner\HookMethodCollection), Object(PHPUnit\Event\DispatchingEmitter), 'beforeTestMetho...', 'beforeTestMetho...', 'beforeTestMetho...')
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(511): PHPUnit\Framework\TestCase->invokeBeforeTestHookMethods(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#23 {main}
+DEBUG - 2026-03-24 18:35:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:35:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:35:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:35:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:35:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 18:35:36 --> Exception: duplicate column name: users_id in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:157
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(157): SQLite3->exec('ALTER TABLE `db...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('ALTER TABLE `db...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('ALTER TABLE `db...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\Forge.php(772): CodeIgniter\Database\BaseConnection->query('ALTER TABLE `db...')
+#4 C:\xampp\htdocs\VitalGymSistema\app\Database\Migrations\2026-02-26-202245_ModificarGymnasiosYCrearAsistencia.php(61): CodeIgniter\Database\Forge->addColumn('Gymnasios', Array)
+#5 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(866): App\Database\Migrations\ModificarGymnasiosYCrearAsistencia->up()
+#6 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(175): CodeIgniter\Database\MigrationRunner->latest('tests')
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(120): Tests\Unit\RegistroMembresiaModelTest->migrateDatabase()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(60): Tests\Unit\RegistroMembresiaModelTest->setUpMigrate()
+#10 C:\xampp\htdocs\VitalGymSistema\system\Test\CIUnitTestCase.php(251): Tests\Unit\RegistroMembresiaModelTest->setUpDatabase()
+#11 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(23): CodeIgniter\Test\CIUnitTestCase->setUp()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2467): Tests\Unit\RegistroMembresiaModelTest->setUp()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2370): PHPUnit\Framework\TestCase->invokeHookMethods(Object(PHPUnit\Runner\HookMethodCollection), Object(PHPUnit\Event\DispatchingEmitter), 'beforeTestMetho...', 'beforeTestMetho...', 'beforeTestMetho...')
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(511): PHPUnit\Framework\TestCase->invokeBeforeTestHookMethods(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#23 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#24 {main}
+DEBUG - 2026-03-24 18:36:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:36:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:36:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:36:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:36:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 18:36:13 --> Exception: duplicate column name: users_id in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:157
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(157): SQLite3->exec('ALTER TABLE `db...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('ALTER TABLE `db...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('ALTER TABLE `db...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\Forge.php(772): CodeIgniter\Database\BaseConnection->query('ALTER TABLE `db...')
+#4 C:\xampp\htdocs\VitalGymSistema\app\Database\Migrations\2026-02-26-202245_ModificarGymnasiosYCrearAsistencia.php(61): CodeIgniter\Database\Forge->addColumn('Gymnasios', Array)
+#5 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(866): App\Database\Migrations\ModificarGymnasiosYCrearAsistencia->up()
+#6 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(175): CodeIgniter\Database\MigrationRunner->latest('tests')
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(120): Tests\Unit\RegistroMembresiaModelTest->migrateDatabase()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(60): Tests\Unit\RegistroMembresiaModelTest->setUpMigrate()
+#10 C:\xampp\htdocs\VitalGymSistema\system\Test\CIUnitTestCase.php(251): Tests\Unit\RegistroMembresiaModelTest->setUpDatabase()
+#11 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(23): CodeIgniter\Test\CIUnitTestCase->setUp()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2467): Tests\Unit\RegistroMembresiaModelTest->setUp()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2370): PHPUnit\Framework\TestCase->invokeHookMethods(Object(PHPUnit\Runner\HookMethodCollection), Object(PHPUnit\Event\DispatchingEmitter), 'beforeTestMetho...', 'beforeTestMetho...', 'beforeTestMetho...')
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(511): PHPUnit\Framework\TestCase->invokeBeforeTestHookMethods(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#23 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#24 {main}
+DEBUG - 2026-03-24 18:37:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:37:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:37:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:37:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:37:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 18:37:47 --> Exception: no such table: Gymnasios in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:157
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(157): SQLite3->exec('ALTER TABLE `Gy...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('ALTER TABLE `Gy...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('ALTER TABLE `Gy...')
+#3 C:\xampp\htdocs\VitalGymSistema\app\Database\Migrations\2026-02-26-202245_ModificarGymnasiosYCrearAsistencia.php(65): CodeIgniter\Database\BaseConnection->query('ALTER TABLE `Gy...')
+#4 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(866): App\Database\Migrations\ModificarGymnasiosYCrearAsistencia->up()
+#5 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#6 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(175): CodeIgniter\Database\MigrationRunner->latest('tests')
+#7 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(120): Tests\Unit\RegistroMembresiaModelTest->migrateDatabase()
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(60): Tests\Unit\RegistroMembresiaModelTest->setUpMigrate()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Test\CIUnitTestCase.php(251): Tests\Unit\RegistroMembresiaModelTest->setUpDatabase()
+#10 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(23): CodeIgniter\Test\CIUnitTestCase->setUp()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2467): Tests\Unit\RegistroMembresiaModelTest->setUp()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2370): PHPUnit\Framework\TestCase->invokeHookMethods(Object(PHPUnit\Runner\HookMethodCollection), Object(PHPUnit\Event\DispatchingEmitter), 'beforeTestMetho...', 'beforeTestMetho...', 'beforeTestMetho...')
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(511): PHPUnit\Framework\TestCase->invokeBeforeTestHookMethods(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#23 {main}
+DEBUG - 2026-03-24 18:42:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:42:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:42:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:42:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:42:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 18:42:02 --> Exception: no such table: Gymnasios in C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php:157
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\SQLite3\Connection.php(157): SQLite3->exec('ALTER TABLE `Gy...')
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\SQLite3\Connection->execute('ALTER TABLE `Gy...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('ALTER TABLE `Gy...')
+#3 C:\xampp\htdocs\VitalGymSistema\app\Database\Migrations\2026-02-26-202245_ModificarGymnasiosYCrearAsistencia.php(65): CodeIgniter\Database\BaseConnection->query('ALTER TABLE `Gy...')
+#4 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(866): App\Database\Migrations\ModificarGymnasiosYCrearAsistencia->up()
+#5 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#6 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(175): CodeIgniter\Database\MigrationRunner->latest('tests')
+#7 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(120): Tests\Unit\RegistroMembresiaModelTest->migrateDatabase()
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(60): Tests\Unit\RegistroMembresiaModelTest->setUpMigrate()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Test\CIUnitTestCase.php(251): Tests\Unit\RegistroMembresiaModelTest->setUpDatabase()
+#10 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(23): CodeIgniter\Test\CIUnitTestCase->setUp()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2467): Tests\Unit\RegistroMembresiaModelTest->setUp()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2370): PHPUnit\Framework\TestCase->invokeHookMethods(Object(PHPUnit\Runner\HookMethodCollection), Object(PHPUnit\Event\DispatchingEmitter), 'beforeTestMetho...', 'beforeTestMetho...', 'beforeTestMetho...')
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(511): PHPUnit\Framework\TestCase->invokeBeforeTestHookMethods(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#23 {main}
+DEBUG - 2026-03-24 18:46:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:46:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:46:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:46:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:46:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 18:46:42 --> mysqli_sql_exception: Can't create table `vitalgym_test`.`db_asistenciachecador` (errno: 150 "Foreign key constraint is incorrectly formed") in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('CREATE TABLE `d...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `d...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `d...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\Forge.php(570): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `d...')
+#4 C:\xampp\htdocs\VitalGymSistema\app\Database\Migrations\2026-02-26-202245_ModificarGymnasiosYCrearAsistencia.php(41): CodeIgniter\Database\Forge->createTable('db_AsistenciaCh...')
+#5 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(866): App\Database\Migrations\ModificarGymnasiosYCrearAsistencia->up()
+#6 C:\xampp\htdocs\VitalGymSistema\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(175): CodeIgniter\Database\MigrationRunner->latest('tests')
+#8 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(120): Tests\Unit\RegistroMembresiaModelTest->migrateDatabase()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Test\DatabaseTestTrait.php(60): Tests\Unit\RegistroMembresiaModelTest->setUpMigrate()
+#10 C:\xampp\htdocs\VitalGymSistema\system\Test\CIUnitTestCase.php(251): Tests\Unit\RegistroMembresiaModelTest->setUpDatabase()
+#11 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(23): CodeIgniter\Test\CIUnitTestCase->setUp()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2467): Tests\Unit\RegistroMembresiaModelTest->setUp()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(2370): PHPUnit\Framework\TestCase->invokeHookMethods(Object(PHPUnit\Runner\HookMethodCollection), Object(PHPUnit\Event\DispatchingEmitter), 'beforeTestMetho...', 'beforeTestMetho...', 'beforeTestMetho...')
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(511): PHPUnit\Framework\TestCase->invokeBeforeTestHookMethods(Array, Object(PHPUnit\Event\DispatchingEmitter))
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#20 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#21 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#22 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#23 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#24 {main}
+DEBUG - 2026-03-24 18:48:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:48:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:48:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:48:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:48:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 18:48:27 --> mysqli_sql_exception: Table 'vitalgym_test.db_registros_membresia' doesn't exist in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `db...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `db...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `db...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `db...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(839): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\VitalGymSistema\system\Model.php(800): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(33): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\RegistroMembresiaModelTest->testObtenerClientesPorVencerTraeSoloLosCorrectos()
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#19 {main}
+DEBUG - 2026-03-24 18:52:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:52:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:52:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:52:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:53:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 18:53:00 --> mysqli_sql_exception: Table 'vitalgym_test.registros_membresia' doesn't exist in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `re...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `re...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `re...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `re...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(839): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\VitalGymSistema\system\Model.php(800): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(33): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\RegistroMembresiaModelTest->testObtenerClientesPorVencerTraeSoloLosCorrectos()
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#19 {main}
+DEBUG - 2026-03-24 18:56:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:56:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:56:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:56:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 18:56:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 18:56:11 --> mysqli_sql_exception: Table 'vitalgym_test.registros_membresia' doesn't exist in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('INSERT INTO `re...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `re...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `re...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(2340): CodeIgniter\Database\BaseConnection->query('INSERT INTO `re...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(839): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\VitalGymSistema\system\Model.php(800): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(33): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\RegistroMembresiaModelTest->testObtenerClientesPorVencerTraeSoloLosCorrectos()
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#19 {main}
+DEBUG - 2026-03-24 19:00:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:00:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:00:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:00:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:00:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 19:00:56 --> mysqli_sql_exception: Unknown column 'registros_membresia.Aviso_Enviado' in 'where clause' in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT COUNT(*)...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1728): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(676): CodeIgniter\Database\BaseBuilder->countAllResults(false)
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(1283): CodeIgniter\Model->countAllResults(false)
+#6 C:\xampp\htdocs\VitalGymSistema\app\Models\RegistroMembresiaModel.php(58): CodeIgniter\BaseModel->paginate(10)
+#7 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(69): App\Models\RegistroMembresiaModel->obtenerClientesPorVencer(3, 10)
+#8 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\RegistroMembresiaModelTest->testObtenerClientesPorVencerTraeSoloLosCorrectos()
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#19 {main}
+DEBUG - 2026-03-24 19:03:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:03:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:03:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:03:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:03:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-03-24 19:03:35 --> mysqli_sql_exception: Unknown column 'clientes.Acepta_WhatsApp' in 'field list' in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `registr...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `registr...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `registr...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `registr...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(675): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\VitalGymSistema\system\BaseModel.php(1287): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\VitalGymSistema\app\Models\RegistroMembresiaModel.php(58): CodeIgniter\BaseModel->paginate(10)
+#8 C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php(69): App\Models\RegistroMembresiaModel->obtenerClientesPorVencer(3, 10)
+#9 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(1667): Tests\Unit\RegistroMembresiaModelTest->testObtenerClientesPorVencerTraeSoloLosCorrectos()
+#10 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(519): PHPUnit\Framework\TestCase->runTest()
+#11 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestRunner\TestRunner.php(87): PHPUnit\Framework\TestCase->runBare()
+#12 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestCase.php(365): PHPUnit\Framework\TestRunner->run(Object(Tests\Unit\RegistroMembresiaModelTest))
+#13 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestCase->run()
+#14 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#15 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\Framework\TestSuite.php(369): PHPUnit\Framework\TestSuite->run()
+#16 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\TestRunner.php(64): PHPUnit\Framework\TestSuite->run()
+#17 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\src\TextUI\Application.php(211): PHPUnit\TextUI\TestRunner->run(Object(PHPUnit\TextUI\Configuration\Configuration), Object(PHPUnit\Runner\ResultCache\DefaultResultCache), Object(PHPUnit\Framework\TestSuite))
+#18 C:\xampp\htdocs\VitalGymSistema\vendor\phpunit\phpunit\phpunit(104): PHPUnit\TextUI\Application->run(Array)
+#19 C:\xampp\htdocs\VitalGymSistema\vendor\bin\phpunit(122): include('C:\\xampp\\htdocs...')
+#20 {main}
+DEBUG - 2026-03-24 19:04:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:04:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:04:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:04:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 19:04:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

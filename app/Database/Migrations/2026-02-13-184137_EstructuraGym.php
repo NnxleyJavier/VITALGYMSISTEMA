@@ -51,6 +51,7 @@ class EstructuraGym extends Migration
             'Correo'        => ['type' => 'VARCHAR', 'constraint' => 120, 'null' => true],
             'Huella'        => ['type' => 'TEXT', 'null' => true],
             'Fecha_Ingreso' => ['type' => 'DATE'],
+            'Acepta_WhatsApp' => ['type' => 'TINYINT', 'constraint' => 1, 'default' => 0],
         ]);
         $this->forge->addKey('IDClientes', true);
         $this->forge->createTable('Clientes');
@@ -88,19 +89,20 @@ class EstructuraGym extends Migration
             'Servicios_IDServicios' => ['type' => 'INT', 'constraint' => 11],
             'Fecha_Inicio'          => ['type' => 'DATE'],
             'Fecha_Fin'             => ['type' => 'DATE'],
+            'Aviso_Enviado'         => ['type' => 'TINYINT', 'constraint' => 1, 'default' => 0],
         ]);
         $this->forge->addKey('idRegistros_Membresia', true);
         $this->forge->addForeignKey('Clientes_IDClientes', 'Clientes', 'IDClientes', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('Pago_idPago', 'Pago', 'idPago', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('Estatus_idEstatus', 'Estatus', 'idEstatus', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('Servicios_IDServicios', 'Servicios', 'IDServicios', 'CASCADE', 'CASCADE');
-        $this->forge->createTable('Registros_Membresia');
+        $this->forge->createTable('registros_membresia');
     }
 
     public function down()
     {
         // El orden de borrado debe ser inverso para no romper las llaves foráneas
-        $this->forge->dropTable('Registros_Membresia', true);
+        $this->forge->dropTable('registros_membresia', true);
         $this->forge->dropTable('Gymnasios_has_Servicios', true);
         $this->forge->dropTable('Pago', true);
         $this->forge->dropTable('Clientes', true);

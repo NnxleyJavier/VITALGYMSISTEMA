@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\xampp\htdocs\VitalGymSistema\phpunit.xml.dist" tests="11" assertions="24" errors="0" failures="0" skipped="0" time="4.140879">
+    <testsuite name="App" tests="11" assertions="24" errors="0" failures="0" skipped="0" time="4.140879">
+      <testsuite name="ExampleDatabaseTest" file="C:\xampp\htdocs\VitalGymSistema\tests\database\ExampleDatabaseTest.php" tests="2" assertions="3" errors="0" failures="0" skipped="0" time="0.341129">
+        <testcase name="testModelFindAll" file="C:\xampp\htdocs\VitalGymSistema\tests\database\ExampleDatabaseTest.php" line="17" class="ExampleDatabaseTest" classname="ExampleDatabaseTest" assertions="1" time="0.287507"/>
+        <testcase name="testSoftDeleteLeavesRow" file="C:\xampp\htdocs\VitalGymSistema\tests\database\ExampleDatabaseTest.php" line="28" class="ExampleDatabaseTest" classname="ExampleDatabaseTest" assertions="2" time="0.053621"/>
+      </testsuite>
+      <testsuite name="ExampleSessionTest" file="C:\xampp\htdocs\VitalGymSistema\tests\session\ExampleSessionTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.003703">
+        <testcase name="testSessionSimple" file="C:\xampp\htdocs\VitalGymSistema\tests\session\ExampleSessionTest.php" line="10" class="ExampleSessionTest" classname="ExampleSessionTest" assertions="1" time="0.003703"/>
+      </testsuite>
+      <testsuite name="HealthTest" file="C:\xampp\htdocs\VitalGymSistema\tests\unit\HealthTest.php" tests="2" assertions="3" errors="0" failures="0" skipped="0" time="0.010723">
+        <testcase name="testIsDefinedAppPath" file="C:\xampp\htdocs\VitalGymSistema\tests\unit\HealthTest.php" line="12" class="HealthTest" classname="HealthTest" assertions="1" time="0.001453"/>
+        <testcase name="testBaseUrlHasBeenSet" file="C:\xampp\htdocs\VitalGymSistema\tests\unit\HealthTest.php" line="17" class="HealthTest" classname="HealthTest" assertions="2" time="0.009270"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\HomeTest" file="C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php" tests="5" assertions="16" errors="0" failures="0" skipped="0" time="3.129236">
+        <testcase name="testIndex" file="C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php" line="46" class="Tests\Unit\HomeTest" classname="Tests.Unit.HomeTest" assertions="4" time="0.549609"/>
+        <testcase name="testMandaraBDUsuarioSuccess" file="C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php" line="78" class="Tests\Unit\HomeTest" classname="Tests.Unit.HomeTest" assertions="3" time="0.703723"/>
+        <testcase name="testMandaraBDUsuarioBiometricFailure" file="C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php" line="118" class="Tests\Unit\HomeTest" classname="Tests.Unit.HomeTest" assertions="3" time="0.728284"/>
+        <testcase name="testGuardarHuellaUsuarioSuccess" file="C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php" line="152" class="Tests\Unit\HomeTest" classname="Tests.Unit.HomeTest" assertions="3" time="0.545130"/>
+        <testcase name="testMandaraBDUsuarioPaseDiarioSuccess" file="C:\xampp\htdocs\VitalGymSistema\tests\unit\HomeTest.php" line="184" class="Tests\Unit\HomeTest" classname="Tests.Unit.HomeTest" assertions="3" time="0.602490"/>
+      </testsuite>
+      <testsuite name="Tests\Unit\RegistroMembresiaModelTest" file="C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.656089">
+        <testcase name="testObtenerClientesPorVencerTraeSoloLosCorrectos" file="C:\xampp\htdocs\VitalGymSistema\tests\unit\RegistroMembresiaModelTest.php" line="42" class="Tests\Unit\RegistroMembresiaModelTest" classname="Tests.Unit.RegistroMembresiaModelTest" assertions="1" time="0.656089"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

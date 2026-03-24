@@ -2,11 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Models\Servicios;
-use App\Models\Cliente;
+
 use App\Models\UsersModel;
 use App\Models\RegistroMembresiaModel;
-use CodeIgniter\Shield\Models\UserModel;
+
 
 
 class Home extends BaseController
@@ -17,7 +16,7 @@ class Home extends BaseController
 
          $idUser = obtener_username(); // obtengo el id User de la Sesion
 
-        $servicioModel = new Servicios();
+        $servicioModel = model(\App\Models\Servicios::class);
 
         // 1. Filtrar usando las funciones de CodeIgniter:
         // Traemos solo los que dicen "MEMBRESIA"
@@ -57,8 +56,8 @@ class Home extends BaseController
             ]);
         }
 
-        $usuarioModel = new Cliente(); 
-        
+        $usuarioModel = model(\App\Models\Cliente::class);
+
         // Inserción en la base de datos
         if ($usuarioModel->registrarClienteCompleto($resultado)) {
             return $this->response->setJSON([
@@ -98,7 +97,7 @@ class Home extends BaseController
         $Acepta_WhatsApp = $this->request->getPost("Acepta_WhatsApp") ? 1 : 0;
 
         // --- LÓGICA PARA PASE DIARIO ---
-        $servicioModel = new Servicios();
+        $servicioModel = model(\App\Models\Servicios::class);
         $servicio = $servicioModel->find($Servicios_IDServicios);
         $esPaseDiario = false;
         if ($servicio && stripos($servicio['NombreMembresia'], 'GYM 1 DÍA') !== false) {
@@ -149,7 +148,7 @@ class Home extends BaseController
         return $validarformProducto;
     }
 
-    private function generarTemplateBiometrico($h1, $h2, $h3, $h4, $h5, $h6) {
+    protected function generarTemplateBiometrico($h1, $h2, $h3, $h4, $h5, $h6) {
         $url = "http://127.0.0.1:5000/crear_template";
         
         $data = [
@@ -255,7 +254,7 @@ class Home extends BaseController
         }
 
         // 3. Guardar en la Base de Datos
-        $userModel = new UsersModel(); 
+       $userModel = model(\App\Models\UsersModel::class);
         
         // Hacemos el UPDATE usando el template devuelto por Python, NO la huella en bruto
         $guardado = $userModel->update($idUsuarioLogueado, [
@@ -352,7 +351,7 @@ public function panel()
         $busqueda = $this->request->getGet('busqueda');
 
         // 2. El modelo aplica el WHERE estado AND (nombre LIKE %...% OR telefono LIKE %...%)
-        $membresias = $membresiaModel->obtenerTodasLasMembresias($estado, $busqueda, 1);
+        $membresias = $membresiaModel->obtenerTodasLasMembresias($estado, $busqueda, 15);
 
         $data = [
             'titulo'     => 'Historial General de Membresías | VitalGym',

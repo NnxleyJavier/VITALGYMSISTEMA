@@ -1,0 +1,21 @@
+Example Database
+ [x] Model find all
+ [x] Soft delete leaves row
+
+Example Session
+ [x] Session simple
+
+Health
+ [x] Is defined app path
+ [x] Base url has been set
+
+Home (Tests\Unit\Home)
+ [x] Index
+ [x] Mandara b d usuario success
+ [x] Mandara b d usuario biometric failure
+ [x] Guardar huella usuario success
+ [x] Mandara b d usuario pase diario success
+
+Registro Membresia Model (Tests\Unit\RegistroMembresiaModel)
+ [x] Obtener clientes por vencer trae solo los correctos
+
