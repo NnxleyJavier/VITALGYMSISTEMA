@@ -365,6 +365,82 @@ public function panel()
         return view('html/main', $data) . view('html/VerMembresias', $data) . view('html/footer');
     }
 
+
+public function verAsistencias()
+    {
+        $asistenciaModel = new \App\Models\AsistenciaChecador();
+        $userModel = new \App\Models\UsersModel();
+
+        // --- 1. SI LA PETICIÓN ES POR AJAX (Filtro dinámico) ---
+        if ($this->request->isAJAX()) {
+            $fechaInicio = $this->request->getPost('fecha_inicio');
+            $fechaFin    = $this->request->getPost('fecha_fin');
+            $usuarioSeleccionado = $this->request->getPost('usuario');
+
+            $asistencias = $asistenciaModel->obtenerAsistenciasPorRango($fechaInicio, $fechaFin, $usuarioSeleccionado);
+            
+            // Pre-formateamos los datos en PHP para no complicar el JavaScript
+         // Pre-formateamos los datos en PHP para no complicar el JavaScript
+            $datosFormateados = [];
+            
+            // Arreglo para traducir los días al español
+            $diasEspanol = [
+                'Monday' => 'Lunes', 'Tuesday' => 'Martes', 'Wednesday' => 'Miércoles', 
+                'Thursday' => 'Jueves', 'Friday' => 'Viernes', 'Saturday' => 'Sábado', 'Sunday' => 'Domingo'
+            ];
+
+            foreach ($asistencias as $a) {
+                $entrada = new \DateTime($a['FechaHora_Registro_Entrada']);
+                $salida = !empty($a['FechaHora_Registro_Salida']) ? new \DateTime($a['FechaHora_Registro_Salida']) : null;
+                
+                $horaSalida = $salida ? $salida->format('h:i A') : '<span class="badge bg-warning text-dark p-2" style="border-radius: 8px;">En turno</span>';
+                $horasTrabajadas = $salida ? $entrada->diff($salida)->format('%h h %i min') : '<span class="text-muted">-</span>';
+
+                // Obtenemos el nombre del día en inglés y lo traducimos
+                $nombreDiaIngles = $entrada->format('l');
+                $diaTraducido = $diasEspanol[$nombreDiaIngles];
+
+                $datosFormateados[] = [
+                    'username'  => esc($a['username']),
+                    'dia'       => $diaTraducido, // NUEVO DATO
+                    'fecha'     => $entrada->format('d/m/Y'),
+                    'entrada'   => $entrada->format('h:i A'),
+                    'salida'    => $horaSalida,
+                    'trabajado' => $horasTrabajadas
+                ];
+            }
+            
+            return $this->response->setJSON([
+                'status' => 'success', 
+                'datos'  => $datosFormateados
+            ]);
+        }
+
+        // --- 2. SI ES LA CARGA INICIAL DE LA PÁGINA (GET) ---
+        $fechaInicio = date('Y-m-d', strtotime('monday this week'));
+        $fechaFin    = date('Y-m-d', strtotime('sunday this week'));
+        $usuarioSeleccionado = 'todos';
+
+        // Traemos todos los usuarios y los registros de la semana actual por defecto
+        $usuarios = $userModel->findAll();
+        $asistencias = $asistenciaModel->obtenerAsistenciasPorRango($fechaInicio, $fechaFin, $usuarioSeleccionado);
+
+        $data = [
+            'titulo'              => 'Control de Asistencia | VitalGym',
+            'username'            => obtener_username(), 
+            'asistencias'         => $asistencias,
+            'fechaInicio'         => $fechaInicio,
+            'fechaFin'            => $fechaFin,
+            'usuarios'            => $usuarios,
+            'usuarioSeleccionado' => $usuarioSeleccionado
+        ];
+
+        return view('html/main', $data)
+             . view('html/AsistenciasView', $data)
+             . view('html/footer');
+    }
+    
+
     
 
 }

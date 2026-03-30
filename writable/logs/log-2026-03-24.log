@@ -863,3 +863,198 @@ DEBUG - 2026-03-24 19:04:21 --> Session: Class initialized using 'CodeIgniter\Se
 DEBUG - 2026-03-24 19:04:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-03-24 19:04:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-03-24 19:04:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-24 23:22:09 --> ErrorException: Undefined variable $productos
+[Method: GET, Route: tienda]
+in APPPATH\Views\html\Tienda.php on line 6.
+ 1 APPPATH\Views\html\Tienda.php(6): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $productos', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\Tienda.php', 6)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\Tienda.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/Tienda', [], true)
+ 5 APPPATH\Controllers\Tienda.php(14): view('html/Tienda')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Tienda->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Tienda))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-03-24 23:22:10 --> ErrorException: Undefined variable $productos
+[Method: GET, Route: tienda]
+in APPPATH\Views\html\Tienda.php on line 6.
+ 1 APPPATH\Views\html\Tienda.php(6): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $productos', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\Tienda.php', 6)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\Tienda.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/Tienda', [], true)
+ 5 APPPATH\Controllers\Tienda.php(14): view('html/Tienda')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Tienda->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Tienda))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-03-24 23:27:06 --> ErrorException: Attempt to read property "Nombre" on array
+[Method: GET, Route: tienda]
+in APPPATH\Views\html\Tienda.php on line 10.
+ 1 APPPATH\Views\html\Tienda.php(10): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "Nombre" on array', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\Tienda.php', 10)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\Tienda.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/Tienda', [], true)
+ 5 APPPATH\Controllers\Tienda.php(19): view('html/Tienda', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Tienda->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Tienda))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-03-24 23:27:08 --> ErrorException: Attempt to read property "Nombre" on array
+[Method: GET, Route: tienda]
+in APPPATH\Views\html\Tienda.php on line 10.
+ 1 APPPATH\Views\html\Tienda.php(10): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "Nombre" on array', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\Tienda.php', 10)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\Tienda.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/Tienda', [], true)
+ 5 APPPATH\Controllers\Tienda.php(19): view('html/Tienda', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Tienda->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Tienda))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-03-24 23:27:24 --> ErrorException: Attempt to read property "Nombre" on array
+[Method: GET, Route: tienda]
+in APPPATH\Views\html\Tienda.php on line 10.
+ 1 APPPATH\Views\html\Tienda.php(10): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "Nombre" on array', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\Tienda.php', 10)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\Tienda.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/Tienda', [], true)
+ 5 APPPATH\Controllers\Tienda.php(19): view('html/Tienda', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Tienda->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Tienda))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-03-24 23:28:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:28:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:32:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:32:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:32:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:32:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:34:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:34:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:34:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-03-24 23:34:52 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\html\plantilla_dashboard.php on line 4.
+ 1 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\plantilla_dashboard.php')
+ 2 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/plantilla_dashboard', [], true)
+ 4 APPPATH\Controllers\Dashboard.php(89): view('html/plantilla_dashboard', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->paginaPrincipal()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+WARNING - 2026-03-24 23:34:52 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\html\plantilla_dashboard.php on line 5.
+ 1 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\plantilla_dashboard.php')
+ 2 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/plantilla_dashboard', [], true)
+ 4 APPPATH\Controllers\Dashboard.php(89): view('html/plantilla_dashboard', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->paginaPrincipal()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-03-24 23:34:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:37:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:37:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:39:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:39:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:39:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:39:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:40:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:40:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:44:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:44:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:44:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:44:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:44:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-03-24 23:44:38 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\html\plantilla_dashboard.php on line 4.
+ 1 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\plantilla_dashboard.php')
+ 2 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/plantilla_dashboard', [], true)
+ 4 APPPATH\Controllers\Dashboard.php(89): view('html/plantilla_dashboard', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->paginaPrincipal()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+WARNING - 2026-03-24 23:44:38 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\html\plantilla_dashboard.php on line 5.
+ 1 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\plantilla_dashboard.php')
+ 2 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/plantilla_dashboard', [], true)
+ 4 APPPATH\Controllers\Dashboard.php(89): view('html/plantilla_dashboard', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->paginaPrincipal()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-03-24 23:44:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:44:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+WARNING - 2026-03-24 23:44:45 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\html\plantilla_dashboard.php on line 4.
+ 1 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\plantilla_dashboard.php')
+ 2 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/plantilla_dashboard', [], true)
+ 4 APPPATH\Controllers\Dashboard.php(89): view('html/plantilla_dashboard', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->paginaPrincipal()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+WARNING - 2026-03-24 23:44:45 --> [DEPRECATED] Function strftime() is deprecated in APPPATH\Views\html\plantilla_dashboard.php on line 5.
+ 1 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\plantilla_dashboard.php')
+ 2 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/plantilla_dashboard', [], true)
+ 4 APPPATH\Controllers\Dashboard.php(89): view('html/plantilla_dashboard', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->paginaPrincipal()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-03-24 23:44:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-03-24 23:45:22 --> CodeIgniter\HTTP\Exceptions\BadRequestException: The URI you submitted has disallowed characters: "agua1.png'"
+[Method: GET, Route: assets/media/tienda/agua1.png%27]
+in SYSTEMPATH\Router\Router.php on line 738.
+ 1 SYSTEMPATH\Router\Router.php(205): CodeIgniter\Router\Router->checkDisallowedChars('assets/media/tienda/agua1.png\'')
+ 2 SYSTEMPATH\CodeIgniter.php(834): CodeIgniter\Router\Router->handle('assets/media/tienda/agua1.png\'')
+ 3 SYSTEMPATH\CodeIgniter.php(457): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-03-24 23:47:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:47:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:47:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:47:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:52:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:52:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:54:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:54:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:59:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:59:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-24 23:59:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

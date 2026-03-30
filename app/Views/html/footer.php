@@ -1,4 +1,5 @@
-<style>
+</div> </div> <style>
+
         .footer-vital {
             background-color: #ffffff;
             color: #7e8299;
@@ -15,16 +16,14 @@
         .footer-vital a:hover { color: #a19307; text-decoration: none; }
     </style>
 
-    <footer class="footer-vital">
-        <p class="mb-0">&copy; <?= date('Y') ?> <strong>Vital GYM Fitness</strong>. Todos los derechos reservados.</p>
-        <p class="mb-0">
-            <a href="<?= base_url('/soporte') ?>">
-                <span class="glyphicon glyphicon-headphones" style="margin-right: 5px;"></span> Soporte Técnico
-            </a>
-        </p>
-    </footer>
+<footer class="footer-vital">
+            <p class="mb-0">&copy; <?= date('Y') ?> <strong>Vital GYM Fitness</strong>. Todos los derechos reservados.</p>
+            <p class="mb-0">
+                <a href="<?= base_url('/soporte') ?>">
+                    <span class="glyphicon glyphicon-headphones" style="margin-right: 5px;"></span> Soporte Técnico
+                </a>
+            </p>
+        </footer>
 
-    </div> </div> 
-
-</body>
+    </div> </body>
 </html>

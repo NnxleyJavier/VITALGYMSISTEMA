@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/CSS/appmenu.css') ?>">
     <script src="<?= base_url('assets/lib/jquery.min.js')?>"></script> 
     <script src="<?= base_url('assets/lib/bootstrap.min.js')?>"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 
 
@@ -55,6 +56,8 @@
     <aside class="sidebar-vital" id="sidebarVital">
         <div class="sidebar-label opcion1">Principal</div>
         <a href="<?= base_url('/dashboard') ?>"><span class="glyphicon glyphicon-home"></span> Panel de Control</a>
+       <a href="<?= base_url('/tienda') ?>"><span class="glyphicon glyphicon-shopping-cart"></span> Tienda</a>
+        <a href="<?= base_url('/inventario') ?>"><span class="glyphicon glyphicon-list-alt"></span> Inventario</a>
         
         <a href="<?= base_url('/') ?>"><span class="glyphicon glyphicon-user"></span> Registro de Clientes</a>
         <a href="<?= base_url('/accesoclientes') ?>"><span class="glyphicon glyphicon-transfer"></span> Control de Acceso</a>
@@ -66,6 +69,7 @@
         <a href="<?= base_url('/vistaRegistroHuella') ?>"><span class="glyphicon glyphicon-inbox"></span> Registro de Huellas Staff</a>
         <a href="<?= base_url('/recordatoriosMembresia') ?>"><span class="glyphicon glyphicon-comment"></span> Recordatorios de Membresía</a>
         <a href="<?= base_url('/renovaciones') ?>"><span class="glyphicon glyphicon-refresh"></span> Renovaciones de Membresía</a>
+        <a href="<?= base_url('/verAsistencias') ?>"><span class="glyphicon glyphicon-refresh"></span> Ver Asitencia </a>
 
         <div class="sidebar-label">Sistema</div>
         <a href="<?= base_url('/dashboard') ?>"><span class="glyphicon glyphicon-stats"></span> Reportes </a>
@@ -74,7 +78,8 @@
     </aside>
 
     <div class="content-vital">
-        <div class="container-fluid">
+       <div class="vista-global-container" style="min-height: calc(100vh - 130px); padding-top: 20px;">
+            <div class="container-fluid">
             <script>
 $(document).ready(function() {
     

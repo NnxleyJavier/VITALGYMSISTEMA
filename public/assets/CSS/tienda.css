@@ -1,0 +1,118 @@
+/* Heredamos variables y colores de VitalGym */
+:root { 
+    --shadow-vital: 0 10px 30px 0 rgba(82, 63, 105, 0.03); 
+    --color-dorado: #c4b50d;
+}
+
+.layout-tienda { margin-top: 15px; }
+
+/* --- Utilidades heredadas de tu footer.php --- */
+.shadow-vital { box-shadow: var(--shadow-vital); border: 1px solid rgba(0,0,0,0.02); }
+.rounded-vital { border-radius: 16px; }
+
+/* --- Tarjetas de Productos --- */
+.product-card {
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative; /* Para que el badge no se salga */
+}
+.margin {
+    margin: 15px 0px 15px 0px;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(82, 63, 105, 0.1);
+}
+
+.img-container {
+    height: 140px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fcfcfc;
+}
+
+.img-container img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.btn-add {
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    padding: 8px;
+}
+
+.badge-stock {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    z-index: 2;
+}
+
+/* Evita que nombres largos rompan la tarjeta */
+.texto-recortado {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Buscador Superior --- */
+.input-buscador {
+    border-radius: 20px;
+    padding-left: 20px;
+    border: 1px solid #e4e6ef;
+    background-color: #f5f8fa;
+    height: 40px;
+}
+.input-buscador:focus {
+    background-color: #ffffff;
+    border-color: var(--color-dorado);
+    box-shadow: none;
+    outline: none;
+}
+
+/* --- Panel de Carrito (Sticky) --- */
+.cart-container {
+    position: sticky;
+    top: 20px; /* Margen superior al hacer scroll */
+    height: calc(100vh - 120px); /* Ocupa el alto de la pantalla respetando el menu */
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+}
+
+.cart-body {
+    flex-grow: 1; 
+    overflow-y: auto; /* Permite scroll interno solo a los productos añadidos */
+}
+
+.cart-item {
+    border-bottom: 1px solid #f8f9fa;
+    padding: 15px;
+}
+
+.shadow-top {
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.02);
+    border-radius: 0 0 16px 16px;
+}
+
+/* --- Responsividad Móvil --- */
+@media (max-width: 991px) {
+    .cart-container {
+        position: relative;
+        top: 0;
+        height: auto;
+        max-height: 500px;
+        margin-top: 20px;
+    }
+}

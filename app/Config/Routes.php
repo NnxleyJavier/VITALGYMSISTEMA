@@ -27,6 +27,8 @@ $routes->post('/verificarHuella','Kiosko::verificarHuella');
 
 $routes->get('/asistencia', 'Kiosko::asistencia');
 $routes->post('/RegistroddeAsistencia', 'Kiosko::RegistroddeAsistencia');
+$routes->get('/verAsistencias', 'Home::verAsistencias');
+$routes->post('/verAsistencias', 'Home::verAsistencias');
 
 $routes->get('/vistaRegistroHuella', 'Home::vistaRegistroHuella');
 $routes->post('/guardarHuellaUsuario', 'Home::guardarHuellaUsuario');
@@ -45,6 +47,15 @@ $routes->get('/CambioFechas', 'Dashboard::CambioFechas');
 $routes->post('/actualizarFechaMembresia', 'Dashboard::actualizarFechaMembresia');
 
 $routes->get('/servicios', 'Home::verMembresias');
+
+$routes->get('/tienda', 'Tienda::index');
+
+$routes->post('/registrarVenta', 'Tienda::registrarVenta');
+
+$routes->get('/inventario', 'Tienda::inventario');
+$routes->post('/guardarProducto', 'Tienda::guardarProducto');
+
+
 
 
 
