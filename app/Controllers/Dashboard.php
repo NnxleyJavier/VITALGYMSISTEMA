@@ -5,6 +5,7 @@ namespace App\Controllers;
 // Hasta arriba en tu Controlador
 use App\Models\PagoModel;
 use App\Models\RegistroMembresiaModel; 
+use App\Models\VentasproductosModel;
 
 
 class Dashboard extends BaseController
@@ -14,6 +15,8 @@ class Dashboard extends BaseController
     $username = obtener_username();
         $pagoModel = new PagoModel();
         $membresiaModel = new RegistroMembresiaModel(); 
+        $ventasModel = new VentasproductosModel();
+
 
         // --- TAREA DE MANTENIMIENTO: Actualizar membresías vencidas ---
         // Esto es lo más optimizado porque se ejecuta en una sola consulta a la BD.
@@ -28,7 +31,7 @@ class Dashboard extends BaseController
         // 1. INGRESOS DE HOY
         $hoyMatriz = $pagoModel->ingresosMembresiasHoy('matriz');
         $hoyXoxo   = $pagoModel->ingresosMembresiasHoy('xoxo');
-        $hoyTienda = $pagoModel->ingresosTiendaHoy();
+        $hoyTienda = $ventasModel->ingresosTiendaHoy();
 
         $ingresosHoy = [
             'membresias_matriz' => $hoyMatriz,
@@ -48,7 +51,7 @@ class Dashboard extends BaseController
         // 2. INGRESOS DEL MES
         $mesMatriz = $pagoModel->ingresosMembresiasMes('matriz');
         $mesXoxo   = $pagoModel->ingresosMembresiasMes('xoxo');
-        $mesTienda = $pagoModel->ingresosTiendaMes();
+        $mesTienda = $ventasModel->ingresosTiendaMes();
 
         $ingresosMes = [
             'membresias_matriz' => $mesMatriz,

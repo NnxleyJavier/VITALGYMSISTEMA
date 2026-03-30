@@ -66,4 +66,33 @@ public function procesarVenta(array $productos, int $idUsuario): bool
         return $this->db->transStatus();
     }
     
+    // ====================================================================
+    // CONSULTAS PARA EL DASHBOARD: VENTAS DE LA TIENDA
+    // ====================================================================
+
+    public function ingresosTiendaHoy()
+    {
+        $hoy = date('Y-m-d');
+        
+        // Sumamos la columna 'Total_Venta' filtrando por las horas de hoy
+        $row = $this->select('SUM(Total_Venta) as total_monto')
+                    ->where('Fecha_Venta >=', $hoy . ' 00:00:00')
+                    ->where('Fecha_Venta <=', $hoy . ' 23:59:59')
+                    ->first();
+
+        return $row['total_monto'] ?? 0.00;
+    }
+
+    public function ingresosTiendaMes()
+    {
+        $mesActual = date('m');
+        $anioActual = date('Y');
+        
+        $row = $this->select('SUM(Total_Venta) as total_monto')
+                    ->where('MONTH(Fecha_Venta)', $mesActual)
+                    ->where('YEAR(Fecha_Venta)', $anioActual)
+                    ->first();
+
+        return $row['total_monto'] ?? 0.00;
+    }
 }
