@@ -295,8 +295,33 @@ function ajaxGuardarUsuario(formulario, controlador, csrfName, csrfHash) {
         dataType: "json",
         success: function(resp) {
             if (resp.status === 'success') {
-                alert("✅ " + (resp.message || "Usuario registrado correctamente."));
-              //  window.location.href = base_url; 
+                
+                // 1. Mostrar alerta nativa primero para asegurar que el código no se detenga si falla SweetAlert
+                alert("✅ " + (resp.message || "El registro fue correcto"));
+
+                // 2. Lógica de impresión silenciosa (Iframe)
+                if (resp.valoresdata) {
+                    console.log("Enviando a impresora:", resp.valoresdata.costo_membresia); 
+
+                    var queryString = $.param(resp.valoresdata);
+                    
+                    // OJO: Asegúrate de que esta ruta sea la correcta en tu nuevo sistema
+                    let url = "http://localhost/sistema/vendor/ticket14.php?" + queryString;
+
+               var nuevaVentana = window.open(url, '_blank');
+                            setTimeout(function() {
+                                if (nuevaVentana) {
+                                    nuevaVentana.close();
+                                }
+                                 }, 5000);
+                  
+
+
+
+
+                        location.reload();
+                }
+
             } else {
                 alert("❌ Error: " + (resp.message || "Error desconocido"));
                 $("#btnGuardar").prop("disabled", false).text("Intentar de Nuevo");

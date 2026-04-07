@@ -59,19 +59,46 @@ class Home extends BaseController
         $usuarioModel = model(\App\Models\Cliente::class);
 
         // Inserción en la base de datos
-        if ($usuarioModel->registrarClienteCompleto($resultado)) {
-            return $this->response->setJSON([
-                'status' => 'success',
-                'message' => 'Cliente registrado y huella guardada correctamente.',
-                'token' => csrf_hash() 
-            ]);
-        } else {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Error al guardar en la base de datos (revisa tu modelo).',
-                'token' => csrf_hash()
-            ]);
-        }
+
+        $registroExitoso = $usuarioModel->registrarClienteCompleto($resultado);
+if ($registroExitoso) {
+    
+    // 1. Cargamos el helper que acabamos de crear
+        helper('usuario');
+
+        // 2. Obtenemos la sucursal del usuario logueado
+        $sucursalActiva = obtener_sucursal_usuario();
+
+        
+        
+        // Armamos el array con las variables EXACTAS que espera tu archivo ticket14.php
+        $datosParaTicket = [
+            // Si tienes multisycursal en el nuevo sistema, aquí pondrías la variable. Pongo la 1 por defecto.
+            'sucursal' => $sucursalActiva ?? 'SUCUR0000X', 
+            // Esto lo puedes sacar de la sesión del usuario logueado: session()->get('nombre')
+            'nombre' => obtener_username() ?? 'USUARIO', 
+            // Concatenamos el nombre completo del cliente
+            'cliente' => trim($resultado['Nombre'] . ' ' . $resultado['ApellidoP'] . ' ' . $resultado['ApellidoM']),
+            // Si tu modelo te devuelve el ID generado, lo pones aquí. Si no, puedes poner "NUEVO" por ahora.
+            'cliente_membresia' => 'NUEVO', 
+            'tipo_visita_membresia' => $resultado['Tipo_Membresia_Ticket'],
+            'costo_servicio_extra_membresia' => 0, // Aquí sumarías $resultado['Servicios_Extra'] si es necesario
+            'costo_membresia' => $resultado['MontoTotal']
+        ];
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Cliente registrado y huella guardada correctamente.',
+            'token' => csrf_hash(),
+            'valoresdata' => $datosParaTicket // <-- Mandamos esto al frontend para que arme la URL
+        ]);
+    } else {
+        return $this->response->setJSON([
+            'status' => 'error',
+            'message' => 'Error al guardar en la base de datos (revisa tu modelo).',
+            'token' => csrf_hash()
+        ]);
+    }
     }
 
     private function validarProducto()
@@ -100,10 +127,21 @@ class Home extends BaseController
         $servicioModel = model(\App\Models\Servicios::class);
         $servicio = $servicioModel->find($Servicios_IDServicios);
         $esPaseDiario = false;
-        if ($servicio && stripos($servicio['NombreMembresia'], 'GYM 1 DÍA') !== false) {
-            $esPaseDiario = true;
-        }
-
+        $tipoMembresiaTicket = 'MENSUALIDAD'; // Valor por defecto para el ticket
+        
+        if ($servicio) {
+             $nombreServicio = strtoupper($servicio['NombreMembresia']);
+    
+    // Homologamos el nombre para que coincida con lo que espera ticket14.php
+            if (stripos($nombreServicio, 'DÍA') !== false || stripos($nombreServicio, 'DIA') !== false) {
+                $esPaseDiario = true;
+                $tipoMembresiaTicket = 'DIA';
+            } elseif (stripos($nombreServicio, 'QUINCENA') !== false) {
+                $tipoMembresiaTicket = 'QUINCENA';
+            } elseif (stripos($nombreServicio, 'SEMANA') !== false) {
+                $tipoMembresiaTicket = 'SEMANA';
+            }
+                }
         // --- VALIDACIÓN DIFERENCIADA ---
         if ($esPaseDiario) {
             // Para pase diario, solo el nombre es obligatorio, además de los datos del pago.
@@ -142,7 +180,8 @@ class Home extends BaseController
             "Servicios_IDServicios" => $Servicios_IDServicios,
             "Tipo_Pago"             => $Tipo_Pago,
             "MontoTotal"            => $MontoTotal,
-            "Servicios_Extra"       => $servicios_extra
+            "Servicios_Extra"       => $servicios_extra,
+            "Tipo_Membresia_Ticket" => $tipoMembresiaTicket
         );
 
         return $validarformProducto;
