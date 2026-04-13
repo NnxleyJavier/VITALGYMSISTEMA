@@ -94,7 +94,85 @@ class RegistroMembresiaModel extends Model
     {
         // (Tu código original de transacciones se mantiene aquí intacto)
         // ...
+
+           // Cargamos los modelos necesarios
+        $pagoModel = model('PagoModel');
+        $serviciosModel = model('Servicios');
+        $membresiaExtrasModel = model('MembresiaExtras');
+
+        $this->transStart();
+
+        try {
+            // 1. Obtener la información del nuevo servicio elegido
+            $servicio = $serviciosModel->find($datos['Servicios_IDServicios']);
+            if (!$servicio) {
+                throw new \Exception("El servicio seleccionado no existe.");
+            }
+
+            // 2. Calcular las fechas inteligentemente
+            // Buscamos si tiene una membresía previa para no robarle días
+            $ultima = $this->where('Clientes_IDClientes', $datos['Clientes_IDClientes'])
+                           ->orderBy('Fecha_Fin', 'DESC')
+                           ->first();
+
+            $hoy = date('Y-m-d');
+            
+            // Si la membresía actual aún no vence, el nuevo mes inicia cuando termine esa
+            if ($ultima && $ultima['Fecha_Fin'] >= $hoy) {
+                $fechaInicio = date('Y-m-d', strtotime($ultima['Fecha_Fin']));
+            } else {
+                // Si ya venció, inicia hoy
+                $fechaInicio = $hoy;
+            }
+
+            // Calculamos el fin sumando los "LapsoDias" que trae el servicio en la BD
+            $dias = $servicio['LapsoDias'] ?? 30; // Por si viene nulo, damos 30 por defecto
+            $fechaFin = date('Y-m-d', strtotime($fechaInicio . " + $dias days"));
+
+            // 3. Registrar el Pago
+            $idPago = $pagoModel->insert([
+                'Tipo_Pago'  => $datos['Tipo_Pago'] ?? 'Efectivo',
+                'Concepto'   => 'Renovación: ' . $servicio['NombreMembresia'],
+                'Monto'      => $datos['MontoTotal'],
+                'Fecha_Pago' => date('Y-m-d H:i:s')
+            ]);
+
+            // 4. Registrar la nueva Membresía
+            $idRegistroMembresia = $this->insert([
+                'Clientes_IDClientes'   => $datos['Clientes_IDClientes'],
+                'Pago_idPago'           => $idPago,
+                'Estatus_idEstatus'     => 1, // 1 = Activo
+                'Servicios_IDServicios' => $datos['Servicios_IDServicios'],
+                'Fecha_Inicio'          => $fechaInicio . ' 00:00:00',
+                'Fecha_Fin'             => $fechaFin . ' 23:59:59',
+                'Aviso_Enviado'         => 0 // Reiniciamos el aviso de WhatsApp
+            ]);
+
+            // 5. Registrar los Extras (si seleccionó alguno)
+            if (!empty($datos['Extras']) && is_array($datos['Extras'])) {
+                foreach ($datos['Extras'] as $idExtra) {
+                    $membresiaExtrasModel->insert([
+                        'Registros_Membresia_id' => $idRegistroMembresia,
+                        'Servicios_IDServicios'  => $idExtra
+                    ]);
+                }
+            }
+
+            $this->db->transComplete();
+
+            if ($this->db->transStatus() === FALSE) {
+                throw new \Exception("Error al guardar en la base de datos.");
+            }
+
+            return ['success' => true, 'fecha_fin' => $fechaFin];
+
+        } catch (\Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
     }
+
+
+    
 
     // ====================================================================
     // NUEVA FUNCIÓN: Obtener membresías activas para cambio de fecha

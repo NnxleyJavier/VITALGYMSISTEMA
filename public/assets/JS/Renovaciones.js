@@ -57,7 +57,7 @@ $(document).ready(function() {
         // Recolectamos todos los datos (Monto, ID Cliente, Extras, etc.)
         let formData = form.serialize();
 
-        // Enviamos la petición silenciosa a PHP
+// Enviamos la petición silenciosa a PHP
         $.ajax({
             url: urlGuardar, 
             type: "POST",
@@ -69,13 +69,32 @@ $(document).ready(function() {
                 $('#csrf_token').val(respuesta.token);
 
                 if (respuesta.status === 'success') {
-                    // Si todo salió bien en la base de datos:
+                    // Alert nativo (o SweetAlert si decides cambiarlo después)
                     alert(respuesta.mensaje);
-                    window.location.href = urlPanel; // Mandamos al panel principal
+
+                    // --- INICIO LÓGICA DE IMPRESIÓN ---
+                    if (respuesta.valoresdata) {
+                        var queryString = $.param(respuesta.valoresdata);
+                        let urlImpresion = "http://localhost/sistema/vendor/ticket15.php?" + queryString;
+
+                        let iframe = document.createElement('iframe');
+                        iframe.style.display = "none";
+                        iframe.src = urlImpresion;
+                        document.body.appendChild(iframe);
+
+                        // Esperamos 3 segundos para la impresión antes de redirigir al panel
+                        setTimeout(function() {
+                            window.location.href = urlPanel;
+                        }, 3000);
+                    } else {
+                        // Si por algo no hay datos de ticket, redirigimos de inmediato
+                        window.location.href = urlPanel; 
+                    }
+                    // --- FIN LÓGICA DE IMPRESIÓN ---
+
                 } else {
-                    // Si hubo un problema (ej. base de datos caída):
                     alert(respuesta.mensaje);
-                    btnSubmit.prop('disabled', false).html(textoOriginal); // Soltamos el botón
+                    btnSubmit.prop('disabled', false).html(textoOriginal); 
                 }
             },
             error: function() {
