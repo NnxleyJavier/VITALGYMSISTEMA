@@ -478,7 +478,82 @@ public function verAsistencias()
              . view('html/AsistenciasView', $data)
              . view('html/footer');
     }
+
+    public function FirmarResponsiva()
+    {
+        $data = [
+            'titulo'   => 'Carta Responsiva | VitalGym',
+            'username' => obtener_username()
+        ];
+
+        return view('html/main', $data)
+             . view('html/CartaResponsiva', $data)
+             . view('html/footer');
+    }
     
+
+    public function GuardarResponsiva()
+    {
+        if ($this->request->isAJAX()) {
+            
+            $clientesModel =  model(\App\Models\Cliente::class);
+
+            // 1. Recibir los datos del formulario
+            $nombre = $this->request->getPost('nombre');
+            $apellido_p = $this->request->getPost('apellido_p');
+            $apellido_m = $this->request->getPost('apellido_m');
+            $telefono = $this->request->getPost('telefono');
+            $correo = $this->request->getPost('correo');
+            $TelefonoEmergencia = $this->request->getPost('telefono_emergencia');
+            $ContactoEmergencia = $this->request->getPost('contacto_emergencia');
+            $acepta_wa = $this->request->getPost('recordatorio_wa') === 'SI' ? 1 : 0;
+            
+            // 2. Procesar la firma en Base64
+            $firma_base64 = $this->request->getPost('firma_base64');
+            $ruta_firma = null;
+
+            if ($firma_base64) {
+                // Quitar la cabecera "data:image/png;base64," para obtener solo el código
+                $image_parts = explode(";base64,", $firma_base64);
+                $image_base64 = base64_decode($image_parts[1]);
+                
+                // Crear un nombre único para el archivo
+                $nombre_archivo = 'firma_' . time() . '_' . rand(100, 999) . '.png';
+                
+                // Definir la ruta donde se guardará (ej. public/uploads/firmas/)
+                // Asegúrate de crear esta carpeta y darle permisos de escritura
+                $ruta_guardado = FCPATH . 'assets/firmas/' . $nombre_archivo;
+                
+                // Guardar el archivo físicamente en el servidor
+                file_put_contents($ruta_guardado, $image_base64);
+                
+                // Guardar solo el nombre o ruta relativa para la BD
+                $ruta_firma = 'assets/firmas/' . $nombre_archivo;
+            }
+
+            // 3. Preparar los datos para insertar en la tabla clientes
+            $datosCliente = [
+                'Nombre' => $nombre,
+                'ApellidoP' => $apellido_p,
+                'ApellidoM' => $apellido_m,
+                'Telefono' => $telefono,
+                'Correo' => $correo,
+                'Acepta_WhatsApp' => $acepta_wa,
+                'Firma' => $ruta_firma,
+                'Fecha_Ingreso' => date('Y-m-d'),
+                'Telefono_Emergencia' => $TelefonoEmergencia,
+                'Contacto_Emergencia' => $ContactoEmergencia,    
+                'Huella' => null // Queda nula hasta que pasen a recepción
+            ];
+
+            // 4. Insertar en la BD
+            if ($clientesModel->insert($datosCliente)) {
+                return $this->response->setJSON(['status' => 'success', 'mensaje' => 'Pre-registro completado con éxito.']);
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'mensaje' => 'Error al guardar en la base de datos.']);
+            }
+        }
+    }
 
     
 

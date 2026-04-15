@@ -24,29 +24,46 @@ $(document).ready(function() {
         reiniciarProceso();
     });
 
-    // ENVÍO DEL FORMULARIO DE STAFF
-    $("#formRegistroStaff").submit(function(e) {
-    e.preventDefault();
+// =========================================================
+    // 1. ESCUCHADOR DE AMBOS FORMULARIOS
+    // =========================================================
+    $("#formRegistroStaff, #formRegistroCliente").submit(function(e) {
+        e.preventDefault();
         
+        // REGLA ESTRICTA: 6 Muestras
         if (conteoMuestras < 6) {
             alert("⚠️ Debe capturar la huella 6 veces antes de guardar.");
             return;
         }
 
-        var datosFormulario = $(this);
+        var formId = $(this).attr('id'); // Identificamos qué formulario se envió
         var urlAction = $(this).attr('action'); 
+        var datosFormulario = $(this);
         
-        // CORRECCIÓN: Tomamos el CSRF directamente del input oculto del formulario
-        // en lugar de usar AppConfig
+        // Tomamos el CSRF
         var csrfName = $('.txt_csrfname').attr('name'); 
-        var csrfHash = $('.txt_csrfname').val(); 
+        var csrfHash = $('.txt_csrfname').val();
 
-        // Agregamos el token CSRF a los datos serializados
-        var dataString = datosFormulario.serialize() + "&" + csrfName + "=" + csrfHash;
+   // CORRECCIÓN: Leemos las huellas directamente de los inputs ocultos 
+        // tal y como lo hace tu función original onSamplesAcquired
+        var dataString = datosFormulario.serialize() + 
+                         "&" + csrfName + "=" + csrfHash +
+                         "&huella_1=" + encodeURIComponent($("#huella_1").val()) + 
+                         "&huella_2=" + encodeURIComponent($("#huella_2").val()) + 
+                         "&huella_3=" + encodeURIComponent($("#huella_3").val()) + 
+                         "&huella_4=" + encodeURIComponent($("#huella_4").val()) + 
+                         "&huella_5=" + encodeURIComponent($("#huella_5").val()) + 
+                         "&huella_6=" + encodeURIComponent($("#huella_6").val());
 
-        ajaxGuardarStaff(dataString, urlAction);
+        // CONDICIONAL PARA SEPARAR LÓGICA
+        if (formId === 'formRegistroStaff') {
+            ajaxGuardarStaff(dataString, urlAction);
+        } else if (formId === 'formRegistroCliente') {
+            ajaxGuardarCliente(dataString, urlAction);
+        }
     });
 });
+
 
 /* --- FUNCIONES DEL SDK --- */
 
@@ -120,8 +137,14 @@ function onSamplesAcquired(s) {
                 actualizarProgreso(conteoMuestras);
 
                 if (conteoMuestras < 6) {
-                    $("#mensajeHuella").text("Muestra " + conteoMuestras + "/6. LEVANTE EL DEDO y vuelva a colocarlo.");
+                    // Texto Staff
+                    $("#mensajeHuella").text("Muestra " + conteoMuestras + "/6. LEVANTE EL DEDO y vuelva a colocarlo.").css("color", "#d31900");
+                    // Texto Cliente
+                    $("#contadorMuestras").text(conteoMuestras + " de 6. LEVANTE EL DEDO y vuelva a colocarlo.").css("color", "#d31900");
+
                     $("#mensajeHuella").css("color", "#d31900");
+                    $("#contadorMuestras").css("color", "#d31900");
+
                     
                     setTimeout(function() {
                         isProcessing = false;
@@ -143,16 +166,19 @@ function actualizarProgreso(n) {
     $("#barraProgreso").css("width", porcentaje + "%");
     
     if (n < 6) {
-        $("#mensajeHuella").text("Muestra " + n + "/6 capturada. Levante el dedo.");
-        $("#mensajeHuella").css("color", "#333");
+        // Texto Staff
+        $("#mensajeHuella").text("Muestra " + n + "/6 capturada. Levante el dedo.").css("color", "#333");
+        // Texto Cliente
+        $("#contadorMuestras").text(n + " de 6 muestras capturadas. Levante el dedo.").css("color", "#333");
     } else {
-        $("#mensajeHuella").text("✅ Captura completada.");
-        $("#mensajeHuella").css("color", "green");
+        // Texto Staff
+        $("#mensajeHuella").text("✅ Captura completada.").css("color", "green");
+        // Texto Cliente
+        $("#contadorMuestras").text("✅ Captura completada.").css("color", "green");
         
         $("#iconoEstado").removeClass("glyphicon-hand-up").addClass("glyphicon-ok");
         $("#circuloEstado").css("border-color", "#28a745").css("color", "#28a745").css("background", "#d4edda");
         
-        // Cambié la clase a tu botón morado (btn-secondary-custom)
         $("#btnGuardar").prop("disabled", false);
         $("#btnReiniciarHuella").show();
         
@@ -173,7 +199,10 @@ function reiniciarProceso() {
     for(let i=1; i<=6; i++) $("#huella_"+i).val("");
     
     $("#barraProgreso").css("width", "0%");
+    
+    // Resetear textos
     $("#mensajeHuella").text("Coloque el dedo en el lector (0/6)").css("color", "#555");
+    $("#contadorMuestras").text("0 de 6 muestras capturadas").css("color", "#555");
     
     $("#circuloEstado").css("border-color", "#ddd").css("color", "#aaa").css("background", "#eee");
     $("#iconoEstado").removeClass("glyphicon-ok").addClass("glyphicon-hand-up");
@@ -184,40 +213,87 @@ function reiniciarProceso() {
     comenzarCaptura();
 }
 
-function ajaxGuardarStaff(dataString, urlAction) {
-    $("#btnGuardar").prop("disabled", true).html('<span class="glyphicon glyphicon-refresh"></span> Procesando Biometría...');
+// =========================================================
+    // 2. FUNCIÓN AJAX PARA EL STAFF (Tu código original)
+    // =========================================================
+    function ajaxGuardarStaff(dataString, urlAction) {
+        $("#btnGuardar").prop("disabled", true).html('<span class="glyphicon glyphicon-refresh fast-spin"></span> Procesando Biometría...');
 
-    $.ajax({
-        url: urlAction, 
-        type: "POST",
-        data: dataString, 
-        dataType: "json",
-        success: function(resp) {
-            
-            // 🔥 CORRECCIÓN AQUÍ: Eliminamos AppConfig y actualizamos directo el input de HTML
-            if (resp.token) {
-                $('.txt_csrfname').val(resp.token);
+        $.ajax({
+            url: urlAction, 
+            type: "POST",
+            data: dataString, 
+            dataType: "json",
+            success: function(resp) {
+                // Actualizamos token CSRF
+                if (resp.token) $('.txt_csrfname').val(resp.token);
+
+                if (resp.status === 'success') {
+                    alert("✅ " + resp.mensaje);
+                    reiniciarProceso();
+                    $("#zonaCaptura").hide();
+                    $("#btnEscanear").show().text("Huella Guardada - Cambiar Huella");
+                    $("#btnGuardar").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar Huella en mi Perfil');
+                } else {
+                    alert("❌ Error: " + (resp.mensaje || "Error desconocido"));
+                    $("#btnGuardar").prop("disabled", false).html('<span class="glyphicon glyphicon-floppy-disk"></span> Intentar de Nuevo');
+                }
+            },
+            error: function(xhr) {
+                alert("Error de conexión. Revise la consola.");
+                console.log(xhr.responseText);
+                $("#btnGuardar").prop("disabled", false).html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar Huella en mi Perfil');
             }
+        });
+    }
 
-            if (resp.status === 'success') {
-                alert("✅ " + resp.mensaje);
-                reiniciarProceso();
-                $("#zonaCaptura").hide();
-                $("#btnEscanear").show().text("Huella Guardada - Cambiar Huella");
-                $("#btnGuardar").html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar Huella en mi Perfil');
-            } else {
-                alert("❌ Error: " + (resp.mensaje || "Error desconocido"));
-                $("#btnGuardar").prop("disabled", false).html('<span class="glyphicon glyphicon-floppy-disk"></span> Intentar de Nuevo');
+
+    // =========================================================
+    // 3. FUNCIÓN AJAX PARA EL CLIENTE (Con SweetAlert y redirección)
+    // =========================================================
+function ajaxGuardarCliente(dataString, urlAction) {
+        $("#btnGuardar").prop("disabled", true).html('<span class="glyphicon glyphicon-refresh fast-spin"></span> Procesando Biometría...');
+
+        $.ajax({
+            url: urlAction, 
+            type: "POST",
+            data: dataString, 
+            dataType: "json",
+            success: function(resp) {
+                if (resp.token) $('.txt_csrfname').val(resp.token);
+
+                if (resp.status === 'success') {
+             Swal.fire({
+                        icon: 'success',
+                        title: '¡Enrolamiento Exitoso!',
+                        text: resp.mensaje,
+                        confirmButtonText: 'Terminar y volver',
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Si el controlador nos manda la ruta exacta, la usamos
+                            if (resp.redirect) {
+                                window.location.href = resp.redirect;
+                            } else {
+                                // Plan B infalible: Fuerza la ruta base + /recepcion
+                                window.location.href = window.location.origin + '/recepcion';
+                            }
+                        }
+                    });
+                } else {
+                    Swal.fire('Error', resp.mensaje || "Error desconocido", 'error');
+                    $("#btnGuardar").prop("disabled", false).html('<span class="glyphicon glyphicon-floppy-disk"></span> Intentar de Nuevo');
+                }
+            },
+            error: function(xhr) {
+                Swal.fire('Error', 'Fallo de conexión. Revise la consola.', 'error');
+                console.log(xhr.responseText);
+                $("#btnGuardar").prop("disabled", false).html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar Huella del Cliente');
             }
-        },
-        error: function(xhr) {
-            alert("Error de conexión. Revise la consola.");
-            console.log(xhr.responseText);
-            $("#btnGuardar").prop("disabled", false).html('<span class="glyphicon glyphicon-floppy-disk"></span> Guardar Huella en mi Perfil');
-        }
-    });
-}
+        });
+    }   
 
+    
 function mostrarEstado(msg, tipo) {
     console.log("[" + tipo + "] " + msg);
 }

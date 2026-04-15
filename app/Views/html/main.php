@@ -57,6 +57,7 @@
         <div class="sidebar-label opcion1">Principal</div>
         <a href="<?= base_url('/dashboard') ?>"><span class="glyphicon glyphicon-home"></span> Panel de Control</a>
        <a href="<?= base_url('/tienda') ?>"><span class="glyphicon glyphicon-shopping-cart"></span> Tienda</a>
+        
         <a href="<?= base_url('/inventario') ?>"><span class="glyphicon glyphicon-list-alt"></span> Inventario</a>
         
         <a href="<?= base_url('/') ?>"><span class="glyphicon glyphicon-user"></span> Registro de Clientes</a>
@@ -64,7 +65,8 @@
         <a href="<?= base_url('/asistencia') ?>"><span class="glyphicon glyphicon-check"></span> Asistencia</a>
         
         <div class="sidebar-label">Administración</div>
-        <a href="<?= base_url('/pagos') ?>"><span class="glyphicon glyphicon-usd"></span> Pagos y Caja</a>
+        <a href="<?= base_url('/recepcion') ?>"><span class="glyphicon glyphicon-user"></span> Recepción de Clientes </a>
+         <a href="<?= base_url('/cartaresponsiva') ?>"><span class="glyphicon glyphicon-file"></span> Carta Responsiva </a>
         <a href="<?= base_url('/servicios') ?>"><span class="glyphicon glyphicon-list-alt"></span> Membresías</a>
         <a href="<?= base_url('/vistaRegistroHuella') ?>"><span class="glyphicon glyphicon-inbox"></span> Registro de Huellas Staff</a>
         <a href="<?= base_url('/recordatoriosMembresia') ?>"><span class="glyphicon glyphicon-comment"></span> Recordatorios de Membresía</a>
