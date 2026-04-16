@@ -57,36 +57,50 @@ class RegistroMembresiaModel extends Model
             ->orderBy('DiasRestantes', 'ASC') // Ordenamos para que los que vencen hoy salgan primero
             ->paginate($porPagina); // Paginación automática de 10 en 10
     }
-
-    public function obtenerClientesParaRenovacion($telefono = null, $diasAviso = 5, $porPagina = 10)
+public function obtenerClientesParaRenovacion($telefono = null, $diasAviso = 5, $porPagina = 10)
     {
-        // Límite: Hoy + los días de aviso (ej. 5 días)
+        // Calculamos la fecha límite (Hoy + 5 días)
         $limiteDias = date('Y-m-d', strtotime("+$diasAviso days"));
 
-        // Seleccionamos los datos y calculamos los días restantes
         $this->select('
+                registros_membresia.Fecha_Fin,
+                registros_membresia.Estatus_idEstatus,
                 clientes.IDClientes, 
                 clientes.Nombre, 
                 clientes.ApellidoP, 
                 clientes.Telefono, 
-                registros_membresia.Fecha_Fin, 
-                DATEDIFF(registros_membresia.Fecha_Fin, CURDATE()) AS DiasRestantes
+                DATEDIFF(CURDATE(), registros_membresia.Fecha_Fin) AS DiasVencidos
             ')
-            ->join('clientes', 'clientes.IDClientes = registros_membresia.Clientes_IDClientes')
-            // TRUCO SQL: Subconsulta para traer SOLO el registro más reciente de cada cliente
-            ->where('registros_membresia.Fecha_Fin = (SELECT MAX(Fecha_Fin) FROM registros_membresia rm2 WHERE rm2.Clientes_IDClientes = registros_membresia.Clientes_IDClientes)')
-            // Filtramos: Que su fecha más reciente sea menor o igual al límite (incluye los ya vencidos que son fechas pasadas)
-            ->where('registros_membresia.Fecha_Fin <=', $limiteDias . ' 23:59:59');
+            ->join('clientes', 'clientes.IDClientes = registros_membresia.Clientes_IDClientes');
 
-        // Si el usuario escribió un teléfono en el buscador, lo filtramos
+        // 🔥 LÓGICA COMBINADA: Inactivos OR (Activos a punto de vencer)
+        $this->groupStart()
+             // Condición 1: Todos los inactivos (Estatus 2)
+             ->where('registros_membresia.Estatus_idEstatus !=', 1)
+             
+             // Condición 2: O los que son activos (Estatus 1) pero vencen pronto
+             ->orGroupStart()
+                 ->where('registros_membresia.Estatus_idEstatus', 1)
+                 ->where('registros_membresia.Fecha_Fin <=', $limiteDias . ' 23:59:59')
+             ->groupEnd()
+        ->groupEnd();
+
+        $this->groupBy('clientes.IDClientes');
+
         if (!empty($telefono)) {
-            $this->like('clientes.Telefono', $telefono);
+            $this->groupStart()
+                 ->like('clientes.Nombre', $telefono)
+                 ->orLike('clientes.ApellidoP', $telefono)
+                 ->orLike('clientes.Telefono', $telefono)
+                 ->groupEnd();
         }
 
-        // Ordenamos: Los más atrasados (números negativos) salen primero
-        $this->orderBy('DiasRestantes', 'ASC');
+        // 🔥 DOBLE ORDENAMIENTO
+        // 1ro: Inactivos (2) arriba, Activos (1) abajo
+        $this->orderBy('registros_membresia.Estatus_idEstatus', 'DESC'); 
+        // 2do: Dentro de cada grupo, los más recientes arriba
+        $this->orderBy('registros_membresia.Fecha_Fin', 'DESC'); 
         
-        // Retornamos con paginación
         return $this->paginate($porPagina);
     }
     

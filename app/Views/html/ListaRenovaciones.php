@@ -43,7 +43,7 @@
         <hr>
 
         <div class="search-box">
-            <form action="<?= base_url('/renovaciones/panel') ?>" method="GET" class="form-inline">
+            <form action="<?= base_url('/renovaciones') ?>" method="GET" class="form-inline" id="form-busqueda">
                 <div class="form-group" style="width: 100%; display: flex; gap: 10px;">
                     <input type="text" name="telefono" class="form-control" placeholder="Buscar por número de teléfono..." value="<?= esc($busqueda) ?>" style="flex-grow: 1; border-radius: 6px;">
                     <button type="submit" class="btn btn-default" style="background-color: #6c757d; color: white; border: none; border-radius: 6px;">
@@ -57,7 +57,7 @@
         </div>
 
         <div class="table-responsive">
-            <table class="table table-hover table-custom">
+            <table class="table table-hover table-custom" id="tabla-renovaciones">
                 <thead>
                     <tr>
                         <th>Cliente</th>
@@ -74,17 +74,28 @@
                                 <td><strong><?= esc($cliente['Nombre'] . ' ' . $cliente['ApellidoP']) ?></strong></td>
                                 <td><?= esc($cliente['Telefono']) ?></td>
                                 <td>
-                                    <?php if($cliente['DiasRestantes'] < 0): ?>
-                                        <span class="badge-vencido">Vencido hace <?= abs($cliente['DiasRestantes']) ?> días</span>
-                                    <?php elseif($cliente['DiasRestantes'] == 0): ?>
-                                        <span class="badge-vencido" style="background-color: #fd7e14;">¡Vence Hoy!</span>
+                                    <?php if($cliente['DiasVencidos'] > 0): ?>
+                                        <span class="badge-vencido" style="background-color: #dc3545; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold;">
+                                            Vencido hace <?= $cliente['DiasVencidos'] ?> días
+                                        </span>
+                                    
+                                    <?php elseif($cliente['DiasVencidos'] == 0): ?>
+                                        <span class="badge-vencido" style="background-color: #fd7e14; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold;">
+                                            ¡Vence Hoy!
+                                        </span>
+                                    
                                     <?php else: ?>
-                                        <span class="badge-porvencer">Faltan <?= $cliente['DiasRestantes'] ?> días</span>
+                                        <span class="badge-porvencer" style="background-color: #17a2b8; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold;">
+                                            Faltan <?= abs($cliente['DiasVencidos']) ?> días
+                                        </span>
                                     <?php endif; ?>
+                                    
+                                    <br>
+                                    <small style="color: #888; font-size: 11px;">(Fecha: <?= date('d/m/Y', strtotime($cliente['Fecha_Fin'])) ?>)</small>
                                 </td>
                                 <td><?= date('d/m/Y', strtotime($cliente['Fecha_Fin'])) ?></td>
                                 <td class="text-center">
-                                <a href="<?= base_url('/renovacionesRegistro/' . $cliente['IDClientes']) ?>" class="btn btn-sm btn-warning">
+                                <a href="<?= base_url('/renovacionesRegistro' . $cliente['IDClientes']) ?>" class="btn btn-sm btn-warning">
                                  <span class="glyphicon glyphicon-refresh"></span> Renovar
                                 </a>
                                 </td>
@@ -101,7 +112,7 @@
             </table>
         </div>
 
-      <div id="contenedor-paginacion" style="text-align: center; margin-top: 20px;">
+        <div id="contenedor-paginacion" style="text-align: center; margin-top: 20px;">
             <?= $pager->links() ?>
         </div>
 
@@ -111,61 +122,71 @@
 <script>
     $(document).ready(function() {
         let temporizador;
+        // Definimos la URL base a la que siempre le haremos las peticiones
+        const urlBase = "<?= base_url('/renovaciones') ?>";
 
-        // 1. Evitamos que el formulario recargue la página si dan "Enter"
-        $('form').on('submit', function(e) {
-            e.preventDefault();
-            let valor = $('input[name="telefono"]').val().replace(/[^0-9]/g, '');
-            buscarClientes(valor);
-        });
-
-        // 2. Detectamos cada vez que el usuario teclea algo en el buscador
+        // ==========================================
+        // 1. EVENTO: EL USUARIO ESCRIBE EN EL BUSCADOR
+        // ==========================================
         $('input[name="telefono"]').on('input', function() {
-            
-            // Forzamos a que solo se puedan escribir números (limpia letras al vuelo)
             let valor = $(this).val().replace(/[^0-9]/g, '');
             $(this).val(valor);
 
-            // Reiniciamos el reloj si el usuario sigue tecleando rápido
             clearTimeout(temporizador);
 
-            // 3. Evaluamos: ¿Ya hay 8 o más números? ¿O borró todo para ver la lista completa?
             if (valor.length >= 8 || valor.length === 0) {
-                
-                // Usamos un retraso (debounce) de 300ms para no saturar tu base de datos
                 temporizador = setTimeout(function() {
-                    buscarClientes(valor);
+                    // Armamos la URL con el parámetro de búsqueda
+                    let urlDestino = urlBase + (valor ? "?telefono=" + valor : "");
+                    cargarPaginaAjax(urlDestino);
                 }, 300);
             }
         });
 
-        // 4. La función que va a buscar los datos a tu Controlador
-        function buscarClientes(telefono) {
-            // Efecto visual: opacamos un poco la tabla para indicar que está "pensando"
-            $('.table-custom tbody').css('opacity', '0.4');
+        // ==========================================
+        // 2. EVENTO: EL USUARIO DA "ENTER" O CLIC EN BUSCAR
+        // ==========================================
+        $('#form-busqueda').on('submit', function(e) {
+            e.preventDefault();
+            let valor = $('input[name="telefono"]').val().replace(/[^0-9]/g, '');
+            let urlDestino = urlBase + (valor ? "?telefono=" + valor : "");
+            cargarPaginaAjax(urlDestino);
+        });
+
+        // ==========================================
+        // 3. EVENTO: EL USUARIO HACE CLIC EN LA PAGINACIÓN (NUEVO)
+        // ==========================================
+        // Usamos $(document).on para que jQuery escuche los clics incluso en los botones nuevos que lleguen por AJAX
+        $(document).on('click', '#contenedor-paginacion a', function(e) {
+            e.preventDefault(); // Evitamos que el navegador recargue la página
+            let urlPagina = $(this).attr('href'); // Extraemos la URL del botón (ej. ?page=2)
+            cargarPaginaAjax(urlPagina);
+        });
+
+        // ==========================================
+        // 4. FUNCIÓN MAESTRA AJAX
+        // ==========================================
+        function cargarPaginaAjax(url) {
+            $('#tabla-renovaciones tbody').css('opacity', '0.4');
 
             $.ajax({
-                url: "<?= base_url('/renovaciones') ?>",
+                url: url,
                 type: "GET",
-                data: { telefono: telefono },
                 success: function(respuesta) {
-                    // MAGIA JQUERY: El servidor nos devuelve la página entera, pero 
-                    // nosotros "recortamos" solo los datos de la tabla y la paginación.
-                    let nuevoCuerpoTabla = $(respuesta).find('.table-custom tbody').html();
+                    // Recortamos la tabla y el paginador de la respuesta HTML
+                    let nuevoCuerpoTabla = $(respuesta).find('#tabla-renovaciones tbody').html();
                     let nuevaPaginacion = $(respuesta).find('#contenedor-paginacion').html();
                     
-                    // Inyectamos los nuevos resultados y regresamos la opacidad a la normalidad
-                    $('.table-custom tbody').html(nuevoCuerpoTabla).css('opacity', '1');
+                    // Pegamos los datos frescos en nuestra pantalla
+                    $('#tabla-renovaciones tbody').html(nuevoCuerpoTabla).css('opacity', '1');
                     $('#contenedor-paginacion').html(nuevaPaginacion);
 
-                    // Opcional y elegante: Actualizamos la URL del navegador sin recargar la página.
-                    // Así, si el usuario refresca la página (F5), no pierde su búsqueda.
-                    let nuevaUrl = telefono ? "?telefono=" + telefono : window.location.pathname;
-                    window.history.pushState({}, '', nuevaUrl);
+                    // Actualizamos la URL en la barra de direcciones sin recargar
+                    window.history.pushState({}, '', url);
                 },
                 error: function() {
-                    $('.table-custom tbody').css('opacity', '1');
-                    console.log("Error al realizar la búsqueda silenciosa.");
+                    $('#tabla-renovaciones tbody').css('opacity', '1');
+                    console.log("Error al realizar la petición asíncrona.");
                 }
             });
         }

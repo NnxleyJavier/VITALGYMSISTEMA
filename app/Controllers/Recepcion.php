@@ -8,8 +8,24 @@ class Recepcion extends BaseController
     // Carga la vista principal
     public function index()
     {
+ // parte de renovaciones
+ $membresiaModel = model(\App\Models\RegistroMembresiaModel::class);
+   
+        // Capturamos lo que el usuario haya escrito en la barra de búsqueda (GET)
+        $telefonoBuscar = $this->request->getGet('telefono');
+        
+        // Llamamos a la función: le pasamos la búsqueda, avisamos desde 5 días antes, y paginamos de 10 en 10
+        $clientes = $membresiaModel->obtenerClientesParaRenovacion($telefonoBuscar, 5, 5);
+        
+        $datarenovaciones = [
+            'titulo'   => 'Panel de Renovaciones | VitalGym',
+            'username' => obtener_username(),
+            'clientes' => $clientes,
+            'pager'    => $membresiaModel->pager,
+            'busqueda' => $telefonoBuscar // Lo mandamos a la vista para dejarlo escrito en el input
+        ];
+     // termina parte de renovaciones
 
-    
         $serviciosModel =  model(\App\Models\Servicios::class);
         // Mandamos los servicios a la vista para llenar el select del modal
         $data['servicios'] = $serviciosModel->where('Catalogo', 'MEMBRESIA')->findAll();
@@ -17,6 +33,7 @@ class Recepcion extends BaseController
         
         return view('html/main', $data)
              . view('html/Espera', $data)
+               . view('html/ListaRenovaciones', $datarenovaciones)
              . view('html/footer');
   
     }

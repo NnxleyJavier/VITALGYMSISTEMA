@@ -143,6 +143,7 @@
     
     let tabla;
     $(document).ready(function() {
+        // 1. Inicializamos la tabla
         tabla = $('#tablaPendientes').DataTable({
             "ajax": BASE_URL + "/obtenerPendientesAJAX",
             "language": {
@@ -151,6 +152,18 @@
             "order": [[ 0, "desc" ]],
             "pageLength": 10
         });
+
+        // =========================================================
+        // 2. ACTUALIZACIÓN AUTOMÁTICA SILENCIOSA CADA 5 SEGUNDOS
+        // =========================================================
+        setInterval(function() {
+            if(tabla) {
+                // El parámetro 'null' mantiene los datos actuales si falla, 
+                // y el 'false' evita que la paginación o búsqueda se reinicien.
+                tabla.ajax.reload(null, false); 
+            }
+        }, 5000);
+        // =========================================================
     });
 </script>
 

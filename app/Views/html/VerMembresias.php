@@ -49,11 +49,11 @@
         </a>
     </div>
 
-    <form method="get" action="<?= base_url('/servicios') ?>" class="card-elegant">
+    <form id="form-busqueda-membresias" method="get" action="<?= base_url('/servicios') ?>" class="card-elegant">
         <div class="row">
             <div class="col-md-3 mb-3 mb-md-0">
                 <label class="filter-label">Estado de membresía</label>
-                <select name="estado" class="form-control form-control-custom" onchange="this.form.submit()">
+                <select name="estado" class="form-control form-control-custom">
                     <option value="todas" <?= $estado == 'todas' ? 'selected' : '' ?>>🌐 Ver Todas</option>
                     <option value="activas" <?= $estado == 'activas' ? 'selected' : '' ?>>✅ Solo Activas</option>
                     <option value="inactivas" <?= $estado == 'inactivas' ? 'selected' : '' ?>>⛔ Inactivas / Vencidas</option>
@@ -73,7 +73,7 @@
             </div>
             
             <div class="col-md-2" style="display: flex; align-items: flex-end;">
-                 <a href="<?= base_url('/servicios') ?>" class="btn-custom-outline w-100">Limpiar</a>
+                 <a href="<?= base_url('/servicios') ?>" id="btn-limpiar" class="btn-custom-outline w-100">Limpiar</a>
             </div>
         </div>
     </form>
@@ -91,7 +91,7 @@
                         <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody-membresias">
                     <?php if (empty($membresias)): ?>
                         <tr>
                             <td colspan="6" class="text-center py-5">
@@ -144,7 +144,81 @@
         </div>
     </div>
 
-    <div class="mt-4 d-flex justify-content-center">
+    <div id="contenedor-paginacion" class="mt-4 d-flex justify-content-center">
         <?= $pager->links() ?>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        let temporizador;
+        const urlBase = "<?= base_url('/servicios') ?>";
+
+        // 1. Cuando cambian el select de "Estado de membresía"
+        $('select[name="estado"]').on('change', function() {
+            $('#form-busqueda-membresias').submit();
+        });
+
+        // 2. Cuando escriben en el buscador de texto
+        $('input[name="busqueda"]').on('input', function() {
+            clearTimeout(temporizador);
+            // Esperamos 400ms después de que deje de escribir para buscar automáticamente
+            temporizador = setTimeout(function() {
+                $('#form-busqueda-membresias').submit();
+            }, 400); 
+        });
+
+        // 3. Cuando se envía el formulario (ya sea por enter, botón o los eventos de arriba)
+        $('#form-busqueda-membresias').on('submit', function(e) {
+            e.preventDefault();
+            // Serializamos el formulario (convierte los datos a: estado=activas&busqueda=juan)
+            let datosFormulario = $(this).serialize(); 
+            let urlDestino = urlBase + "?" + datosFormulario;
+            cargarPaginaAjax(urlDestino);
+        });
+
+        // 4. Cuando hacen clic en el paginador
+        $(document).on('click', '#contenedor-paginacion a', function(e) {
+            e.preventDefault(); 
+            let urlPagina = $(this).attr('href'); 
+            cargarPaginaAjax(urlPagina);
+        });
+
+        // 5. Cuando hacen clic en "Limpiar"
+        $('#btn-limpiar').on('click', function(e) {
+            e.preventDefault();
+            // Vaciamos los inputs
+            $('input[name="busqueda"]').val('');
+            $('select[name="estado"]').val('todas');
+            // Pedimos la tabla limpia a la base de datos
+            cargarPaginaAjax(urlBase);
+        });
+
+        // --- FUNCIÓN MAESTRA AJAX ---
+        function cargarPaginaAjax(url) {
+            // Ponemos la tabla un poco transparente para indicar que está cargando
+            $('#tbody-membresias').css('opacity', '0.4');
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(respuesta) {
+                    // Recortamos la tabla y el paginador de la respuesta HTML
+                    let nuevoCuerpoTabla = $(respuesta).find('#tbody-membresias').html();
+                    let nuevaPaginacion = $(respuesta).find('#contenedor-paginacion').html();
+                    
+                    // Pegamos los datos frescos y regresamos la opacidad
+                    $('#tbody-membresias').html(nuevoCuerpoTabla).css('opacity', '1');
+                    $('#contenedor-paginacion').html(nuevaPaginacion);
+
+                    // Actualizamos la barra de direcciones del navegador
+                    window.history.pushState({}, '', url);
+                },
+                error: function() {
+                    $('#tbody-membresias').css('opacity', '1');
+                    console.log("Error al realizar la petición asíncrona.");
+                }
+            });
+        }
+    });
+</script>
