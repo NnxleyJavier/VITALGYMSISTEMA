@@ -80,7 +80,9 @@
                                 <td><?= esc($cliente['Telefono']) ?></td>
                                 <td>
                                     <!-- Input Date con la fecha actual del cliente -->
-                                    <input type="date" class="input-fecha-custom" id="fecha_<?= $cliente['idRegistros_Membresia'] ?>" value="<?= date('Y-m-d', strtotime($cliente['Fecha_Fin'])) ?>">
+                                  <input type="date" class="input-fecha-custom" id="fecha_<?= $cliente['idRegistros_Membresia'] ?>" value="<?= date('Y-m-d', strtotime($cliente['Fecha_Fin'])) ?>">
+
+                                    <input type="text" id="motivo_<?= $cliente['idRegistros_Membresia'] ?>" class="form-control mt-2" placeholder="Ej. Reposición por enfermedad..." style="font-size: 12px; margin-top: 5px;">
                                 </td>
                                 <td class="text-center">
                                     <button onclick="guardarNuevaFecha(<?= $cliente['idRegistros_Membresia'] ?>)" class="btn btn-sm btn-success">
@@ -102,14 +104,59 @@
             <?= $pager->links() ?>
         </div>
     </div>
+
+<div class="card-panel" style="border-top: 5px solid #ffc107; margin-top: 30px;">
+    <h4 style="color: #ffc107; font-weight: 600;"><span class="glyphicon glyphicon-time"></span> Solicitudes de Cambio Pendientes</h4>
+    <p class="text-muted" style="font-size: 13px;">Peticiones de los encargados en espera de autorización del Superadmin.</p>
+    
+    <div class="table-responsive">
+        <table class="table table-hover table-custom mt-3">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Solicitado por</th>
+                    <th>Fecha Anterior</th>
+                     <th>Motivo</th>
+                    <th>Fecha Solicitada</th>
+                    <?php if($esSuperAdmin): ?>
+                        <th class="text-center">Acciones</th>
+                    <?php endif; ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if(!empty($solicitudes)): ?>
+                    <?php foreach($solicitudes as $solicitud): ?>
+                        <tr>
+                            <td><strong><?= esc($solicitud['Nombre'] . ' ' . $solicitud['ApellidoP']) ?></strong></td>
+                            <td><?= esc($solicitud['username']) ?></td>
+                            <td><span style="color: #dc3545; text-decoration: line-through;"><?= date('d/m/Y', strtotime($solicitud['fecha_fin_anterior'])) ?></span></td>
+                            <td><span style="color: #28a745; font-weight: bold;"><?= date('d/m/Y', strtotime($solicitud['fecha_fin_nueva'])) ?></span></td>
+                            <td><?= esc($solicitud['motivo']) ?></td>
+                            <?php if($esSuperAdmin): ?>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-success" onclick="procesarSolicitud(<?= $solicitud['idSolicitud'] ?>, 'aprobar')"><span class="glyphicon glyphicon-ok"></span></button>
+                                <button class="btn btn-sm btn-danger" onclick="procesarSolicitud(<?= $solicitud['idSolicitud'] ?>, 'rechazar')"><span class="glyphicon glyphicon-remove"></span></button>
+                            </td>
+                            <?php endif; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr><td colspan="5" class="text-center text-muted py-4">No hay solicitudes pendientes.</td></tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
-    function guardarNuevaFecha(idRegistro) {
+
+  function guardarNuevaFecha(idRegistro) {
         var nuevaFecha = $('#fecha_' + idRegistro).val();
+        var motivoCambio = $('#motivo_' + idRegistro).val(); // <-- Capturamos el motivo
         
         if(!nuevaFecha) { alert("Por favor selecciona una fecha válida."); return; }
-        if(!confirm("¿Estás seguro de cambiar la fecha de vencimiento?")) return;
+        if(!motivoCambio || motivoCambio.trim() === "") { alert("Debes escribir un motivo para justificar el cambio."); return; } // <-- Validamos
+        if(!confirm("¿Estás seguro de solicitar el cambio de fecha?")) return;
 
         $.ajax({
             url: '<?= base_url("/actualizarFechaMembresia") ?>',
@@ -117,21 +164,43 @@
             data: {
                 id: idRegistro,
                 fecha: nuevaFecha,
-                '<?= csrf_token() ?>': '<?= csrf_hash() ?>' // Token CSRF actual (aunque lo ideal es refrescarlo dinámicamente)
+                motivo: motivoCambio, // <-- Lo mandamos al controlador
+                '<?= csrf_token() ?>': '<?= csrf_hash() ?>' 
             },
             success: function(response) {
                 if(response.status === 'success') {
-                    alert("✅ Fecha actualizada correctamente.");
-                    if(response.token) { 
-                        // Actualizamos token por si el usuario hace otro cambio inmediato
-                        // Nota: En tu implementación real de JS deberías tener una variable global para el token si usas CSRF estricto
+                    if(response.accion === 'directo') {
+                        alert("✅ Fecha actualizada y aplicada inmediatamente.");
+                    } else {
+                        alert("⏳ Solicitud enviada al Superadmin para su autorización.");
                     }
+                    location.reload(); 
                 } else {
                     alert("❌ Error: " + response.mensaje);
                 }
+            }
+        });
+    }
+    // Nueva función para aprobar o rechazar (Solo Superadmin)
+    function procesarSolicitud(idSolicitud, accionMenu) {
+        let texto = accionMenu === 'aprobar' ? "¿Aprobar este cambio de fecha?" : "¿Rechazar esta solicitud?";
+        if(!confirm(texto)) return;
+
+        $.ajax({
+            url: '<?= base_url("/procesarSolicitudFecha") ?>',
+            type: 'POST',
+            data: {
+                id: idSolicitud,
+                accion: accionMenu,
+                '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
             },
-            error: function() {
-                alert("Error de conexión con el servidor.");
+            success: function(response) {
+                if(response.status === 'success') {
+                    alert("✅ Solicitud procesada correctamente.");
+                    location.reload();
+                } else {
+                    alert("❌ Error: " + response.mensaje);
+                }
             }
         });
     }

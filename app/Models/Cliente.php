@@ -313,6 +313,14 @@ class Cliente extends Model
         }
     }
 
+    // Busca a un cliente rápidamente por su ID o número de teléfono
+    public function buscarPorIdOTelefono($termino)
+    {
+        return $this->where('IDClientes', $termino)
+                    ->orWhere('Telefono', $termino)
+                    ->first();
+    }
+
 
 
 }

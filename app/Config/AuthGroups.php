@@ -90,14 +90,15 @@ class AuthGroups extends ShieldAuthGroups
      * This defines group-level permissions.
      */
     public array $matrix = [
-        'superadmin' => [
+        'superadmin' => [ // es el dueño del sistema, el que tiene acceso a todo
             'admin.*',
-            'users.*',
+            'user.*',
             'beta.*',
+            'superadmin.vista',
         ],
-        'admin' => [
+        'admin' => [//pueden ser los encargados de los Gymnasios 
             'admin.access',
-            'users.create',
+            'user.access',
             'users.edit',
             'users.delete',
             'beta.access',
@@ -109,7 +110,10 @@ class AuthGroups extends ShieldAuthGroups
             'users.edit',
             'beta.access',
         ],
-        'user' => [],
+        'user' => [//pueden ser los instructores o los clientes
+            'user.access',
+			'user.index'
+        ],
         'beta' => [
             'beta.access',
         ],

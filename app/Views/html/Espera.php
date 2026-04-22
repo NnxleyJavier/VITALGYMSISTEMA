@@ -25,6 +25,48 @@
 </style>
 
 <div class="container-fluid" style="padding-top: 20px;">
+
+<div class="panel panel-default shadow-sm border-0" style="margin-bottom: 30px; border-top: 4px solid #17a2b8;">
+        <div class="panel-body" style="padding: 25px;">
+            <div class="row">
+                <div class="col-md-5">
+                    <h4 style="color: #17a2b8; font-weight: 600; margin-top: 0;"><i class="fas fa-search"></i> Consulta Rápida</h4>
+                    <p class="text-muted small">Busca a un socio por su ID o Teléfono para ver su vigencia.</p>
+                    
+                    <div class="input-group">
+                        <span class="input-group-addon" style="background: white;"><i class="fas fa-user"></i></span>
+                        <input type="text" id="inputBusquedaSocio" class="form-control" placeholder="ID o Teléfono..." onkeypress="if(event.keyCode==13) buscarSocioRapido();">
+                        <div class="input-group-btn">
+                            <button class="btn btn-info" onclick="buscarSocioRapido()">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div id="resultadoConsulta" style="display: none; background: #f8f9fa; border-radius: 10px; padding: 15px; border: 1px solid #e9ecef;">
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <h4 id="resNombre" style="margin: 0; font-weight: 700; color: #333;">Nombre Cliente</h4>
+                                <p class="text-muted mb-0" style="font-size: 13px;"><i class="fas fa-phone"></i> <span id="resTelefono"></span> | ID: <span id="resID"></span></p>
+                                <hr style="margin: 10px 0;">
+                                <p style="margin: 0; font-weight: 600; color: #555;" id="resMembresia"><i class="fas fa-id-card"></i> Membresía</p>
+                                <p style="font-size: 12px; color: #777; margin: 0;">Vence el: <strong id="resFechaFin"></strong></p>
+                            </div>
+                            <div class="col-xs-4 text-center" style="display: flex; flex-direction: column; justify-content: center;">
+                                <div id="badgeDias" style="padding: 10px; border-radius: 10px; color: white; font-weight: bold; text-align: center;">
+                                    <span style="font-size: 24px; display: block; line-height: 1;" id="resDias">0</span>
+                                    <span style="font-size: 11px; text-transform: uppercase;">Días</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="mensajeErrorConsulta" class="alert alert-danger" style="display: none; margin-top: 15px; padding: 10px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="panel panel-default shadow-sm border-0">
         <div class="panel-heading bg-white pt-4 pb-0">
             <h3 class="text-primary" style="margin-top: 0;"><i class="fas fa-users text-secondary"></i> Clientes en Espera de Pago</h3>
@@ -165,6 +207,92 @@
         }, 5000);
         // =========================================================
     });
+
+
+
+
+
+    function buscarSocioRapido() {
+    let termino = $('#inputBusquedaSocio').val();
+    
+    if(!termino) {
+        alert("Por favor ingresa un ID o Teléfono.");
+        return;
+    }
+
+    // Ocultamos resultados previos
+    $('#resultadoConsulta').hide();
+    $('#mensajeErrorConsulta').hide();
+
+    $.ajax({
+        url: BASE_URL + "/consultaRapidaSocio",
+        type: "POST",
+        data: {
+            termino: termino,
+            '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
+        },
+       success: function(response) {
+            if(response.status === 'success') {
+                // Llenamos los datos básicos
+                $('#resNombre').text(response.cliente.Nombre + ' ' + response.cliente.ApellidoP);
+                $('#resTelefono').text(response.cliente.Telefono || 'Sin teléfono');
+                $('#resID').text(response.cliente.IDClientes);
+
+                if(response.tiene_membresia) {
+                    $('#resMembresia').html('<i class="fas fa-id-card"></i> ' + response.membresia.NombreMembresia);
+                    
+                    let fechaPartes = response.membresia.Fecha_Fin.split(' ')[0].split('-');
+                    $('#resFechaFin').text(fechaPartes[2] + '/' + fechaPartes[1] + '/' + fechaPartes[0]);
+                    
+                    let numDias = response.dias_restantes;
+                    let badge = $('#badgeDias');
+                    
+                    if(response.estado_vigencia === 'activa' || response.estado_vigencia === 'vence_hoy') {
+                        $('#resDias').text(response.estado_vigencia === 'vence_hoy' ? 'HOY' : numDias);
+                        badge.css('background-color', response.estado_vigencia === 'vence_hoy' ? '#fd7e14' : '#28a745');
+                        
+                        // ALERTA DE ÉXITO (Reemplaza los textos)
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Acceso Concedido!',
+                            text: 'La asistencia se ha registrado en el sistema.',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                    } else {
+                        $('#resDias').text(Math.abs(numDias));
+                        badge.css('background-color', '#dc3545');
+                        $('#resDias').siblings('span').text('Días Vencido');
+
+                        // ALERTA DE BLOQUEO
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Acceso Denegado',
+                            text: 'La membresía está vencida.',
+                        });
+                    }
+                } else {
+                    $('#resMembresia').html('<i class="fas fa-exclamation-triangle"></i> Sin membresía registrada');
+                    $('#resFechaFin').text('N/A');
+                    $('#resDias').text('-');
+                    $('#badgeDias').css('background-color', '#6c757d').find('span:last').text('Sin Datos');
+                    
+                    Swal.fire('Atención', 'Este socio no tiene membresías registradas.', 'warning');
+                }
+
+                $('#resultadoConsulta').fadeIn();
+                $('#inputBusquedaSocio').val(''); 
+                
+            } else {
+                $('#mensajeErrorConsulta').html('<i class="fas fa-times-circle"></i> ' + response.message).fadeIn();
+            }
+        },
+        error: function() {
+            alert("Error de comunicación con el servidor.");
+        }
+    });
+}
 </script>
 
 <script src="<?= base_url('assets/js/ventaMembresia2.js') ?>"></script>

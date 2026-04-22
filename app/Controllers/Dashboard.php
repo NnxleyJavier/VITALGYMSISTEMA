@@ -93,49 +93,102 @@ class Dashboard extends BaseController
              . view('html/footer');
     }
 
+ // Asegúrate de importar el nuevo modelo hasta arriba del archivo:
+    // use App\Models\SolicitudesCambioFechaModel;
+
     public function CambioFechas()
     {
         $username = obtener_username();
-        $membresiaModel = new RegistroMembresiaModel(); 
+        $membresiaModel = new RegistroMembresiaModel();
+        $solicitudesModel = new \App\Models\SolicitudesCambioFechaModel();
         
-        // Capturar búsqueda si existe
         $busqueda = $this->request->getGet('busqueda');
-
-        // Obtener datos paginados
         $clientes = $membresiaModel->obtenerActivasParaCambioFecha($busqueda, 10);
+
+        // Verificamos si es superadmin para mandar esa bandera a la vista
+        $esSuperAdmin = auth()->user()->inGroup('superadmin');
 
         $data = [
             'titulo'   => 'Ajuste de Fechas | VitalGym',
             'username' => $username,
             'clientes' => $clientes,
             'pager'    => $membresiaModel->pager,
-            'busqueda' => $busqueda
+            'busqueda' => $busqueda,
+            'esSuperAdmin' => $esSuperAdmin,
+            'solicitudes'  => $solicitudesModel->obtenerPendientes() // Mandamos la lista de pendientes
         ];
 
         return view('html/main', $data)
-             . view('html/CambiodeFechas', $data) // Cargamos la nueva vista
+             . view('html/CambiodeFechas', $data)
              . view('html/footer');
     }
 
-    public function actualizarFechaMembresia()
+  public function actualizarFechaMembresia()
     {
         $idRegistro = $this->request->getPost('id');
         $nuevaFecha = $this->request->getPost('fecha');
+        $motivo     = $this->request->getPost('motivo'); // <-- 1. Recibimos el motivo
 
-        if (!$idRegistro || !$nuevaFecha) {
-            return $this->response->setJSON(['status' => 'error', 'mensaje' => 'Datos incompletos', 'token' => csrf_hash()]);
+        // Validamos que vengan los 3 datos
+        if (!$idRegistro || !$nuevaFecha || !$motivo) {
+            return $this->response->setJSON(['status' => 'error', 'mensaje' => 'Faltan datos o el motivo está vacío', 'token' => csrf_hash()]);
         }
 
         $membresiaModel = new RegistroMembresiaModel();
-        
-        // Actualizamos la fecha
-        $actualizado = $membresiaModel->update($idRegistro, ['Fecha_Fin' => $nuevaFecha]);
+        $esSuperAdmin = auth()->user()->inGroup('superadmin');
 
-        if ($actualizado) {
-            return $this->response->setJSON(['status' => 'success', 'mensaje' => 'Fecha actualizada correctamente', 'token' => csrf_hash()]);
+        if ($esSuperAdmin) {
+            // LÓGICA SUPERADMIN: Cambia directo
+            // Opcional: Podrías guardar el motivo en un log de movimientos si lo deseas
+            $actualizado = $membresiaModel->update($idRegistro, ['Fecha_Fin' => $nuevaFecha]);
+
+            if ($actualizado) {
+                return $this->response->setJSON(['status' => 'success', 'accion' => 'directo', 'token' => csrf_hash()]);
+            }
         } else {
-            return $this->response->setJSON(['status' => 'error', 'mensaje' => 'No se pudo actualizar en BD', 'token' => csrf_hash()]);
+            // LÓGICA ADMIN: Crea la solicitud con el motivo
+            $solicitudesModel = new \App\Models\SolicitudesCambioFechaModel();
+            $membresiaActual = $membresiaModel->find($idRegistro);
+
+            $solicitudesModel->insert([
+                'registro_membresia_id' => $idRegistro,
+                'users_id'              => auth()->user()->id,
+                'fecha_fin_anterior'    => $membresiaActual['Fecha_Fin'],
+                'fecha_fin_nueva'       => $nuevaFecha,
+                'motivo'                => $motivo, // <-- 2. Guardamos el motivo en la BD
+                'estado'                => 'Pendiente'
+            ]);
+
+            return $this->response->setJSON(['status' => 'success', 'accion' => 'solicitud', 'token' => csrf_hash()]);
         }
+
+        return $this->response->setJSON(['status' => 'error', 'mensaje' => 'No se pudo procesar la solicitud', 'token' => csrf_hash()]);
+    }
+
+    public function procesarSolicitudFecha()
+    {
+        // Solo el superadmin puede autorizar
+        if (!auth()->user()->inGroup('superadmin')) {
+            return $this->response->setJSON(['status' => 'error', 'mensaje' => 'No tienes permisos']);
+        }
+
+        $idSolicitud = $this->request->getPost('id');
+        $accion = $this->request->getPost('accion'); // 'aprobar' o 'rechazar'
+
+        $solicitudesModel = new \App\Models\SolicitudesCambioFechaModel();
+        $membresiaModel = new RegistroMembresiaModel();
+        
+        $solicitud = $solicitudesModel->find($idSolicitud);
+
+        if ($accion === 'aprobar') {
+            // Actualizamos la fecha en la membresía real
+            $membresiaModel->update($solicitud['registro_membresia_id'], ['Fecha_Fin' => $solicitud['fecha_fin_nueva']]);
+            $solicitudesModel->update($idSolicitud, ['estado' => 'Aprobada']);
+        } else {
+            $solicitudesModel->update($idSolicitud, ['estado' => 'Rechazada']);
+        }
+
+        return $this->response->setJSON(['status' => 'success', 'token' => csrf_hash()]);
     }
 
 

@@ -29,7 +29,9 @@
                     </span>
                     
                     <div class="img-container border-bottom">
-                        <?php $nombreImagen = (!empty($p->Imagen)) ? $p->Imagen : 'agua.png'; ?>
+                        <?php $nombreImagen = (!empty($p->Imagen)) ? $p->Imagen : 'agua.png'; ?> 
+                        <!-- Se mandeja por Rutas depediendo la base de datos -->
+                        <?= base_url('assets/images/productos/' . $nombreImagen) ?>
                         <img src="<?= $nombreImagen ?>" alt="<?= $p->Nombre ?>">
                     </div>
                     

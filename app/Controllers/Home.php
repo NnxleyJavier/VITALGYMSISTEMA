@@ -404,7 +404,30 @@ public function panel()
         return view('html/main', $data) . view('html/VerMembresias', $data) . view('html/footer');
     }
 
+    
+public function verIngresos()
+    {
+        $asistenciasModel = new \App\Models\HistorialAccesosModel();
+        
+        // Capturamos la fecha del calendario (si no hay, usamos HOY por defecto)
+        $fechaSeleccionada = $this->request->getGet('fecha') ?? date('Y-m-d');
 
+        // Consultamos la base de datos
+        $asistencias = $asistenciasModel->obtenerAsistenciasPorFecha($fechaSeleccionada);
+
+        $data = [
+            'titulo'      => 'Control de Asistencias | VitalGym',
+            'username'    => obtener_username(),
+            'fecha'       => $fechaSeleccionada, // Mandamos la fecha para dejarla pintada en el input
+            'asistencias' => $asistencias
+        ];
+
+        return view('html/main', $data)
+             . view('html/VerIngresos', $data)
+             . view('html/footer');
+    }
+
+    
 public function verAsistencias()
     {
         $asistenciaModel = new \App\Models\AsistenciaChecador();

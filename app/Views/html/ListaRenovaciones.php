@@ -95,7 +95,7 @@
                                 </td>
                                 <td><?= date('d/m/Y', strtotime($cliente['Fecha_Fin'])) ?></td>
                                 <td class="text-center">
-                                <a href="<?= base_url('/renovacionesRegistro' . $cliente['IDClientes']) ?>" class="btn btn-sm btn-warning">
+                                <a href="<?= base_url('/renovacionesRegistro/' . $cliente['IDClientes']) ?>" class="btn btn-sm btn-warning">
                                  <span class="glyphicon glyphicon-refresh"></span> Renovar
                                 </a>
                                 </td>

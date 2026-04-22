@@ -444,6 +444,12 @@ class Auth extends ShieldAuth
         $session = session();
         $url     = $session->getTempdata('beforeLoginUrl') ?? setting('Auth.redirects')['login'];
 
+        if (auth()->user()->can('admin.access')) {
+			return '/';
+		}if (auth()->user()->can('superadmin.vista')){
+			return '/dashboard';
+		}
+        
         return $this->getUrl($url);
     }
 
@@ -453,6 +459,12 @@ class Auth extends ShieldAuth
      */
     public function logoutRedirect(): string
     {
+       if (auth()->user()->can('admin.access')) {
+			return '/';
+		}if (auth()->user()->can('superadmin.vista')){
+			return '/dashboard';
+		}
+        
         $url = setting('Auth.redirects')['logout'];
 
         return $this->getUrl($url);

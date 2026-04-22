@@ -293,4 +293,16 @@ public function obtenerClientesParaRenovacion($telefono = null, $diasAviso = 5, 
         $this->orderBy('registros_membresia.Fecha_Fin', 'DESC'); // Ordenar por fecha de vencimiento (más recientes arriba)
         return $this->paginate($porPagina);
     }
+
+
+    // Obtiene la membresía más reciente cruzada con su nombre y estatus
+    public function obtenerMembresiaDetalladaReciente($idCliente)
+    {
+        return $this->select('registros_membresia.*, servicios.NombreMembresia, estatus.EstadodeMembresia')
+                    ->join('servicios', 'servicios.IDServicios = registros_membresia.Servicios_IDServicios', 'left')
+                    ->join('estatus', 'estatus.idEstatus = registros_membresia.Estatus_idEstatus', 'left')
+                    ->where('Clientes_IDClientes', $idCliente)
+                    ->orderBy('Fecha_Fin', 'DESC')
+                    ->first();
+    }
 }

@@ -26,12 +26,21 @@ class Recepcion extends BaseController
         ];
      // termina parte de renovaciones
 
-        $serviciosModel =  model(\App\Models\Servicios::class);
-        // Mandamos los servicios a la vista para llenar el select del modal
-        $data['servicios'] = $serviciosModel->where('Catalogo', 'MEMBRESIA')->findAll();
-        $data['extras'] = $serviciosModel->where('Catalogo', 'EXTRAS')->findAll();
-        
+     // =========================================================
+        // FILTRADO DE SERVICIOS POR SUCURSAL
+        // =========================================================
+        helper('gym'); // Cargamos el helper que creamos
+        $idGymActual = obtener_id_gimnasio();
+
+  // Instanciamos el modelo
+        $serviciosModel = model(\App\Models\Servicios::class);
+
+        // Obtenemos los catálogos ya filtrados directamente desde el modelo
+        $data['servicios'] = $serviciosModel->obtenerServiciosPorSucursal('MEMBRESIA');
+        $data['extras']    = $serviciosModel->obtenerServiciosPorSucursal('EXTRAS');
+        // =========================================================
         return view('html/main', $data)
+
              . view('html/Espera', $data)
                . view('html/ListaRenovaciones', $datarenovaciones)
              . view('html/footer');
@@ -277,4 +286,83 @@ public function obtenerPendientesAJAX()
             }
         }   
     }
+
+public function consultaRapidaSocio()
+    {
+        $termino = $this->request->getPost('termino');
+
+        if (!$termino) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Ingresa un ID o Teléfono válido.']);
+        }
+
+        // Instanciamos los modelos
+        $clienteModel   = new \App\Models\Cliente();
+        $membresiaModel = new \App\Models\RegistroMembresiaModel();
+        $historialModel = new \App\Models\RegistrohistorialAccesos(); // O el nombre de tu modelo de historial de accesos
+        
+        // 1. Buscamos al cliente desde el modelo
+        $cliente = $clienteModel->buscarPorIdOTelefono($termino);
+
+        if (!$cliente) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'No se encontró ningún socio con ese ID o Teléfono.']);
+        }
+
+        // 2. Buscamos su membresía desde el modelo
+        $membresia = $membresiaModel->obtenerMembresiaDetalladaReciente($cliente['IDClientes']);
+
+        // 3. Lógica de cálculo de vigencia
+        $diasRestantes = 0;
+        $estadoVigencia = 'sin_membresia';
+        $puedeEntrar = false;
+
+        if ($membresia) {
+            $fechaFin = new \DateTime($membresia['Fecha_Fin']);
+            $hoy = new \DateTime(date('Y-m-d'));
+            $diferencia = $hoy->diff($fechaFin);
+            
+            $diasRestantes = (int)$diferencia->format('%R%a'); 
+
+            if ($diasRestantes > 0) {
+                $estadoVigencia = 'activa';
+                $puedeEntrar = true;
+            } elseif ($diasRestantes === 0) {
+                $estadoVigencia = 'vence_hoy';
+                $puedeEntrar = true;
+            } else {
+                $estadoVigencia = 'vencida';
+            }
+        }
+
+        // =======================================================
+        // 4. REGISTRO DE ACCESO AUTOMÁTICO (SI ESTÁ ACTIVO)
+        // =======================================================
+        $accesoRegistrado = false;
+        
+        if ($puedeEntrar) {
+            helper('gym');
+            $idGymActual = obtener_id_gimnasio();
+            $idGymInsert = ($idGymActual === 'TODOS' || $idGymActual === null) ? 1 : $idGymActual;
+
+            $historialModel->insert([
+                'Clientes_IDClientes' => $cliente['IDClientes'],
+                'FechaHora_Acceso'    => date('Y-m-d H:i:s'),
+                'Estatus_idEstatus'   => 1,
+                'Motivo'              => 'Ingreso Manual en Recepción (Fallo biométrico)',
+                'id_gimnasio'         => $idGymInsert
+            ]);
+            $accesoRegistrado = true;
+        }
+
+        return $this->response->setJSON([
+            'status'            => 'success',
+            'cliente'           => $cliente,
+            'tiene_membresia'   => $membresia ? true : false,
+            'membresia'         => $membresia,
+            'dias_restantes'    => $diasRestantes,
+            'estado_vigencia'   => $estadoVigencia,
+            'acceso_registrado' => $accesoRegistrado, // Le avisamos al frontend si se le dio acceso
+            'token'             => csrf_hash()
+        ]);
+    }
+    
 }

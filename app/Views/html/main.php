@@ -57,13 +57,13 @@
         <div class="sidebar-label opcion1">Principal</div>
         <a href="<?= base_url('/dashboard') ?>"><span class="glyphicon glyphicon-home"></span> Panel de Control</a>
        <a href="<?= base_url('/tienda') ?>"><span class="glyphicon glyphicon-shopping-cart"></span> Tienda</a>
-        
         <a href="<?= base_url('/inventario') ?>"><span class="glyphicon glyphicon-list-alt"></span> Inventario</a>
-        
         <a href="<?= base_url('/') ?>"><span class="glyphicon glyphicon-user"></span> Registro de Clientes</a>
         <a href="<?= base_url('/accesoclientes') ?>"><span class="glyphicon glyphicon-transfer"></span> Control de Acceso</a>
-        <a href="<?= base_url('/asistencia') ?>"><span class="glyphicon glyphicon-check"></span> Asistencia</a>
-        
+        <a href="<?= base_url('/verIngresos') ?>"><span class="glyphicon glyphicon-check"></span> Ingresos </a>
+        <a href="<?= base_url('/verAsistencias') ?>"><span class="glyphicon glyphicon-refresh"></span> Asistencia Staff </a>
+
+
         <div class="sidebar-label">Administración</div>
         <a href="<?= base_url('/recepcion') ?>"><span class="glyphicon glyphicon-user"></span> Recepción de Clientes </a>
          <a href="<?= base_url('/cartaresponsiva') ?>"><span class="glyphicon glyphicon-file"></span> Carta Responsiva </a>
@@ -71,7 +71,9 @@
         <a href="<?= base_url('/vistaRegistroHuella') ?>"><span class="glyphicon glyphicon-inbox"></span> Registro de Huellas Staff</a>
         <a href="<?= base_url('/recordatoriosMembresia') ?>"><span class="glyphicon glyphicon-comment"></span> Recordatorios de Membresía</a>
         <a href="<?= base_url('/renovaciones') ?>"><span class="glyphicon glyphicon-refresh"></span> Renovaciones de Membresía</a>
-        <a href="<?= base_url('/verAsistencias') ?>"><span class="glyphicon glyphicon-refresh"></span> Ver Asitencia </a>
+        <a href="<?= base_url('/asistencia') ?>"><span class="glyphicon glyphicon-inbox"></span> Tomar Asistencia </a>
+
+
 
         <div class="sidebar-label">Sistema</div>
         <a href="<?= base_url('/dashboard') ?>"><span class="glyphicon glyphicon-stats"></span> Reportes </a>

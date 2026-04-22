@@ -8,11 +8,13 @@ use App\Models\RegistroMembresiaModel;
 
 class Renovaciones extends BaseController
 {
-    // Carga la pantalla de renovación para un cliente específico
+ // Carga la pantalla de renovación para un cliente específico
     public function index($idCliente)
     {
         $clienteModel = new Cliente();
-        $servicioModel = new Servicios();
+        
+        // Instanciamos el modelo de servicios
+        $servicioModel = model(\App\Models\Servicios::class);
 
         // Buscamos al cliente
         $cliente = $clienteModel->find($idCliente);
@@ -20,9 +22,13 @@ class Renovaciones extends BaseController
             return redirect()->to(base_url('/renovaciones'))->with('error', 'Cliente no encontrado.');
         }
 
-        // Traemos catálogos
-        $membresias = $servicioModel->where('Catalogo', 'MEMBRESIA')->findAll();
-        $extras = $servicioModel->where('Catalogo', 'EXTRAS')->findAll();
+        // =========================================================
+        // FILTRADO DE SERVICIOS POR SUCURSAL
+        // =========================================================
+        // Usamos la función inteligente del modelo que ya detecta la sucursal del usuario
+        $membresias = $servicioModel->obtenerServiciosPorSucursal('MEMBRESIA');
+        $extras     = $servicioModel->obtenerServiciosPorSucursal('EXTRAS');
+        // =========================================================
 
         $data = [
             'titulo'     => 'Renovar Membresía | VitalGym',

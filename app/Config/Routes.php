@@ -18,42 +18,54 @@ if (is_file(SYSTEMPATH . 'Config/Routes.php')) {
 
 
 
+service('auth')->routes($routes);
 
-$routes->get('/', 'Home::index');
-$routes->post('/MandaraBDUsuario','Home::MandaraBDUsuario');
 
-$routes->get('/accesoclientes', 'Kiosko::index');
-$routes->post('/verificarHuella','Kiosko::verificarHuella');
 
-$routes->get('/asistencia', 'Kiosko::asistencia');
-$routes->post('/RegistroddeAsistencia', 'Kiosko::RegistroddeAsistencia');
-$routes->get('/verAsistencias', 'Home::verAsistencias');
-$routes->post('/verAsistencias', 'Home::verAsistencias');
+$routes->post('/user-login', 'Api\AuthController::userLogin');
 
-$routes->get('/vistaRegistroHuella', 'Home::vistaRegistroHuella');
-$routes->post('/guardarHuellaUsuario', 'Home::guardarHuellaUsuario');
 
-$routes->get('/recordatoriosMembresia', 'Home::recordatoriosMembresia');
-$routes->post('/marcarAvisoEnviado', 'Home::marcarAvisoEnviado');
+$routes->get('/', 'Home::index',['filter'=>'permission:admin.access']); 
+$routes->post('/MandaraBDUsuario','Home::MandaraBDUsuario',['filter'=>'permission:admin.access']); 
 
-$routes->get('/renovaciones', 'Home::panel');
+$routes->get('/accesoclientes', 'Kiosko::index'); 
+$routes->post('/verificarHuella','Kiosko::verificarHuella'); 
 
-$routes->get('/renovacionesRegistro/(:num)', 'Renovaciones::index/$1');
-$routes->post('/renovacionesguardar', 'Renovaciones::guardarRenovacionAjax');
+$routes->get('/asistencia', 'Kiosko::asistencia',['filter'=>'permission:user.access']);
+$routes->post('/RegistroddeAsistencia', 'Kiosko::RegistroddeAsistencia',['filter'=>'permission:user.access']);
 
-$routes->get('/dashboard', 'Dashboard::paginaPrincipal');
+$routes->get('/verAsistencias', 'Home::verAsistencias',['filter'=>'permission:superadmin.vista']);
+$routes->post('/verAsistencias', 'Home::verAsistencias',['filter'=>'permission:superadmin.vista']);
 
-$routes->get('/CambioFechas', 'Dashboard::CambioFechas');
-$routes->post('/actualizarFechaMembresia', 'Dashboard::actualizarFechaMembresia');
+$routes->get('/vistaRegistroHuella', 'Home::vistaRegistroHuella',['filter'=>'permission:admin.access']);
+$routes->post('/guardarHuellaUsuario', 'Home::guardarHuellaUsuario',['filter'=>'permission:admin.access']);
 
-$routes->get('/servicios', 'Home::verMembresias');
+$routes->get('/recordatoriosMembresia', 'Home::recordatoriosMembresia',['filter'=>'permission:admin.access']);
+$routes->post('/marcarAvisoEnviado', 'Home::marcarAvisoEnviado',['filter'=>'permission:admin.access']);
 
-$routes->get('/tienda', 'Tienda::index');
+$routes->get('/renovaciones', 'Home::panel',['filter'=>'permission:admin.access']);
 
-$routes->post('/registrarVenta', 'Tienda::registrarVenta');
 
-$routes->get('/inventario', 'Tienda::inventario');
-$routes->post('/guardarProducto', 'Tienda::guardarProducto');
+$routes->get('/renovacionesRegistro/(:num)', 'Renovaciones::index/$1',['filter'=>'permission:admin.access']);
+$routes->post('/renovacionesguardar', 'Renovaciones::guardarRenovacionAjax',['filter'=>'permission:admin.access']);
+
+
+
+
+
+$routes->get('/dashboard', 'Dashboard::paginaPrincipal',['filter'=>'permission:superadmin.vista']);
+
+$routes->get('/CambioFechas', 'Dashboard::CambioFechas',['filter'=>'permission:admin.access']);
+$routes->post('/actualizarFechaMembresia', 'Dashboard::actualizarFechaMembresia',['filter'=>'permission:admin.access']);
+
+$routes->get('/servicios', 'Home::verMembresias',['filter'=>'permission:admin.access']); //Membresias 
+
+$routes->get('/tienda', 'Tienda::index',['filter'=>'permission:admin.access']);
+
+$routes->post('/registrarVenta', 'Tienda::registrarVenta',['filter'=>'permission:admin.access']);
+
+$routes->get('/inventario', 'Tienda::inventario',['filter'=>'permission:admin.access']);
+$routes->post('/guardarProducto', 'Tienda::guardarProducto',['filter'=>'permission:admin.access']);
 
 $routes->get('/cartaresponsiva', 'Home::FirmarResponsiva');
 
@@ -61,14 +73,18 @@ $routes->post('/GuardarResponsiva', 'Home::GuardarResponsiva');
 
 
 
-$routes->get('/recepcion', 'Recepcion::index');
-$routes->get('/obtenerPendientesAJAX', 'Recepcion::obtenerPendientesAJAX');
-$routes->post('/guardarPagoEInscripcion', 'Recepcion::guardarPagoEInscripcion');
-$routes->get('/enrolar/(:num)', 'Biometrico::enrolar/$1');
-$routes->post('/guardarHuellaCliente', 'Biometrico::guardarHuellaCliente');
+$routes->get('/recepcion', 'Recepcion::index',['filter'=>'permission:admin.access']);
+$routes->get('/obtenerPendientesAJAX', 'Recepcion::obtenerPendientesAJAX',['filter'=>'permission:admin.access']);
+$routes->post('/guardarPagoEInscripcion', 'Recepcion::guardarPagoEInscripcion',['filter'=>'permission:admin.access']);
+$routes->get('/enrolar/(:num)', 'Biometrico::enrolar/$1',['filter'=>'permission:admin.access']);
+$routes->post('/guardarHuellaCliente', 'Biometrico::guardarHuellaCliente',['filter'=>'permission:admin.access']);
+
+$routes->post('/procesarSolicitudFecha', 'Dashboard::procesarSolicitudFecha',['filter'=>'permission:superadmin.vista']);
+
+$routes->get('/verIngresos', 'Home::verIngresos',['filter'=>'permission:admin.access']);
 
 
-
+$routes->post('/consultaRapidaSocio', 'Recepcion::consultaRapidaSocio', ['filter'=>'permission:admin.access']);
 
 
 
