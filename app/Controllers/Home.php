@@ -64,10 +64,10 @@ class Home extends BaseController
 if ($registroExitoso) {
     
     // 1. Cargamos el helper que acabamos de crear
-        helper('usuario');
+        helper('gym');
 
         // 2. Obtenemos la sucursal del usuario logueado
-        $sucursalActiva = obtener_sucursal_usuario();
+        $sucursalActiva = obtener_id_gimnasio();
 
         
         
@@ -355,29 +355,6 @@ if ($registroExitoso) {
     }
 
 
-
-public function panel()
-    {
-        $membresiaModel = new RegistroMembresiaModel();
-        
-        // Capturamos lo que el usuario haya escrito en la barra de búsqueda (GET)
-        $telefonoBuscar = $this->request->getGet('telefono');
-        
-        // Llamamos a la función: le pasamos la búsqueda, avisamos desde 5 días antes, y paginamos de 10 en 10
-        $clientes = $membresiaModel->obtenerClientesParaRenovacion($telefonoBuscar, 5, 10);
-        
-        $data = [
-            'titulo'   => 'Panel de Renovaciones | VitalGym',
-            'username' => obtener_username(),
-            'clientes' => $clientes,
-            'pager'    => $membresiaModel->pager,
-            'busqueda' => $telefonoBuscar // Lo mandamos a la vista para dejarlo escrito en el input
-        ];
-
-        return view('html/main', $data)
-             . view('html/ListaRenovaciones', $data)
-             . view('html/footer');
-    }
 
     public function verMembresias()
     {

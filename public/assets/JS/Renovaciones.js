@@ -57,7 +57,7 @@ $(document).ready(function() {
         // Recolectamos todos los datos (Monto, ID Cliente, Extras, etc.)
         let formData = form.serialize();
 
-// Enviamos la petición silenciosa a PHP
+    // Enviamos la petición silenciosa a PHP
         $.ajax({
             url: urlGuardar, 
             type: "POST",
@@ -68,9 +68,24 @@ $(document).ready(function() {
                 // Refrescamos el candado de seguridad (CSRF) de CodeIgniter
                 $('#csrf_token').val(respuesta.token);
 
-                if (respuesta.status === 'success') {
-                    // Alert nativo (o SweetAlert si decides cambiarlo después)
-                    alert(respuesta.mensaje);
+              if (respuesta.status === 'success') {
+                    
+                    // Mostramos SweetAlert
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Operación Exitosa!',
+                        text: respuesta.mensaje,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+
+                    // ==========================================
+                    // NUEVO: ABRIR WHATSAPP SI EXISTE LA RUTA
+                    // ==========================================
+                    if (respuesta.url_whatsapp) {
+                        window.open(respuesta.url_whatsapp, '_blank');
+                    }
+                    // ==========================================
 
                     // --- INICIO LÓGICA DE IMPRESIÓN ---
                     if (respuesta.valoresdata) {
@@ -82,23 +97,32 @@ $(document).ready(function() {
                         iframe.src = urlImpresion;
                         document.body.appendChild(iframe);
 
-                        // Esperamos 3 segundos para la impresión antes de redirigir al panel
+                        // Esperamos 3 segundos para que se mande a imprimir, y luego REGRESAMOS
                         setTimeout(function() {
-                            window.location.href = urlPanel;
+                            window.history.back();
                         }, 3000);
                     } else {
-                        // Si por algo no hay datos de ticket, redirigimos de inmediato
-                        window.location.href = urlPanel; 
+                        setTimeout(function() {
+                            window.history.back(); 
+                        }, 1500);
                     }
                     // --- FIN LÓGICA DE IMPRESIÓN ---
 
                 } else {
-                    alert(respuesta.mensaje);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: respuesta.mensaje
+                    });
                     btnSubmit.prop('disabled', false).html(textoOriginal); 
                 }
             },
             error: function() {
-                alert("Error de comunicación con el servidor. Revisa la conexión de red.");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de Red',
+                    text: 'Error de comunicación con el servidor. Revisa la conexión.'
+                });
                 btnSubmit.prop('disabled', false).html(textoOriginal);
             }
         });

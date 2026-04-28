@@ -14,7 +14,7 @@ class RegistroMembresiaModel extends Model
   
     protected $allowedFields = [
         'Clientes_IDClientes', 'Pago_idPago', 'Estatus_idEstatus',
-        'Servicios_IDServicios', 'Fecha_Inicio', 'Fecha_Fin', 'Aviso_Enviado'
+        'Servicios_IDServicios', 'Fecha_Inicio', 'Fecha_Fin', 'Aviso_Enviado','users_id'
     ]; 
 
     // Dates
@@ -57,59 +57,56 @@ class RegistroMembresiaModel extends Model
             ->orderBy('DiasRestantes', 'ASC') // Ordenamos para que los que vencen hoy salgan primero
             ->paginate($porPagina); // Paginación automática de 10 en 10
     }
-public function obtenerClientesParaRenovacion($telefono = null, $diasAviso = 5, $porPagina = 10)
+public function obtenerClientesParaRenovacion($busqueda = null, $estado = 'todas', $porPagina = 10)
     {
-        // Calculamos la fecha límite (Hoy + 5 días)
-        $limiteDias = date('Y-m-d', strtotime("+$diasAviso days"));
+        // 1. Usamos $this->db nativo del modelo para crear la subconsulta
+        // Esto aísla el último registro (el más reciente) de cada cliente
+        $subquery = $this->db->table('registros_membresia')
+                             ->select('Clientes_IDClientes, MAX(idRegistros_Membresia) as ultimo_registro')
+                             ->groupBy('Clientes_IDClientes');
 
-        $this->select('
-                registros_membresia.Fecha_Fin,
-                registros_membresia.Estatus_idEstatus,
+        // 2. Construimos la consulta principal referenciando directamente a $this
+      $this->select('
+                registros_membresia.*, 
                 clientes.IDClientes, 
                 clientes.Nombre, 
                 clientes.ApellidoP, 
                 clientes.Telefono, 
+                servicios.NombreMembresia, 
+                estatus.EstadodeMembresia, 
                 DATEDIFF(CURDATE(), registros_membresia.Fecha_Fin) AS DiasVencidos
-            ')
-            ->join('clientes', 'clientes.IDClientes = registros_membresia.Clientes_IDClientes');
+             ')
+             ->join('clientes', 'clientes.IDClientes = registros_membresia.Clientes_IDClientes')
+             ->join('servicios', 'servicios.IDServicios = registros_membresia.Servicios_IDServicios', 'left')
+             ->join('estatus', 'estatus.idEstatus = registros_membresia.Estatus_idEstatus', 'left')
+             // 3. Unimos la tabla principal con la subconsulta ya compilada
+             ->join('(' . $subquery->getCompiledSelect() . ') as ultimos', 'ultimos.ultimo_registro = registros_membresia.idRegistros_Membresia');
 
-        // 🔥 LÓGICA COMBINADA: Inactivos OR (Activos a punto de vencer)
-        $this->groupStart()
-             // Condición 1: Todos los inactivos (Estatus 2)
-             ->where('registros_membresia.Estatus_idEstatus !=', 1)
-             
-             // Condición 2: O los que son activos (Estatus 1) pero vencen pronto
-             ->orGroupStart()
-                 ->where('registros_membresia.Estatus_idEstatus', 1)
-                 ->where('registros_membresia.Fecha_Fin <=', $limiteDias . ' 23:59:59')
-             ->groupEnd()
-        ->groupEnd();
+        // 4. Aplicamos los filtros de estado
+        if ($estado === 'activas') {
+            $this->where('registros_membresia.Estatus_idEstatus', 1);
+        } elseif ($estado === 'inactivas') {
+            $this->where('registros_membresia.Estatus_idEstatus !=', 1);
+        }
 
-        $this->groupBy('clientes.IDClientes');
-
-        if (!empty($telefono)) {
+        // 5. Aplicamos la barra de búsqueda agrupando las condiciones
+        if (!empty($busqueda)) {
             $this->groupStart()
-                 ->like('clientes.Nombre', $telefono)
-                 ->orLike('clientes.ApellidoP', $telefono)
-                 ->orLike('clientes.Telefono', $telefono)
+                 ->like('clientes.Nombre', $busqueda)
+                 ->orLike('clientes.ApellidoP', $busqueda)
+                 ->orLike('clientes.Telefono', $busqueda)
                  ->groupEnd();
         }
 
-        // 🔥 DOBLE ORDENAMIENTO
-        // 1ro: Inactivos (2) arriba, Activos (1) abajo
-        $this->orderBy('registros_membresia.Estatus_idEstatus', 'DESC'); 
-        // 2do: Dentro de cada grupo, los más recientes arriba
-        $this->orderBy('registros_membresia.Fecha_Fin', 'DESC'); 
+        // 6. Ordenamos por fecha de vencimiento y aplicamos tu paginación
+        $this->orderBy('registros_membresia.Fecha_Fin', 'ASC'); // Los que vencen primero aparecen arriba
         
         return $this->paginate($porPagina);
     }
     
-    public function renovarMembresiaTransaccion($datos)
+  public function renovarMembresiaTransaccion($datos)
     {
-        // (Tu código original de transacciones se mantiene aquí intacto)
-        // ...
-
-           // Cargamos los modelos necesarios
+        // Cargamos los modelos necesarios
         $pagoModel = model('PagoModel');
         $serviciosModel = model('Servicios');
         $membresiaExtrasModel = model('MembresiaExtras');
@@ -124,23 +121,19 @@ public function obtenerClientesParaRenovacion($telefono = null, $diasAviso = 5, 
             }
 
             // 2. Calcular las fechas inteligentemente
-            // Buscamos si tiene una membresía previa para no robarle días
             $ultima = $this->where('Clientes_IDClientes', $datos['Clientes_IDClientes'])
                            ->orderBy('Fecha_Fin', 'DESC')
                            ->first();
 
             $hoy = date('Y-m-d');
             
-            // Si la membresía actual aún no vence, el nuevo mes inicia cuando termine esa
             if ($ultima && $ultima['Fecha_Fin'] >= $hoy) {
                 $fechaInicio = date('Y-m-d', strtotime($ultima['Fecha_Fin']));
             } else {
-                // Si ya venció, inicia hoy
                 $fechaInicio = $hoy;
             }
 
-            // Calculamos el fin sumando los "LapsoDias" que trae el servicio en la BD
-            $dias = $servicio['LapsoDias'] ?? 30; // Por si viene nulo, damos 30 por defecto
+            $dias = $servicio['LapsoDias'] ?? 30; 
             $fechaFin = date('Y-m-d', strtotime($fechaInicio . " + $dias days"));
 
             // 3. Registrar el Pago
@@ -155,11 +148,11 @@ public function obtenerClientesParaRenovacion($telefono = null, $diasAviso = 5, 
             $idRegistroMembresia = $this->insert([
                 'Clientes_IDClientes'   => $datos['Clientes_IDClientes'],
                 'Pago_idPago'           => $idPago,
-                'Estatus_idEstatus'     => 1, // 1 = Activo
+                'Estatus_idEstatus'     => 1, 
                 'Servicios_IDServicios' => $datos['Servicios_IDServicios'],
                 'Fecha_Inicio'          => $fechaInicio . ' 00:00:00',
                 'Fecha_Fin'             => $fechaFin . ' 23:59:59',
-                'Aviso_Enviado'         => 0 // Reiniciamos el aviso de WhatsApp
+                'Aviso_Enviado'         => 0 
             ]);
 
             // 5. Registrar los Extras (si seleccionó alguno)
@@ -178,7 +171,12 @@ public function obtenerClientesParaRenovacion($telefono = null, $diasAviso = 5, 
                 throw new \Exception("Error al guardar en la base de datos.");
             }
 
-            return ['success' => true, 'fecha_fin' => $fechaFin];
+            // AQUI ESTÁ EL CAMBIO: Enviamos el idPago de regreso al controlador
+            return [
+                'success'   => true, 
+                'fecha_fin' => $fechaFin, 
+                'idPago'    => $idPago 
+            ];
 
         } catch (\Exception $e) {
             return ['success' => false, 'error' => $e->getMessage()];

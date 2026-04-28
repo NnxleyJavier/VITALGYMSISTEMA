@@ -192,6 +192,68 @@ class Dashboard extends BaseController
     }
 
 
+    // 1. Carga la vista con la tabla de peticiones
+    public function autorizarPrecios()
+    {
+        // Solo el superadmin puede entrar aquí
+        if (!auth()->user()->inGroup('superadmin')) {
+            return redirect()->to('/')->with('error', 'No tienes permisos para acceder a esta área.');
+        }
+
+        $solicitudesModel = new \App\Models\SolicitudesPrecioAmigoModel();
+        
+        $data = [
+            'titulo'      => 'Autorizar Precios Especiales | VitalGym',
+            'username'    => obtener_username(),
+            'solicitudes' => $solicitudesModel->obtenerPendientesConDetalles()
+        ];
+
+        return view('html/main', $data)
+             . view('html/AutorizarPrecios', $data)
+             . view('html/footer');
+    }
+
+    // 2. Procesa la aprobación o rechazo
+public function procesarPrecioAmigoAjax()
+    {
+        if (!auth()->user()->inGroup('superadmin')) {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Sin permisos']);
+        }
+
+        $idSolicitud = $this->request->getPost('id');
+        $accion      = $this->request->getPost('accion');
+
+        $solicitudesModel = new \App\Models\SolicitudesPrecioAmigoModel();
+        $solicitud = $solicitudesModel->find($idSolicitud);
+
+        if ($accion === 'rechazar') {
+            $solicitudesModel->update($idSolicitud, ['estado' => 'Rechazada']);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Solicitud rechazada.']);
+        }
+
+        if ($accion === 'aprobar') {
+            // Instanciamos los modelos para actualizar el pago original
+            $pagoModel = new \App\Models\PagoModel();
+            $servicioModel = model(\App\Models\Servicios::class);
+
+            $servicio = $servicioModel->find($solicitud['Servicios_IDServicios']);
+            
+            // Armamos el nuevo concepto
+            $nuevoConcepto = 'Precio Amigo Autorizado: ' . strtoupper($servicio['NombreMembresia']);
+
+            // 1. VAMOS AL PAGO ORIGINAL Y LO ACTUALIZAMOS
+            $pagoModel->update($solicitud['Pago_idPago'], [
+                'Monto'    => $solicitud['precio_solicitado'],
+                'Concepto' => $nuevoConcepto
+            ]);
+
+            // 2. Marcamos la solicitud como Aprobada
+            $solicitudesModel->update($idSolicitud, ['estado' => 'Aprobada']);
+
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Precio autorizado. El corte de caja se ha actualizado a la nueva cantidad.']);
+        }
+    }
+
 
 
    }

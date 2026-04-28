@@ -91,6 +91,34 @@
 
             <div class="row">
                 <div class="col-md-12">
+                    <div class="form-group mt-3" style="border: 1px solid #ff9800; padding: 15px; border-radius: 8px; background: #fffdf5; margin-bottom: 20px;">
+                        <div class="checkbox" style="margin: 0;">
+                            <label style="font-weight: 600; color: #d84315; font-size: 14px;">
+                                <input type="checkbox" id="checkAmigo" onchange="$('#panelAmigo').slideToggle();"> 
+                                <span class="glyphicon glyphicon-star"></span> Solicitar Precio Especial al Superadmin
+                            </label>
+                        </div>
+                        
+                        <div id="panelAmigo" style="display: none; margin-top: 15px; border-top: 1px dashed #ffb74d; padding-top: 15px;">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label style="font-size: 13px;">Precio Propuesto ($)</label>
+                                    <input type="number" step="0.50" name="precio_amigo" class="form-control" placeholder="Ej. 250" style="border-radius: 6px;">
+                                </div>
+                                <div class="col-sm-8">
+                                    <label style="font-size: 13px;">Motivo</label>
+                                    <input type="text" name="motivo_amigo" class="form-control" placeholder="Ej. Promoción autorizada..." style="border-radius: 6px;">
+                                </div>
+                            </div>
+                            <small class="text-muted" style="display: block; margin-top: 10px; line-height: 1.2;">
+                                * El sistema registrará el cobro e imprimirá el ticket con el costo <b>Normal</b>. Cuando el Superadmin lo apruebe, el corte de caja se ajustará a la nueva cantidad.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <div class="total-box">
                         Total a Cobrar: $<span id="lblTotal">0.00</span>
                         <input type="hidden" name="monto_total" id="inputMontoTotal" value="0">
@@ -104,4 +132,5 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script src="<?= base_url('assets/JS/Renovaciones.js') ?>"></script>

@@ -26,7 +26,7 @@
 
 <div class="container-fluid" style="padding-top: 20px;">
 
-<div class="panel panel-default shadow-sm border-0" style="margin-bottom: 30px; border-top: 4px solid #17a2b8;">
+    <div class="panel panel-default shadow-sm border-0" style="margin-bottom: 30px; border-top: 4px solid #17a2b8;">
         <div class="panel-body" style="padding: 25px;">
             <div class="row">
                 <div class="col-md-5">
@@ -161,7 +161,32 @@
                       </button>
                   </div>
               </div>
-          </div>
+
+            <div class="form-group mt-3" style="border: 1px solid #ff9800; padding: 15px; border-radius: 8px; background: #fffdf5; margin-bottom: 20px;">
+                <div class="checkbox" style="margin: 0;">
+                    <label style="font-weight: 600; color: #d84315; font-size: 14px;">
+                        <input type="checkbox" id="checkAmigoRecepcion" onchange="$('#panelAmigoRecepcion').slideToggle();"> 
+                        <span class="glyphicon glyphicon-star"></span> Solicitar Precio Especial al Superadmin
+                    </label>
+                </div>
+                
+                <div id="panelAmigoRecepcion" style="display: none; margin-top: 15px; border-top: 1px dashed #ffb74d; padding-top: 15px;">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label style="font-size: 13px;">Precio Propuesto ($)</label>
+                            <input type="number" step="0.50" name="precio_amigo" class="form-control" placeholder="Ej. 250" style="border-radius: 6px;">
+                        </div>
+                        <div class="col-sm-8">
+                            <label style="font-size: 13px;">Motivo</label>
+                            <input type="text" name="motivo_amigo" class="form-control" placeholder="Ej. Familiar, convenio..." style="border-radius: 6px;">
+                        </div>
+                    </div>
+                    <small class="text-muted" style="display: block; margin-top: 10px; line-height: 1.2;">
+                        * Cobra e imprime el ticket de manera normal. El ajuste en caja se hará tras la autorización.
+                    </small>
+                </div>
+            </div>
+            </div>
           
           <div class="modal-footer" style="border-top: 1px solid #eee; background-color: #fafafa; border-radius: 0 0 10px 10px;">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -173,6 +198,7 @@
     </div>
   </div>
 </div>
+
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -207,10 +233,6 @@
         }, 5000);
         // =========================================================
     });
-
-
-
-
 
     function buscarSocioRapido() {
     let termino = $('#inputBusquedaSocio').val();

@@ -43,7 +43,7 @@ $routes->post('/guardarHuellaUsuario', 'Home::guardarHuellaUsuario',['filter'=>'
 $routes->get('/recordatoriosMembresia', 'Home::recordatoriosMembresia',['filter'=>'permission:admin.access']);
 $routes->post('/marcarAvisoEnviado', 'Home::marcarAvisoEnviado',['filter'=>'permission:admin.access']);
 
-$routes->get('/renovaciones', 'Home::panel',['filter'=>'permission:admin.access']);
+$routes->get('/renovaciones', 'Renovaciones::panel',['filter'=>'permission:admin.access']);
 
 
 $routes->get('/renovacionesRegistro/(:num)', 'Renovaciones::index/$1',['filter'=>'permission:admin.access']);
@@ -86,6 +86,8 @@ $routes->get('/verIngresos', 'Home::verIngresos',['filter'=>'permission:admin.ac
 
 $routes->post('/consultaRapidaSocio', 'Recepcion::consultaRapidaSocio', ['filter'=>'permission:admin.access']);
 
-
+$routes->post('/solicitarPrecioAmigo', 'Home::solicitarPrecioAmigo');
+$routes->get('/autorizar', 'Dashboard::autorizarPrecios', ['filter' => 'permission:superadmin.vista']);
+$routes->post('/procesarPrecioAmigoAjax', 'Dashboard::procesarPrecioAmigoAjax', ['filter' => 'permission:superadmin.vista']);
 
 service('auth')->routes($routes);

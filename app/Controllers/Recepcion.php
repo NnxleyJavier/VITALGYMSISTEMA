@@ -144,10 +144,30 @@ public function obtenerPendientesAJAX()
 
             // 4. Verificamos si devolvió el idPago (Éxito) o el error_real (Fallo)
             if (isset($registroExitoso['idPago'])) {
+
+                // =================================================================
+                // NUEVO: CREAR SOLICITUD DE PRECIO AMIGO EN LA INSCRIPCIÓN/ESPERA
+                // =================================================================
+                $precioAmigo = $this->request->getPost('precio_amigo');
+                $motivoAmigo = $this->request->getPost('motivo_amigo');
+                
+                if (!empty($precioAmigo) && !empty($motivoAmigo)) {
+                    $solicitudesModel = new \App\Models\SolicitudesPrecioAmigoModel();
+                    $solicitudesModel->insert([
+                        'Clientes_IDClientes'   => $idCliente,
+                        'Servicios_IDServicios' => $idServicio, 
+                        'Pago_idPago'           => $registroExitoso['idPago'], // Vinculamos el pago
+                        'precio_solicitado'     => $precioAmigo,
+                        'motivo'                => $motivoAmigo,
+                        'estado'                => 'Pendiente',
+                        'users_id'              => auth()->user()->id
+                    ]);
+                }
+                // =================================================================
                 
                 // --- PREPARACIÓN DEL TICKET ---
-                helper('usuario'); 
-                $sucursalActiva = obtener_sucursal_usuario();
+                helper('gym'); 
+                $sucursalActiva = obtener_id_gimnasio();
                 
                // Extraer información base
                 $clienteData = $usuarioModel->find($idCliente);
@@ -185,7 +205,7 @@ public function obtenerPendientesAJAX()
                 $costoBase = $montoTotal - $costoExtras; 
                 // =========================================================
 
-           
+            
 
                 // =========================================================
                 // PREPARACIÓN DEL PDF Y MENSAJE DE WHATSAPP DESGLOSADO
@@ -272,7 +292,7 @@ public function obtenerPendientesAJAX()
                     'message' => 'Pago e inscripción registrados correctamente.',
                     'token' => csrf_hash(),
                     'id_pago' => $registroExitoso['idPago'],
-                    'valoresdata' => $datosParaTicket,
+                    'valoresdata' => $datosParaTicket ?? null,
                     'url_whatsapp' => $urlWhatsApp // <-- Enviamos la URL al JavaScript
                 ]);
 

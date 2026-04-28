@@ -72,6 +72,7 @@
         <a href="<?= base_url('/recordatoriosMembresia') ?>"><span class="glyphicon glyphicon-comment"></span> Recordatorios de Membresía</a>
         <a href="<?= base_url('/renovaciones') ?>"><span class="glyphicon glyphicon-refresh"></span> Renovaciones de Membresía</a>
         <a href="<?= base_url('/asistencia') ?>"><span class="glyphicon glyphicon-inbox"></span> Tomar Asistencia </a>
+         <a href="<?= base_url('/autorizar') ?>"><span class="glyphicon glyphicon-ok"></span> Autorizar Precios Amigos </a>
 
 
 
