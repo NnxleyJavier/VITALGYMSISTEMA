@@ -11,6 +11,18 @@ class Recepcion extends BaseController
  // parte de renovaciones
  $membresiaModel = model(\App\Models\RegistroMembresiaModel::class);
    
+
+        // --- TAREA DE MANTENIMIENTO: Actualizar membresías vencidas ---
+        // Esto es lo más optimizado porque se ejecuta en una sola consulta a la BD.
+        // Cambia el estado a 'vencido' (0) para todas las membresías cuya fecha de fin ya pasó
+        // y que todavía figuran como 'activas' (1), para mantener la integridad de los datos.
+        $membresiaModel->where('Fecha_Fin <', date('Y-m-d'))
+                       ->where('Estatus_idEstatus', 1)
+                       ->set('Estatus_idEstatus', 2)
+                       ->update();
+                       
+
+
         // Capturamos lo que el usuario haya escrito en la barra de búsqueda (GET)
         $telefonoBuscar = $this->request->getGet('telefono');
         

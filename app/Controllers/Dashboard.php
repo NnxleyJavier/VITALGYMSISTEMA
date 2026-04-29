@@ -45,6 +45,7 @@ class Dashboard extends BaseController
         $metodosHoy = [
             'efectivo'      => $pagoModel->ingresosMetodoPagoHoy('Efectivo'),
             'tarjeta'       => $pagoModel->ingresosMetodoPagoHoy('Tarjeta'),
+            'TarjetaCredito' => $pagoModel->ingresosMetodoPagoHoy('TarjetaCredito'),
             'transferencia' => $pagoModel->ingresosMetodoPagoHoy('Transferencia')
         ];
 
@@ -65,6 +66,7 @@ class Dashboard extends BaseController
         $metodosMes = [
             'efectivo'      => $pagoModel->ingresosMetodoPagoMes('Efectivo'),
             'tarjeta'       => $pagoModel->ingresosMetodoPagoMes('Tarjeta'),
+            'TarjetaCredito' => $pagoModel->ingresosMetodoPagoMes('TarjetaCredito'),
             'transferencia' => $pagoModel->ingresosMetodoPagoMes('Transferencia')
         ];
 

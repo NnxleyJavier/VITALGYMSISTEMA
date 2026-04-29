@@ -67,6 +67,7 @@
                         <select name="tipo_pago" class="form-control" required>
                             <option value="Efectivo">Efectivo</option>
                             <option value="Tarjeta">Tarjeta / Terminal</option>
+                            <option value="TarjetaCredito">Tarjeta de Crédito</option>
                             <option value="Transferencia">Transferencia</option>
                         </select>
                     </div>

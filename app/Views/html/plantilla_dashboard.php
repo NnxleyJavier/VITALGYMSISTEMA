@@ -165,6 +165,10 @@ $mesActual = ucfirst(strftime("%b %Y"));
                 <span class="payment-label">TARJETA (HOY)</span>
                 <span class="payment-value" style="color:#5d78ff;">$<?= number_format($metodosHoy['tarjeta'], 2) ?></span>
             </div>
+              <div class="col-12 col-md-4 border-right-dashed">
+                <span class="payment-label">TARJETA DE CRÉDITO (HOY)</span>
+                <span class="payment-value" style="color:#5d78ff;">$<?= number_format($metodosHoy['TarjetaCredito'], 2) ?></span>
+            </div>
             <div class="col-12 col-md-4">
                 <span class="payment-label">TRANSFERENCIA (HOY)</span>
                 <span class="payment-value" style="color:#ffb822;">$<?= number_format($metodosHoy['transferencia'], 2) ?></span>
@@ -257,6 +261,10 @@ $mesActual = ucfirst(strftime("%b %Y"));
             <div class="col-12 col-md-4 border-right-dashed">
                 <span class="payment-label">TARJETA (MES)</span>
                 <span class="payment-value" style="color:#5d78ff;">$<?= number_format($metodosMes['tarjeta'], 2) ?></span>
+            </div>
+               <div class="col-12 col-md-4 border-right-dashed">
+                <span class="payment-label">TARJETA DE CRÉDITO (MES)</span>
+                <span class="payment-value" style="color:#5d78ff;">$<?= number_format($metodosMes['TarjetaCredito'], 2) ?></span>
             </div>
             <div class="col-12 col-md-4">
                 <span class="payment-label">TRANSFERENCIA (MES)</span>

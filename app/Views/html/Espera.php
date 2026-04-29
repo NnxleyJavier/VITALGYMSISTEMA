@@ -136,6 +136,7 @@
                           <select class="form-control" name="Tipo_Pago" required>
                               <option value="Efectivo">Efectivo</option>
                               <option value="Tarjeta">Tarjeta</option>
+                              <option value="TarjetaCredito">Tarjeta de Crédito</option>
                               <option value="Transferencia">Transferencia</option>
                           </select>
                       </div>

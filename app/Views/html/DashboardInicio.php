@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="jumbotron" style="background-color: #f8f9fa; border-left: 5px solid #337ab7;">
-                <h1>¡Hola, <?= esc($username) ?>! 👋</h1>
+             <!--    <h1>¡Hola, <?= esc($username) ?>! 👋</h1> -->
                 <p class="lead">Bienvenido al panel de administración de <strong>VitalGym</strong>. Selecciona una opción para comenzar.</p>
             </div>
         </div>
