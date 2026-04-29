@@ -14,9 +14,8 @@ class Dashboard extends BaseController
     {
     $username = obtener_username();
         $pagoModel = new PagoModel();
-        $membresiaModel = new RegistroMembresiaModel(); 
         $ventasModel = new VentasproductosModel();
-
+        $membresiaModel = new RegistroMembresiaModel(); 
 
         // --- TAREA DE MANTENIMIENTO: Actualizar membresías vencidas ---
         // Esto es lo más optimizado porque se ejecuta en una sola consulta a la BD.
