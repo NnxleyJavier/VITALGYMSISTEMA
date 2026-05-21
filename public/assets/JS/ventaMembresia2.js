@@ -87,7 +87,7 @@ $(document).ready(function() {
                    // Lógica de impresión silenciosa (Heredada de tu código original)
                     if (response.valoresdata) {
                         var queryString = $.param(response.valoresdata);
-                        let urlTicket = BASE_URL + '/vendor/ticket14.php?' + queryString; 
+                        let urlTicket = 'http://localhost/sistema/' + 'vendor/ticket14.php?' + queryString; 
                         
                         var nuevaVentana = window.open(urlTicket, '_blank');
                         setTimeout(function() {

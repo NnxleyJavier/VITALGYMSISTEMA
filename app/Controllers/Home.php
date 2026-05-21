@@ -555,6 +555,16 @@ public function verAsistencias()
         }
     }
 
-    
+    public function accesoDenegado()
+    {
+        $data = [
+            'titulo'   => 'Acceso Denegado | VitalGym',
+            'username' => obtener_username() ?? ''
+        ];
+
+        return view('html/main', $data)
+             . view('html/AccesoDenegado', $data)
+             . view('html/footer');
+    }
 
 }

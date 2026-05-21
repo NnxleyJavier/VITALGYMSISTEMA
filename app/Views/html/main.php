@@ -77,7 +77,7 @@
 
 
         <div class="sidebar-label">Sistema</div>
-        <a href="<?= base_url('/dashboard') ?>"><span class="glyphicon glyphicon-stats"></span> Reportes </a>
+        <a href="<?= base_url('/reportediario') ?>"><span class="glyphicon glyphicon-stats"></span> Reporte Diario </a>
         <a href="<?= base_url('/CambioFechas') ?>"><span class="glyphicon glyphicon-calendar"></span> Ajuste de Fechas</a>
         <a href="<?= base_url('/logout') ?>" style="margin-top: auto; color: #ff6b6b;"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesión</a>
     </aside>

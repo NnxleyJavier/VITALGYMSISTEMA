@@ -95,4 +95,31 @@ public function procesarVenta(array $productos, int $idUsuario): bool
 
         return $row['total_monto'] ?? 0.00;
     }
+
+        
+// ====================================================================
+    // REPORTE DIARIO DE TIENDA (CON FILTRO DE PRIVACIDAD DE CAJERO)
+    // ====================================================================
+    public function getResumenTiendaTurnosAgrupado($fecha, $idUsuarioFiltro = null)
+    {
+        $sql = "
+            SELECT
+                users_id,
+                SUM(Total_Venta) as total_tienda
+            FROM ventas_productos
+            WHERE DATE(Fecha_Venta) = ?
+        ";
+        
+        $bindings = [$fecha];
+
+        // Filtro de Privacidad de Cajero
+        if ($idUsuarioFiltro !== null) {
+            $sql .= " AND users_id = ?";
+            $bindings[] = $idUsuarioFiltro;
+        }
+
+        $sql .= " GROUP BY users_id";
+        
+        return $this->db->query($sql, $bindings)->getResultArray();
+    }
 }

@@ -144,4 +144,57 @@ class PagoModel extends Model
         $row = $builder->first();
         return $row['total_monto'] ?? 0.00;
     }
+
+
+    
+// ====================================================================
+    // REPORTE DIARIO DE TURNOS (CON FILTRO DE PRIVACIDAD DE CAJERO)
+    // ====================================================================
+    public function getResumenTurnosAgrupado($fecha, $idGym, $idUsuarioFiltro = null)
+    {
+        $sql = "
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = 'Efectivo' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = 'Tarjeta' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = 'Transferencia' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE '%Inscrip%' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE '%Inscrip%' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) = ?
+        ";
+
+        $bindings = [$fecha];
+
+        // Filtro 1: Sucursal (Si no es superadmin global)
+        if ($idGym !== 'TODOS' && !empty($idGym)) {
+            $sql .= " AND p.id_gimnasio = ?";
+            $bindings[] = $idGym;
+        }
+
+        // Filtro 2: Privacidad de Cajero (Solo ve su propio dinero)
+        if ($idUsuarioFiltro !== null) {
+            $sql .= " AND p.users_id = ?";
+            $bindings[] = $idUsuarioFiltro;
+        }
+
+        $sql .= " GROUP BY p.users_id";
+
+        return $this->db->query($sql, $bindings)->getResultArray();
+    }
+
+    // Pequeño Helper MVC para obtener datos del usuario sin ensuciar el Controlador
+    public function getDetallesUsuarioParaReporte($userId)
+    {
+        return $this->db->table('users u')
+            ->select('u.username, g.Nombre as sucursal, u.id_gimnasio')
+            ->join('gymnasios g', 'g.idGymnasios = u.id_gimnasio', 'left')
+            ->where('u.id', $userId)
+            ->get()->getRowArray();
+    }
 }

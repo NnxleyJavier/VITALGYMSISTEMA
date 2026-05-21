@@ -85,9 +85,14 @@ $routes->get('/verIngresos', 'Home::verIngresos',['filter'=>'permission:admin.ac
 
 
 $routes->post('/consultaRapidaSocio', 'Recepcion::consultaRapidaSocio', ['filter'=>'permission:admin.access']);
+$routes->post('/solicitarPrecioAmigo', 'Home::solicitarPrecioAmigo',['filter'=>'permission:admin.access']);
 
-$routes->post('/solicitarPrecioAmigo', 'Home::solicitarPrecioAmigo');
+
 $routes->get('/autorizar', 'Dashboard::autorizarPrecios', ['filter' => 'permission:superadmin.vista']);
 $routes->post('/procesarPrecioAmigoAjax', 'Dashboard::procesarPrecioAmigoAjax', ['filter' => 'permission:superadmin.vista']);
 
+$routes->get('/reportediario', 'Dashboard::reportediario', ['filter' => 'permission:admin.access']);
+
 service('auth')->routes($routes);
+
+$routes->get('/acceso-denegado', 'Home::accesoDenegado');

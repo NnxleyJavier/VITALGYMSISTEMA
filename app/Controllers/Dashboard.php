@@ -257,4 +257,96 @@ public function procesarPrecioAmigoAjax()
 
 
 
+public function reportediario()
+    {
+      $fechaInput = $this->request->getGet('fecha') ?? date('Y-m-d');
+        
+        helper('gym');
+        $idGymActual = obtener_id_gimnasio();
+        
+        // 1. LÓGICA DE PRIVACIDAD CORREGIDA (Solo el superadmin ve todos los turnos)
+        $usuarioLogueado = auth()->user();
+        $esSuperAdmin = $usuarioLogueado->inGroup('superadmin'); 
+        
+        // Si NO es superadmin (ej. es admin/cajero), el filtro bloquea la consulta a su propio ID.
+        // Si SÍ es superadmin, el filtro es nulo (trae todos los turnos de la BD).
+        $idUsuarioFiltro = $esSuperAdmin ? null : $usuarioLogueado->id;
+
+        // 2. Instanciar los modelos
+        $pagoModel = new \App\Models\PagoModel();
+        $ventasModel = new \App\Models\VentasproductosModel();
+
+        // 3. Obtener los datos (inyectando el candado de seguridad)
+        $reporteCaja = $pagoModel->getResumenTurnosAgrupado($fechaInput, $idGymActual, $idUsuarioFiltro);
+        $reporteTienda = $ventasModel->getResumenTiendaTurnosAgrupado($fechaInput, $idUsuarioFiltro);
+
+        $reporteFinal = [];
+        $usuariosProcesados = []; 
+
+        // 4. Armar el reporte combinando Membresías + Tienda
+        foreach ($reporteCaja as $caja) {
+            $userId = $caja['users_id'];
+            $usuariosProcesados[] = $userId;
+
+            $tienda = 0;
+            foreach ($reporteTienda as $t) {
+                if ($t['users_id'] == $userId) {
+                    $tienda = floatval($t['total_tienda']);
+                    break;
+                }
+            }
+
+            $reporteFinal[] = [
+                'encargado'     => strtoupper($caja['encargado']),
+                'sucursal'      => $caja['sucursal'] ?? 'Matriz',
+                'caja'          => [
+                    'Efectivo'        => floatval($caja['total_efectivo']),
+                    'Tarjeta'         => floatval($caja['total_tarjeta']),
+                    'Transferencia'   => floatval($caja['total_transferencia']),
+                    'TotalMembresias' => floatval($caja['total_membresias']),
+                ],
+                'inscripciones' => intval($caja['total_inscripciones']),
+                'renovaciones'  => intval($caja['total_renovaciones']),
+                'tienda'        => $tienda,
+                'corte_total'   => floatval($caja['total_membresias']) + $tienda
+            ];
+        }
+
+        // 5. Procesar a empleados que SOLO hayan vendido algo en tienda (MVC Estricto)
+        foreach ($reporteTienda as $t) {
+            $userId = $t['users_id'];
+            if (!in_array($userId, $usuariosProcesados)) {
+                
+                // Pedimos los datos limpiamente al modelo
+                $detallesUser = $pagoModel->getDetallesUsuarioParaReporte($userId);
+                
+                if ($idGymActual !== 'TODOS' && ($detallesUser['id_gimnasio'] ?? 1) != $idGymActual) {
+                    continue; 
+                }
+
+                $reporteFinal[] = [
+                    'encargado'     => strtoupper($detallesUser['username'] ?? 'DESCONOCIDO'),
+                    'sucursal'      => $detallesUser['sucursal'] ?? 'Matriz',
+                    'caja'          => ['Efectivo' => 0, 'Tarjeta' => 0, 'Transferencia' => 0, 'TotalMembresias' => 0],
+                    'inscripciones' => 0,
+                    'renovaciones'  => 0,
+                    'tienda'        => floatval($t['total_tienda']),
+                    'corte_total'   => floatval($t['total_tienda'])
+                ];
+            }
+        }
+
+        $data = [
+            'titulo'       => 'Reporte de Caja | VitalGym',
+            'username'     => obtener_username(),
+            'fecha'        => $fechaInput,
+            'reporte'      => $reporteFinal,
+            'esSuperAdmin' => $esSuperAdmin // Mandamos la variable correcta a la vista
+        ];
+
+        return view('html/main', $data)
+             . view('html/ReporteDiario', $data)
+             . view('html/footer');
+    }
+
    }

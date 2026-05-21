@@ -78,8 +78,8 @@ class Auth extends ShieldAuth
         'login'             => '/',
         'logout'            => 'login',
         'force_reset'       => '/',
-        'permission_denied' => '/',
-        'group_denied'      => '/',
+        'permission_denied' => '/acceso-denegado',
+        'group_denied'      => '/acceso-denegado',
     ];
 
     /**
@@ -271,8 +271,8 @@ class Auth extends ShieldAuth
      * @var list<class-string<ValidatorInterface>>
      */
     public array $passwordValidators = [
-        CompositionValidator::class,
-        NothingPersonalValidator::class,
+     //   CompositionValidator::class,
+     //   NothingPersonalValidator::class,
         DictionaryValidator::class,
         // PwnedValidator::class,
     ];
@@ -441,16 +441,27 @@ class Auth extends ShieldAuth
      */
     public function loginRedirect(): string
     {
-        $session = session();
-        $url     = $session->getTempdata('beforeLoginUrl') ?? setting('Auth.redirects')['login'];
+        // 1. Obtenemos al usuario que acaba de iniciar sesión
+        $user = auth()->user();
 
-        if (auth()->user()->can('admin.access')) {
-			return '/';
-		}if (auth()->user()->can('superadmin.vista')){
-			return '/dashboard';
-		}
-        
-        return $this->getUrl($url);
+        // 2. Evaluamos su rol y lo mandamos a su área de trabajo SIEMPRE (Ignorando la URL anterior)
+        if ($user->inGroup('superadmin')) {
+            return $this->getUrl('/dashboard'); 
+        } elseif ($user->inGroup('admin')) {
+            return $this->getUrl('/recepcion'); 
+        } elseif ($user->inGroup('user')) {
+            return $this->getUrl('/recepcion'); 
+        }
+
+        // 3. Si no tiene ningún rol especial, comprobamos si intentó entrar a una URL protegida
+        $session = session();
+        $url = $session->getTempdata('beforeLoginUrl');
+        if ($url !== null) {
+            return $this->getUrl($url);
+        }
+
+        // 4. Si no tiene URL guardada ni rol de los anteriores, mandamos a la ruta por defecto
+        return $this->getUrl(setting('Auth.redirects')['login']);
     }
 
     /**
