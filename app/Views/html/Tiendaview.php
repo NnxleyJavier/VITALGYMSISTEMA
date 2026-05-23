@@ -6,7 +6,7 @@
     };
 </script>
 <link rel="stylesheet" href="<?= base_url('assets/CSS/tienda.css') ?>">
-<script src="<?= base_url('assets/JS/tienda.js') ?>" defer></script>
+<script src="<?= base_url('assets/js/tienda.js') ?>" defer></script>
 
 <div class="container-fluid pt-4" style="min-height: calc(100vh - 160px); flex: 1 0 auto;
     padding: 50px 50px; border-radius: 16px; box-shadow: 0 10px 30px 0 rgba(82, 63, 105, 0.03); background-color: #f1f1f1;">

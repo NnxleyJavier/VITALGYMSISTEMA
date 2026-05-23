@@ -97,14 +97,14 @@ $(document).ready(function() {
                         iframe.src = urlImpresion;
                         document.body.appendChild(iframe);
 
-                        // Esperamos 3 segundos para que se mande a imprimir, y luego REGRESAMOS
+                        // Esperamos 5 segundos para que se mande a imprimir, y luego REGRESAMOS
                         setTimeout(function() {
                             window.history.back();
-                        }, 3000);
+                        }, 5000);
                     } else {
                         setTimeout(function() {
                             window.history.back(); 
-                        }, 1500);
+                        }, 2500);
                     }
                     // --- FIN LÓGICA DE IMPRESIÓN ---
 

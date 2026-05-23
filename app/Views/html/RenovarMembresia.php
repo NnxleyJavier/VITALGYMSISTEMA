@@ -134,4 +134,4 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script src="<?= base_url('assets/JS/Renovaciones.js') ?>"></script>
+<script src="<?= base_url('assets/js/renovaciones.js') ?>"></script>
