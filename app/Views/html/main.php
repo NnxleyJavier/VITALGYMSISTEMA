@@ -79,6 +79,14 @@
         <div class="sidebar-label">Sistema</div>
         <a href="<?= base_url('/reportediario') ?>"><span class="glyphicon glyphicon-stats"></span> Reporte Diario </a>
         <a href="<?= base_url('/CambioFechas') ?>"><span class="glyphicon glyphicon-calendar"></span> Ajuste de Fechas</a>
+        <a href="<?= base_url('/mi-perfil/password') ?>" style="margin-top: auto;">
+            
+            <span class="glyphicon glyphicon-lock"></span> Cambiar Contraseña
+        </a>
+        
+        <a href="<?= base_url('/logout') ?>" style="color: #ff6b6b;">
+            <span class="glyphicon glyphicon-log-out"></span> Cerrar Sesión
+        </a>
         <a href="<?= base_url('/logout') ?>" style="margin-top: auto; color: #ff6b6b;"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesión</a>
     </aside>
 

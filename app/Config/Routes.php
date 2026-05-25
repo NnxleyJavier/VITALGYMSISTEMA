@@ -96,3 +96,7 @@ $routes->get('/reportediario', 'Dashboard::reportediario', ['filter' => 'permiss
 service('auth')->routes($routes);
 
 $routes->get('/acceso-denegado', 'Home::accesoDenegado');
+
+
+$routes->get('/mi-perfil/password', 'Perfil::cambiarPassword');
+$routes->post('/mi-perfil/actualizar-password', 'Perfil::actualizarPasswordAjax');
