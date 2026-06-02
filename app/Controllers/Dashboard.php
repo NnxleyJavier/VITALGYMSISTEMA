@@ -297,6 +297,7 @@ public function reportediario()
             }
 
             $reporteFinal[] = [
+                'users_id' => $userId,
                 'encargado'     => strtoupper($caja['encargado']),
                 'sucursal'      => $caja['sucursal'] ?? 'Matriz',
                 'caja'          => [
@@ -347,6 +348,28 @@ public function reportediario()
         return view('html/main', $data)
              . view('html/ReporteDiario', $data)
              . view('html/footer');
+    }
+    // ====================================================================
+    // AJAX: OBTENER DESGLOSE DE TICKETS DEL TURNO PARA LA VISTA
+    // ====================================================================
+    public function detallesTurnoAjax()
+    {
+        if (!$this->request->isAJAX()) {
+            return $this->response->setJSON(['status' => 'error', 'mensaje' => 'Petición no válida']);
+        }
+
+        $fecha = $this->request->getGet('fecha');
+        $userId = $this->request->getGet('users_id');
+
+        $membresiaModel = new \App\Models\RegistroMembresiaModel();
+        
+        // Ejecutamos la consulta que añadiste a tu modelo
+        $detalles = $membresiaModel->getDetalleTurnoPorUsuario($fecha, $userId);
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data'   => $detalles
+        ]);
     }
 
    }
