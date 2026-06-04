@@ -308,14 +308,15 @@ public function obtenerClientesParaRenovacion($busqueda = null, $estado = 'todas
     // ====================================================================
     // DESGLOSE DE CLIENTES ATENDIDOS POR UN CAJERO EN UNA FECHA
     // ====================================================================
-    public function getDetalleTurnoPorUsuario($fecha, $userId)
+   public function getDetalleTurnoPorUsuario($fecha, $userId)
     {
-        return $this->select('registros_membresia.*, clientes.Nombre, clientes.ApellidoP, clientes.ApellidoM, pago.Tipo_Pago, pago.Concepto, pago.Monto, pago.Fecha_Pago')
+        // Agregamos clientes.Telefono y pago.idPago al SELECT
+        return $this->select('registros_membresia.*, clientes.Nombre, clientes.ApellidoP, clientes.ApellidoM, clientes.Telefono, pago.idPago, pago.Tipo_Pago, pago.Concepto, pago.Monto, pago.Fecha_Pago')
                     ->join('clientes', 'clientes.IDClientes = registros_membresia.Clientes_IDClientes')
                     ->join('pago', 'pago.idPago = registros_membresia.Pago_idPago')
                     ->where('DATE(pago.Fecha_Pago)', $fecha)
                     ->where('pago.users_id', $userId)
-                    ->orderBy('pago.Fecha_Pago', 'DESC') // Los más recientes primero
+                    ->orderBy('pago.Fecha_Pago', 'DESC')
                     ->findAll();
     }
 }

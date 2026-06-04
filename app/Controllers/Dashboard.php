@@ -372,4 +372,48 @@ public function reportediario()
         ]);
     }
 
+// ====================================================================
+    // SCRIPT DE UN SOLO USO: MIGRAR NOMBRES DE RECIBOS ANTIGUOS
+    // ====================================================================
+    public function arreglarRecibosViejos()
+    {
+        // FCPATH es una constante de CodeIgniter 4 que apunta a tu carpeta "public/"
+        // Asegúrate de que la ruta coincida con tu carpeta real de recibos
+        $rutaFisica = FCPATH . 'assets/recibos/'; 
+        
+        // Buscamos todos los PDFs que empiecen con "Recibo_"
+        $archivos = glob($rutaFisica . 'Recibo_*.pdf');
+        $renombrados = 0;
+
+        foreach ($archivos as $archivo) {
+            $nombreOriginal = basename($archivo); // Ej: Recibo_48_1779138450.pdf
+            
+            // Le quitamos la extensión y partimos el nombre por los guiones bajos
+            $sinExtension = str_replace('.pdf', '', $nombreOriginal);
+            $partes = explode('_', $sinExtension);
+
+            // Verificamos si tiene 3 partes y si la última es un timestamp (número largo de 10 dígitos)
+            if (count($partes) == 3 && is_numeric($partes[2]) && strlen($partes[2]) >= 10) {
+                
+                $idCliente = $partes[1];
+                $timestamp = (int)$partes[2];
+                
+                // ¡LA MAGIA!: Convertimos ese número loco a la fecha real (Año-Mes-Día)
+                $fechaReal = date('Y-m-d', $timestamp);
+                
+                // Armamos el nombre perfecto para tu nuevo sistema
+                $nuevoNombre = 'Recibo_' . $idCliente . '_' . $fechaReal . '.pdf';
+                
+                // Renombramos el archivo físicamente en tu servidor
+                if (!file_exists($rutaFisica . $nuevoNombre)) {
+                    rename($archivo, $rutaFisica . $nuevoNombre);
+                    $renombrados++;
+                }
+            }
+        }
+
+        return "¡Listo! Se actualizaron $renombrados recibos antiguos al nuevo formato inteligente. Ya puedes usar el botón de WhatsApp con todos.";
+    }
+
+
    }

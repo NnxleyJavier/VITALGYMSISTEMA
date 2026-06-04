@@ -20,7 +20,7 @@
 <div class="container-fluid reporte-container">
     
     <div class="filter-box">
-        <form method="GET" action="<?= base_url('/ReporteDiario') ?>" id="formFecha">
+        <form method="GET" action="<?= base_url('/reportediario') ?>" id="formFecha">
             <div class="row align-items-center">
                 <div class="col-md-5 col-sm-12">
                     <h4 style="margin: 0; font-weight: 600; color: #333;">
@@ -176,13 +176,14 @@
       <div class="modal-body" style="padding: 0;">
         <div class="table-responsive">
             <table class="table table-hover table-striped mb-0" id="tablaDetallesTurno">
-                <thead style="background-color: #f8f9fa;">
+               <thead style="background-color: #f8f9fa;">
                     <tr>
                         <th style="padding-left: 25px;">Socio Atendido</th>
                         <th>Concepto Registrado</th>
                         <th>Método</th>
                         <th>Hora</th>
-                        <th class="text-right" style="padding-right: 25px;">Monto</th>
+                        <th class="text-right">Monto</th>
+                        <th class="text-center" style="padding-right: 25px;">Acción</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -218,7 +219,7 @@ $(document).ready(function() {
         $('#modalEncargadoNombre').text(tituloModal);
         
         // Pantalla de carga mientras va al servidor
-        $('#tablaDetallesTurno tbody').html('<tr><td colspan="5" class="text-center" style="padding: 40px;"><i class="fas fa-circle-notch fa-spin fa-2x text-primary" style="margin-bottom:10px;"></i><br><strong class="text-muted">Extrayendo datos de caja...</strong></td></tr>');
+        $('#tablaDetallesTurno tbody').html('<tr><td colspan="6" class="text-center" style="padding: 40px;"><i class="fas fa-circle-notch fa-spin fa-2x text-primary" style="margin-bottom:10px;"></i><br><strong class="text-muted">Extrayendo datos de caja...</strong></td></tr>');
         
         $('#modalDetalleTurno').modal('show');
 
@@ -251,7 +252,7 @@ $(document).ready(function() {
                     if (datosFiltrados.length > 0) {
                         $.each(datosFiltrados, function(i, item) {
                             
-                            let nombreCompleto = item.Nombre + ' ' + item.ApellidoP + ' ' + (item.ApellidoM ? item.ApellidoM : '');
+                           let nombreCompleto = item.Nombre + ' ' + item.ApellidoP + ' ' + (item.ApellidoM ? item.ApellidoM : '');
                             let horaReal = new Date(item.Fecha_Pago).toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', hour12: true });
                             let montoFinal = parseFloat(item.Monto).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
 
@@ -260,25 +261,48 @@ $(document).ready(function() {
                             if(item.Tipo_Pago === 'Tarjeta' || item.Tipo_Pago === 'TarjetaCredito') badgeMetodo = 'badge-info';
                             if(item.Tipo_Pago === 'Transferencia') badgeMetodo = 'badge-warning';
 
+                            // --- INICIO DE LO NUEVO: LÓGICA DEL BOTÓN WHATSAPP ---
+                            let btnWhatsApp = '<span class="text-muted" style="font-size:11px;"><i class="fas fa-phone-slash"></i> Sin Tel.</span>';
+                            
+                            let telefonoLimpio = item.Telefono ? item.Telefono.replace(/[^0-9]/g, '') : '';
+                            if (telefonoLimpio.length === 10) {
+                                telefonoLimpio = '52' + telefonoLimpio; // Código de México
+                            }
+
+                            if (telefonoLimpio !== '') {
+                                // Extrae solo la fecha ("YYYY-MM-DD")
+                                let fechaRecibo = item.Fecha_Pago.split(' ')[0];
+                                let enlaceRecibo = '<?= base_url("assets/recibos/Recibo_") ?>' + item.Clientes_IDClientes + '_' + fechaRecibo + '.pdf';
+                                
+                                let mensaje = "¡Hola " + item.Nombre + "! 🏋️‍♂️\n\nAquí tienes el enlace para descargar la copia de tu recibo de pago:\n" + enlaceRecibo;
+                                let urlWA = "https://api.whatsapp.com/send?phone=" + telefonoLimpio + "&text=" + encodeURIComponent(mensaje);
+                                
+                                btnWhatsApp = `<a href="${urlWA}" target="_blank" class="btn btn-success btn-sm" style="border-radius:20px; padding: 2px 10px; font-size: 11px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"><i class="fab fa-whatsapp"></i> Reenviar</a>`;
+                            }
+                            // --- FIN DE LO NUEVO ---
+
+                            // --- ARMADO DE LA FILA (SE INCLUYE EL btnWhatsApp AL FINAL) ---
                             html += `<tr>
                                 <td style="padding-left: 25px;"><strong style="color:#4e54c8;">${nombreCompleto}</strong></td>
                                 <td style="font-size: 13px; color: #555;">${item.Concepto}</td>
                                 <td><span class="badge ${badgeMetodo}" style="font-size:11px; padding: 5px 8px;">${item.Tipo_Pago}</span></td>
                                 <td class="text-muted" style="font-size:13px;"><i class="far fa-clock"></i> ${horaReal}</td>
-                                <td class="text-right" style="font-weight:700; color:#333; padding-right: 25px;">${montoFinal}</td>
+                                <td class="text-right" style="font-weight:700; color:#333;">${montoFinal}</td>
+                                <td class="text-center" style="padding-right: 25px;">${btnWhatsApp}</td>
                             </tr>`;
+
                         });
                     } else {
-                        html = '<tr><td colspan="5" class="text-center text-muted" style="padding: 30px;"><i class="fas fa-folder-open fa-2x mb-2" style="color:#ddd;"></i><br>No hay registros de <b>' + (tipoClic === 'nuevos' ? 'nuevas inscripciones' : 'renovaciones') + '</b> para mostrar.</td></tr>';
+                        html = '<tr><td colspan="6" class="text-center text-muted" style="padding: 30px;"><i class="fas fa-folder-open fa-2x mb-2" style="color:#ddd;"></i><br>No hay registros de <b>' + (tipoClic === 'nuevos' ? 'nuevas inscripciones' : 'renovaciones') + '</b> para mostrar.</td></tr>';
                     }
                     
                     $('#tablaDetallesTurno tbody').html(html);
                 } else {
-                    $('#tablaDetallesTurno tbody').html('<tr><td colspan="5" class="text-center text-danger" style="padding: 30px;"><i class="fas fa-exclamation-triangle fa-2x mb-2"></i><br>Error al extraer los datos financieros.</td></tr>');
+                    $('#tablaDetallesTurno tbody').html('<tr><td colspan="6" class="text-center text-danger" style="padding: 30px;"><i class="fas fa-exclamation-triangle fa-2x mb-2"></i><br>Error al extraer los datos financieros.</td></tr>');
                 }
             },
             error: function() {
-                $('#tablaDetallesTurno tbody').html('<tr><td colspan="5" class="text-center text-danger" style="padding: 30px;"><i class="fas fa-wifi fa-2x mb-2"></i><br>Error de red al comunicarse con el servidor.</td></tr>');
+                $('#tablaDetallesTurno tbody').html('<tr><td colspan="6" class="text-center text-danger" style="padding: 30px;"><i class="fas fa-wifi fa-2x mb-2"></i><br>Error de red al comunicarse con el servidor.</td></tr>');
             }
         });
     });

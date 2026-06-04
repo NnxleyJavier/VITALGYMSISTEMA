@@ -100,3 +100,5 @@ $routes->get('/detallesTurnoAjax', 'Dashboard::detallesTurnoAjax', ['filter' => 
 
 $routes->get('/mi-perfil/password', 'Perfil::cambiarPassword');
 $routes->post('/mi-perfil/actualizar-password', 'Perfil::actualizarPasswordAjax');
+
+$routes->get('/arreglarRecibosViejos', 'Dashboard::arreglarRecibosViejos');

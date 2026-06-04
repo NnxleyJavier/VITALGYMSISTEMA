@@ -265,7 +265,7 @@ public function obtenerPendientesAJAX()
                         $outputPDF = $dompdf->output();
                         
                         // 2. GUARDAR EL PDF EN EL SERVIDOR
-                        $nombreArchivo = 'Recibo_' . $idCliente . '_' . time() . '.pdf';
+                        $nombreArchivo = 'Recibo_' . $idCliente . '_' . date('Y-m-d') . '.pdf';
                         $rutaGuardado = FCPATH . 'assets/recibos/' . $nombreArchivo;
                         file_put_contents($rutaGuardado, $outputPDF);
                         
@@ -294,6 +294,7 @@ public function obtenerPendientesAJAX()
                         $mensajeWA .= "📄 *Descarga tu recibo detallado aquí:*\n";
                         $mensajeWA .= $linkRecibo . "\n\n";
                         $mensajeWA .= "¡A darle con todo! 💪";
+                         $mensajeWA .= "Cualquier duda o sugerencia, contáctanos a este numero. 📞";
 
                         $urlWhatsApp = "https://api.whatsapp.com/send?phone=" . $telefonoLimpio . "&text=" . urlencode($mensajeWA);
                     }

@@ -259,7 +259,7 @@ public function guardarRenovacionAjax()
                 $outputPDF = $dompdf->output();
                 
                 // 2. GUARDAR EL PDF EN EL SERVIDOR
-                $nombreArchivo = 'ReciboRenovacion_' . $idCliente . '_' . time() . '.pdf';
+                $nombreArchivo = 'ReciboRenovacion_' . $idCliente . '_' . date('Y-m-d') . '.pdf';
                 $rutaGuardado = FCPATH . 'assets/recibos/' . $nombreArchivo;
                 file_put_contents($rutaGuardado, $outputPDF);
                 
