@@ -567,4 +567,52 @@ public function verAsistencias()
              . view('html/footer');
     }
 
+    // ====================================================================
+    // AJAX: ACTUALIZAR TODOS LOS DATOS DEL CLIENTE
+    // ====================================================================
+    public function actualizarDatosClienteAjax()
+    {
+        if (!$this->request->isAJAX()) {
+            return $this->response->setJSON(['status' => 'error', 'mensaje' => 'Petición no válida']);
+        }
+
+        // 1. Recibir datos
+        $idCliente = $this->request->getPost('id_cliente');
+        $nombre    = trim($this->request->getPost('nombre'));
+        $apellidoP = trim($this->request->getPost('apellido_p'));
+        $apellidoM = trim($this->request->getPost('apellido_m'));
+        $correo    = trim($this->request->getPost('correo'));
+        
+        // Limpiamos el teléfono para guardar solo números
+        $telefono  = preg_replace('/[^0-9]/', '', $this->request->getPost('telefono'));
+
+        // 2. Validación básica
+        if (empty($idCliente) || empty($nombre)) {
+            return $this->response->setJSON(['status' => 'error', 'mensaje' => 'El nombre es obligatorio.', 'token' => csrf_hash()]);
+        }
+
+        // 3. Actualizar base de datos
+        $db = \Config\Database::connect();
+        $actualizado = $db->table('clientes')
+                          ->where('IDClientes', $idCliente)
+                          ->update([
+                              'Nombre'    => $nombre,
+                              'ApellidoP' => $apellidoP,
+                              'ApellidoM' => $apellidoM,
+                              'Telefono'  => $telefono,
+                              'Correo'    => $correo
+                          ]);
+
+        // Si $actualizado no es falso, significa que la consulta se ejecutó bien (incluso si no cambiaron nada)
+        if ($actualizado !== false) {
+            return $this->response->setJSON([
+                'status'  => 'success',
+                'mensaje' => 'El perfil del socio se actualizó correctamente.',
+                'token'   => csrf_hash()
+            ]);
+        }
+
+        return $this->response->setJSON(['status' => 'error', 'mensaje' => 'No se pudo conectar con la base de datos.', 'token' => csrf_hash()]);
+    }
+
 }

@@ -131,10 +131,24 @@
                                         <?= esc($m['EstadodeMembresia']) ?>
                                     </span>
                                 </td>
-                                <td class="text-center">
-                                    <a href="<?= base_url('renovacionesRegistro/' . $m['Clientes_IDClientes']) ?>" class="btn-action" title="Renovar">
+                               <td class="text-center" style="white-space: nowrap;">
+                                    <!-- Botón Renovar (El que ya tenías) -->
+                                    <a href="<?= base_url('renovacionesRegistro/' . $m['Clientes_IDClientes']) ?>" class="btn-action" title="Renovar" style="margin-right: 5px;">
                                         <span class="glyphicon glyphicon-refresh"></span>
                                     </a>
+                                    
+                                    <!-- NUEVO: Botón Editar Datos -->
+                                    <button type="button" class="btn-action btn-editar-cliente" 
+                                            data-id="<?= $m['Clientes_IDClientes'] ?>"
+                                            data-nombre="<?= esc($m['Nombre']) ?>"
+                                            data-apellidop="<?= esc($m['ApellidoP']) ?>"
+                                            data-apellidom="<?= esc($m['ApellidoM'] ?? '') ?>"
+                                            data-telefono="<?= esc($m['Telefono'] ?? '') ?>"
+                                            data-correo="<?= esc($m['Correo'] ?? '') ?>"
+                                            title="Editar Perfil" 
+                                            style="background: #fff5f8; color: #f64e60; border: none; outline: none;">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -148,7 +162,8 @@
         <?= $pager->links() ?>
     </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
 <script>
     $(document).ready(function() {
         let temporizador;
@@ -221,4 +236,117 @@
             });
         }
     });
+
+
+    // =======================================================
+        // LÓGICA PARA EDITAR DATOS DEL CLIENTE (SWEETALERT2)
+        // =======================================================
+        $(document).on('click', '.btn-editar-cliente', function() {
+            // 1. Extraemos los datos actuales del botón
+            let id = $(this).data('id');
+            let nombre = $(this).data('nombre');
+            let apellidop = $(this).data('apellidop');
+            let apellidom = $(this).data('apellidom');
+            let telefono = $(this).data('telefono');
+            let correo = $(this).data('correo');
+
+            // 2. Creamos el formulario en HTML
+            let htmlFormulario = `
+                <div class="text-left" style="font-size: 14px; font-family: 'Poppins', sans-serif;">
+                    <div class="form-group mb-3" style="margin-bottom: 15px;">
+                        <label style="font-weight: 600; color: #595d6e;">Nombre(s) <span class="text-danger">*</span></label>
+                        <input type="text" id="swal-nombre" class="form-control" value="${nombre}" style="border-radius: 8px;">
+                    </div>
+                    <div class="row" style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <div class="col-6" style="flex: 1;">
+                            <label style="font-weight: 600; color: #595d6e;">A. Paterno</label>
+                            <input type="text" id="swal-apellidop" class="form-control" value="${apellidop}" style="border-radius: 8px;">
+                        </div>
+                        <div class="col-6" style="flex: 1;">
+                            <label style="font-weight: 600; color: #595d6e;">A. Materno</label>
+                            <input type="text" id="swal-apellidom" class="form-control" value="${apellidom}" style="border-radius: 8px;">
+                        </div>
+                    </div>
+                    <div class="form-group mb-3" style="margin-bottom: 15px;">
+                        <label style="font-weight: 600; color: #595d6e;">Teléfono (10 dígitos)</label>
+                        <input type="text" id="swal-telefono" class="form-control" value="${telefono}" maxlength="10" placeholder="Ej: 9511234567" style="border-radius: 8px;">
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight: 600; color: #595d6e;">Correo Electrónico</label>
+                        <input type="email" id="swal-correo" class="form-control" value="${correo}" style="border-radius: 8px;">
+                    </div>
+                </div>
+            `;
+
+           // 3. Lanzamos la ventana emergente
+            Swal.fire({
+                title: '<span class="glyphicon glyphicon-user text-primary" style="font-size: 24px; margin-right: 10px;"></span>Editar Perfil',
+                html: htmlFormulario,
+                background: '#ffffff', /* <-- FONDO BLANCO SÓLIDO */
+                backdrop: `
+                    rgba(0,0,123,0.1)
+                    url("https://sweetalert2.github.io/images/nyan-cat.gif") /* (Opcional, bórralo si no quieres un fondo animado, es broma, usa solo el rgba) */
+                `,
+                backdrop: 'rgba(0, 0, 0, 0.6)', /* <-- FONDO OSCURO DETRÁS DE LA VENTANA PARA QUE RESALTE */
+                showCancelButton: true,
+                confirmButtonColor: '#4e54c8',
+                cancelButtonColor: '#f64e60',
+                confirmButtonText: 'Guardar Cambios',
+                cancelButtonText: 'Cancelar',
+                customClass: { 
+                    popup: 'border-radius-16', // Quitamos card-elegant para evitar la transparencia
+                },
+                didOpen: () => {
+                    // Opcional: Redondear los bordes del popup dinámicamente si no tienes la clase
+                    Swal.getPopup().style.borderRadius = '16px';
+                },
+                preConfirm: () => {
+                    let inputNombre = document.getElementById('swal-nombre').value.trim();
+                    if (!inputNombre) {
+                        Swal.showValidationMessage('El nombre es obligatorio');
+                        return false;
+                    }
+                    // Retornamos el objeto con los datos a guardar
+                    return {
+                        id_cliente: id,
+                        nombre: inputNombre,
+                        apellido_p: document.getElementById('swal-apellidop').value.trim(),
+                        apellido_m: document.getElementById('swal-apellidom').value.trim(),
+                        telefono: document.getElementById('swal-telefono').value.trim(),
+                        correo: document.getElementById('swal-correo').value.trim()
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    
+                    Swal.fire({ title: 'Actualizando...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+
+                    // 4. Mandamos los datos al servidor por AJAX
+                    $.ajax({
+                        url: '<?= base_url("/actualizar-datos-cliente") ?>',
+                        type: 'POST',
+                        data: result.value,
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '¡Actualizado!',
+                                    text: response.mensaje,
+                                    confirmButtonColor: '#4e54c8'
+                                }).then(() => {
+                                    // Refrescamos la tabla mágicamente sin recargar la página entera
+                                    $('#form-busqueda-membresias').submit();
+                                });
+                            } else {
+                                Swal.fire('Error', response.mensaje, 'error');
+                            }
+                        },
+                        error: function() {
+                            Swal.fire('Error', 'Hubo un problema de conexión con el servidor.', 'error');
+                        }
+                    });
+                }
+            });
+        });
 </script>

@@ -102,3 +102,5 @@ $routes->get('/mi-perfil/password', 'Perfil::cambiarPassword');
 $routes->post('/mi-perfil/actualizar-password', 'Perfil::actualizarPasswordAjax');
 
 $routes->get('/arreglarRecibosViejos', 'Dashboard::arreglarRecibosViejos');
+
+$routes->post('/actualizar-datos-cliente', 'Home::actualizarDatosClienteAjax', ['filter' => 'permission:admin.access']);

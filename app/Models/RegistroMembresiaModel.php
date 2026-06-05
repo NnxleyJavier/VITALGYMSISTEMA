@@ -273,7 +273,7 @@ public function obtenerClientesParaRenovacion($busqueda = null, $estado = 'todas
     // ====================================================================
     public function obtenerTodasLasMembresias($estado = 'todas', $busqueda = null, $porPagina = 1)
     {
-        $this->select('registros_membresia.*, clientes.Nombre, clientes.ApellidoP, clientes.Telefono, servicios.NombreMembresia, estatus.EstadodeMembresia')
+        $this->select('registros_membresia.*, clientes.Nombre, clientes.ApellidoP, clientes.ApellidoM, clientes.Correo, clientes.Telefono, servicios.NombreMembresia, estatus.EstadodeMembresia')
              ->join('clientes', 'clientes.IDClientes = registros_membresia.Clientes_IDClientes')
              ->join('servicios', 'servicios.IDServicios = registros_membresia.Servicios_IDServicios')
              ->join('estatus', 'estatus.idEstatus = registros_membresia.Estatus_idEstatus');
