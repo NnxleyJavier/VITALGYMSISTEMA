@@ -131,13 +131,11 @@
                                         <?= esc($m['EstadodeMembresia']) ?>
                                     </span>
                                 </td>
-                               <td class="text-center" style="white-space: nowrap;">
-                                    <!-- Botón Renovar (El que ya tenías) -->
+                              <td class="text-center" style="white-space: nowrap;">
                                     <a href="<?= base_url('renovacionesRegistro/' . $m['Clientes_IDClientes']) ?>" class="btn-action" title="Renovar" style="margin-right: 5px;">
                                         <span class="glyphicon glyphicon-refresh"></span>
                                     </a>
                                     
-                                    <!-- NUEVO: Botón Editar Datos -->
                                     <button type="button" class="btn-action btn-editar-cliente" 
                                             data-id="<?= $m['Clientes_IDClientes'] ?>"
                                             data-nombre="<?= esc($m['Nombre']) ?>"
@@ -146,9 +144,13 @@
                                             data-telefono="<?= esc($m['Telefono'] ?? '') ?>"
                                             data-correo="<?= esc($m['Correo'] ?? '') ?>"
                                             title="Editar Perfil" 
-                                            style="background: #fff5f8; color: #f64e60; border: none; outline: none;">
+                                            style="background: #fff5f8; color: #f64e60; border: none; outline: none; margin-right: 5px;">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </button>
+
+                                    <a href="<?= base_url('/generarCartaResponsiva/' . $m['Clientes_IDClientes']) ?>" target="_blank" class="btn-action" title="Imprimir Carta Responsiva" style="background: #e8f5e9; color: #28a745;">
+                                        <span class="glyphicon glyphicon-file"></span>
+                                    </a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

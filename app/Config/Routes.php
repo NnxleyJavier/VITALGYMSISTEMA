@@ -104,3 +104,5 @@ $routes->post('/mi-perfil/actualizar-password', 'Perfil::actualizarPasswordAjax'
 $routes->get('/arreglarRecibosViejos', 'Dashboard::arreglarRecibosViejos');
 
 $routes->post('/actualizar-datos-cliente', 'Home::actualizarDatosClienteAjax', ['filter' => 'permission:admin.access']);
+
+$routes->get('/generarCartaResponsiva/(:num)', 'Home::generarCartaResponsivaPDF/$1', ['filter' => 'permission:admin.access']);

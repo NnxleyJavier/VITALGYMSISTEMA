@@ -615,4 +615,52 @@ public function verAsistencias()
         return $this->response->setJSON(['status' => 'error', 'mensaje' => 'No se pudo conectar con la base de datos.', 'token' => csrf_hash()]);
     }
 
+
+    // ====================================================================
+    // GENERAR PDF DE CARTA RESPONSIVA
+    // ====================================================================
+    public function generarCartaResponsivaPDF($idCliente)
+    {
+        $db = \Config\Database::connect();
+        
+        // Buscamos todos los datos del cliente, incluyendo los de emergencia
+        $cliente = $db->table('clientes')->where('IDClientes', $idCliente)->get()->getRowArray();
+
+        if (!$cliente) {
+            return redirect()->back()->with('error', 'Cliente no encontrado.');
+        }
+
+        $data = [
+            'cliente' => $cliente
+        ];
+
+        // Cargamos la vista que tiene el diseño del documento HTML
+        $html = view('html/carta_responsiva_pdf', $data);
+
+        // =======================================================================
+        // GENERACIÓN DEL PDF (Ejemplo genérico con Dompdf)
+        // Sustituye estas líneas por tu librería de PDF si usas una distinta.
+        // =======================================================================
+        $dompdf = new \Dompdf\Dompdf();
+        
+        // Opcional: Permite cargar imágenes si tienes el logo del Gym
+        $options = $dompdf->getOptions();
+        $options->set('isRemoteEnabled', true);
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+
+     // Limpiamos cualquier basura invisible en el buffer
+        if (ob_get_length()) ob_end_clean(); 
+
+        // Mostramos el PDF
+        $dompdf->stream("Carta_Responsiva_" . strtoupper($cliente['Nombre']) . ".pdf", ["Attachment" => false]);
+        
+        // ¡AGREGA ESTA LÍNEA AQUÍ!
+        exit;
+    }
+
 }
