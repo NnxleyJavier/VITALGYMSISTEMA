@@ -151,6 +151,11 @@
                                     <a href="<?= base_url('/generarCartaResponsiva/' . $m['Clientes_IDClientes']) ?>" target="_blank" class="btn-action" title="Imprimir Carta Responsiva" style="background: #e8f5e9; color: #28a745;">
                                         <span class="glyphicon glyphicon-file"></span>
                                     </a>
+
+                                    <a href="<?= base_url('/enrolar/' . $m['Clientes_IDClientes']) ?>" class="btn-action" title="Vincular / Corregir Huella" style="background: #e1f5fe; color: #03a9f4; margin-left: 5px;">
+                                        <span class="glyphicon glyphicon-hand-up"></span>
+                                    </a>
+                                    
                                 </td>
                             </tr>
                         <?php endforeach; ?>
