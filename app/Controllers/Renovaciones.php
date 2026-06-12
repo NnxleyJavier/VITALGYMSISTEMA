@@ -197,7 +197,7 @@ public function guardarRenovacionAjax()
             $tipoMembresiaTicket .= $notaTicketTermico;
 
             helper('gym'); 
-            $sucursalID = obtener_id_gimnasio() ?? 'SUCUR0001';
+            $sucursalID = obtener_id_gimnasio() ?? 1;
             
             $datosParaTicket = [
                 'sucursal'              => $sucursalID,
@@ -259,7 +259,7 @@ public function guardarRenovacionAjax()
                 $outputPDF = $dompdf->output();
                 
                 // 2. GUARDAR EL PDF EN EL SERVIDOR
-                $nombreArchivo = 'ReciboRenovacion_' . $idCliente . '_' . date('Y-m-d') . '.pdf';
+                $nombreArchivo = 'Recibo_' . $idCliente . '_' . date('Y-m-d') . '.pdf';
                 $rutaGuardado = FCPATH . 'assets/recibos/' . $nombreArchivo;
                 file_put_contents($rutaGuardado, $outputPDF);
                 

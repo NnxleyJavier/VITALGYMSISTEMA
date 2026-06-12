@@ -37,7 +37,7 @@ try {
 
     $printer->setTextSize(1, 1);
     $printer->text("VITAL GYM\n");
-    $printer->text("SUC. " . ($sucursal == "SUCUR00001" ? "CENTRO" : "XOXOCOTLAN") . "\n");
+    $printer->text("SUC. " . ($sucursal == "SUCUR00001" || $sucursal == 1 ? "CENTRO" : "XOXOCOTLAN") . "\n");
     $printer->text("===============================\n");
     
     // Título distintivo para renovaciones

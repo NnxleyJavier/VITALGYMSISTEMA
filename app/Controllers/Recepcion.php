@@ -234,7 +234,7 @@ public function obtenerPendientesAJAX()
                         
                     // 1. GENERAR EL PDF CON DOMPDF
                         $datosPDF = [
-                            'sucursal'   => $sucursalActiva ?? 'SUCUR00001', // <--- Agrega esta línea
+                            'sucursal'   => $sucursalActiva ?? 1, // <--- Agrega esta línea
                             'cliente'    => $nombreCompleto,
                             'membresia'  => $nombreMembresia,
                             'costo_base' => $costoBase,
@@ -397,5 +397,94 @@ public function consultaRapidaSocio()
             'token'             => csrf_hash()
         ]);
     }
-    
+// ====================================================================
+    // BOTÓN DE RESCATE: REGENERAR PDF FALTANTE (A PRUEBA DE FALLOS)
+    // ====================================================================
+    public function regenerarReciboFaltante($idPago) {
+        try {
+            $db = \Config\Database::connect();
+
+            // 1. Extraer los datos
+            $pago = $db->table('pago')
+                       ->select('pago.*, clientes.IDClientes, clientes.Nombre, clientes.ApellidoP, registros_membresia.Fecha_Fin')
+                       ->join('registros_membresia', 'registros_membresia.Pago_idPago = pago.idPago', 'left')
+                       ->join('clientes', 'clientes.IDClientes = registros_membresia.Clientes_IDClientes', 'left')
+                       ->where('pago.idPago', $idPago)
+                       ->get()->getRowArray();
+
+            if (!$pago) {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'No se encontró este pago en la base de datos.']);
+            }
+
+            // 2. Armar el nombre del archivo
+            $fechaSolo = date('Y-m-d', strtotime($pago['Fecha_Pago']));
+            $nombreArchivo = 'Recibo_' . $pago['IDClientes'] . '_' . $fechaSolo . '.pdf';
+            $rutaGuardado = FCPATH . 'assets/recibos/' . $nombreArchivo;
+
+        // 3. Preparar las variables blindadas (float)
+            // Validamos que Fecha_Fin no venga vacía o nula para evitar otro error 500
+            $fechaFinRaw = $pago['Fecha_Fin'] ?? '';
+            $fechaFinFormat = (!empty($fechaFinRaw) && $fechaFinRaw != '0000-00-00 00:00:00') 
+                              ? date('d/m/Y', strtotime($fechaFinRaw)) 
+                              : date('d/m/Y', strtotime('+1 month'));
+
+            // Armamos el nombre completo del cliente
+            $nombreCompleto = trim(($pago['Nombre'] ?? '') . ' ' . ($pago['ApellidoP'] ?? ''));
+
+            // AQUÍ ESTÁ LA CORRECCIÓN: Se agregan 'sucursal' y 'cliente' idéntico a tu cobro original
+            $datosParaPDF = [
+                'sucursal'   => $pago['id_gimnasio'] ?? 1,
+                'cliente'    => $nombreCompleto,
+                'membresia'  => mb_strtoupper($pago['Concepto']),
+                'fecha_fin'  => $fechaFinFormat, 
+                'costo_base' => (float) $pago['Monto'],
+                'extras'     => [], 
+                'total'      => (float) $pago['Monto']
+            ];
+            // 4. Invocar a Dompdf
+            // IMPORTANTE: Si en tu sistema necesitas requerir un archivo para usar Dompdf, ponlo aquí arriba.
+            // Ejemplo: require_once APPPATH . 'ThirdParty/dompdf/autoload.inc.php';
+            
+            if (!class_exists('\Dompdf\Dompdf')) {
+                return $this->response->setJSON([
+                    'status' => 'error', 
+                    'message' => 'El servidor no encuentra la librería Dompdf en este controlador.'
+                ]);
+            }
+
+            $options = new \Dompdf\Options();
+            $options->set('isRemoteEnabled', true);
+            $dompdf = new \Dompdf\Dompdf($options);
+            
+            $html = view('html/ReciboPDF', $datosParaPDF);
+            $dompdf->loadHtml($html);
+           $dompdf->setPaper('A5', 'portrait');
+            $dompdf->render();
+
+            // 5. Crear el archivo físicamente
+            // Verificamos si la carpeta tiene permisos antes de intentar guardar
+            if (!is_writable(FCPATH . 'assets/recibos/')) {
+                return $this->response->setJSON([
+                    'status' => 'error', 
+                    'message' => 'Linux bloqueó la acción. La carpeta "assets/recibos/" no tiene permisos de escritura (775 o 777).'
+                ]);
+            }
+
+            file_put_contents($rutaGuardado, $dompdf->output());
+
+            return $this->response->setJSON([
+                'status'  => 'success', 
+                'message' => 'PDF regenerado y guardado en el servidor.',
+                'url'     => base_url('assets/recibos/' . $nombreArchivo)
+            ]);
+
+        } catch (\Throwable $e) {
+            // EL CAZADOR DE ERRORES: Si PHP colapsa, atrapamos el Error 500 aquí
+            return $this->response->setJSON([
+                'status'  => 'error', 
+                'message' => 'ERROR FATAL PHP: ' . $e->getMessage() . ' en la línea ' . $e->getLine()
+            ]);
+        }
+    }
+
 }

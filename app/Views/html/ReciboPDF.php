@@ -40,15 +40,18 @@
 </head>
 <body>
 
-    <?php
-        // Configuramos la información según la sucursal que llegue del controlador
-        $sucursal_activa = $sucursal ?? 'SUCUR00001';
-        if ($sucursal_activa == "SUCUR00002") {
+   <?php
+        // Recibe la sucursal o asigna '1' (Centro) por defecto
+        $sucursal_activa = $sucursal ?? 1;
+
+        // Verificamos si es la sucursal de Xoxo (ya sea que llegue un 2 o el código largo)
+        if ($sucursal_activa == 2 || $sucursal_activa == "SUCUR00002") {
             $direccion1 = "Camino al tequio # 307 C.P.71230";
             $direccion2 = "Santa Cruz Xoxocotlan, Oax.";
             $nombre_suc = "SUC. XOXOCOTLAN";
             $tel        = "(951) 549 - 9368";
         } else {
+            // Si llega un 1, 'SUCUR00001', o cualquier otro dato, imprime Centro (La Paz)
             $direccion1 = "Av. La paz 509 C.P. 68150";
             $direccion2 = "Col. California, Oaxaca de Juarez";
             $nombre_suc = "SUC. CENTRO";
@@ -94,7 +97,7 @@
                         <span class="item-nombre"><?= $membresia ?></span>
                         <span class="item-vence">(Vence: <?= $fecha_fin ?>)</span>
                     </td>
-                    <td class="text-right">$<?= number_format($costo_base, 2) ?></td>
+                    <td class="text-right">$<?= number_format((float)$costo_base, 2) ?></td>
                 </tr>
                 
                 <?php if(!empty($extras)): ?>
@@ -103,7 +106,7 @@
                         <td style="padding-left: 10px;">
                             <span class="item-nombre">+ <?= $extra['nombre'] ?></span>
                         </td>
-                        <td class="text-right">$<?= number_format($extra['costo'], 2) ?></td>
+                       <td class="text-right">$<?= number_format((float)$extra['costo'], 2) ?></td>
                     </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -111,7 +114,7 @@
         </table>
 
         <div class="total-line text-right">
-            TOTAL: $<?= number_format($total, 2) ?>
+           TOTAL: $<?= number_format((float)$total, 2) ?>
         </div>
 
         <div class="footer text-center">

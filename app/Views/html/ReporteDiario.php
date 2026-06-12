@@ -271,8 +271,9 @@ $(document).ready(function() {
 
                             if (telefonoLimpio !== '') {
                                 // Extrae solo la fecha ("YYYY-MM-DD")
-                                let fechaRecibo = item.Fecha_Pago.split(' ')[0];
-                                let enlaceRecibo = '<?= base_url("assets/recibos/Recibo_") ?>' + item.Clientes_IDClientes + '_' + fechaRecibo + '.pdf';
+                                // En tu AJAX de detalles del turno, la lógica del WhatsApp ahora es super sencilla:
+                                    let fechaRecibo = item.Fecha_Pago.split(' ')[0];
+                                    let enlaceRecibo = '<?= base_url("assets/recibos/Recibo_") ?>' + item.Clientes_IDClientes + '_' + fechaRecibo + '.pdf';
                                 
                                 let mensaje = "¡Hola " + item.Nombre + "! 🏋️‍♂️\n\nAquí tienes el enlace para descargar la copia de tu recibo de pago:\n" + enlaceRecibo;
                                 let urlWA = "https://api.whatsapp.com/send?phone=" + telefonoLimpio + "&text=" + encodeURIComponent(mensaje);
@@ -280,16 +281,17 @@ $(document).ready(function() {
                                 btnWhatsApp = `<a href="${urlWA}" target="_blank" class="btn btn-success btn-sm" style="border-radius:20px; padding: 2px 10px; font-size: 11px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"><i class="fab fa-whatsapp"></i> Reenviar</a>`;
                             }
                             // --- FIN DE LO NUEVO ---
+                            // === LO NUEVO: BOTÓN DE RESCATE ===
+                               let btnForzarPDF = `<br><button type="button" onclick="forzarPDF(${item.idPago})" class="btn btn-warning btn-sm mt-1" style="border-radius:20px; padding: 2px 10px; font-size: 10px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"><i class="fas fa-hammer"></i> Crear PDF</button>`;
 
-                            // --- ARMADO DE LA FILA (SE INCLUYE EL btnWhatsApp AL FINAL) ---
                             html += `<tr>
                                 <td style="padding-left: 25px;"><strong style="color:#4e54c8;">${nombreCompleto}</strong></td>
                                 <td style="font-size: 13px; color: #555;">${item.Concepto}</td>
                                 <td><span class="badge ${badgeMetodo}" style="font-size:11px; padding: 5px 8px;">${item.Tipo_Pago}</span></td>
                                 <td class="text-muted" style="font-size:13px;"><i class="far fa-clock"></i> ${horaReal}</td>
                                 <td class="text-right" style="font-weight:700; color:#333;">${montoFinal}</td>
-                                <td class="text-center" style="padding-right: 25px;">${btnWhatsApp}</td>
-                            </tr>`;
+                                <td class="text-center" style="padding-right: 25px;">${btnWhatsApp} ${btnForzarPDF}</td>
+                            </tr>`; 
 
                         });
                     } else {
@@ -307,4 +309,35 @@ $(document).ready(function() {
         });
     });
 });
+
+
+// Función global para disparar la regeneración
+function forzarPDF(idPago) {
+    Swal.fire({
+        title: 'Generando Recibo...',
+        text: 'Extrayendo datos y fabricando el PDF...',
+        allowOutsideClick: false,
+        didOpen: () => { Swal.showLoading(); }
+    });
+
+    $.ajax({
+        url: '<?= base_url("/regenerar-pdf-faltante/") ?>' + idPago,
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if(response.status === 'success') {
+                Swal.fire('¡Solucionado!', 'El recibo físico ya existe en el servidor.', 'success').then(() => {
+                    // Abrimos el PDF regenerado en una nueva pestaña
+                    window.open(response.url, '_blank');
+                });
+            } else {
+                Swal.fire('Error', response.message, 'error');
+            }
+        },
+        error: function() {
+            Swal.fire('Error', 'Hubo un problema de conexión.', 'error');
+        }
+    });
+}
+
 </script>

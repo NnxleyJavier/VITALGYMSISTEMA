@@ -20,7 +20,7 @@ $extras_json       = $_GET['extras'] ?? '[]';
 $extras            = json_decode($extras_json, true);
 
 // 2. CONFIGURACIÓN DE SUCURSALES
-if ($sucursal == "SUCUR00002") {
+if ($sucursal == "SUCUR00002" || $sucursal == 2) {
     $direccion1 = "Camino al tequio # 307 C.P.71230";
     $direccion2 = "Santa Cruz Xoxocotlan, Oax.";
     $nombre_suc = "SUC. XOXOCOTLAN";

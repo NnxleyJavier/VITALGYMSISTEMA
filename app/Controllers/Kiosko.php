@@ -24,22 +24,92 @@ class Kiosko extends Controller {//el controlador tenia en principio extends Con
     $clienteModel = new Cliente();
     $RegistroMembresiaModel = new RegistroMembresiaModel(); // Cargamos el modelo de membresías para consultar fechas
     
+// =========================================================
+        // 1. DEFINE LA IDENTIDAD NUMÉRICA DE ESTE KIOSKO (DINÁMICO)
+        // =========================================================
+        helper(['gym', 'usuario']); 
+        $id_gimnasio_fisico = obtener_id_gimnasio();
+// El helper nos da el ID numérico (ej. 1 o 2) o la palabra 'TODOS' para el superadmin
+
+
+        // Medida de seguridad: Si el kiosko se quedó abierto y la sesión expiró
+        if ($id_gimnasio_fisico === null) {
+            return $this->response->setJSON([
+                'status' => 'error', 
+                'message' => 'Error: El kiosko no tiene una sesión de sucursal activa. Por favor inicie sesión.',
+                'token' => csrf_hash()
+            ]);
+        }
+
+
     // OPTIMIZACIÓN: Solo traer usuarios que tengan huella registrada y membresía activa 
 
         $candidatos = $clienteModel->ObtenerclientesActivos(); // Usamos el método que ya definimos en Cliente.php
 
-    foreach ($candidatos as $candidato) {
-        // Llamada 1 a 1 al Python "Salvavidas"
-        $resultado = $this->consultarMicroservicio($huellaRecibida, $candidato['Huella']);
+   // ¡EL CAMBIO MÁGICO!: Mandamos todo el arreglo de candidatos a Python en una sola petición
+        $resultado = $this->consultarMicroservicioBatch($huellaRecibida, $candidatos);
         
+           // Python nos va a devolver "match: true" y el ID del cliente si lo encontró
         if (isset($resultado['match']) && $resultado['match'] === true) {
 
-            $IdCandidato= $candidato['IDClientes'] ; // Aquí empezamos a vincular las fechas o consultar por ID
+            $IdCandidato= $resultado['IDClientes'] ; // Aquí empezamos a vincular las fechas o consultar por ID
 
-            $ConsultarFecha = $RegistroMembresiaModel->obtenerFechaMembresia($IdCandidato); // Método que debes crear en tu modelo para obtener la fecha de fin de membresía;
-            
-            $diasRestantes = $this->calcularDiasRestantes($ConsultarFecha[0]['Fecha_Fin'],$IdCandidato); // Método que debes crear para calcular días restantes y preparar la respuesta JSON
 
+            // Buscamos los datos completos de ese cliente específico en nuestro arreglo
+            $clienteEncontrado = null;
+            foreach ($candidatos as $cand) {
+                if ($cand['IDClientes'] == $IdCandidato) {
+                    $clienteEncontrado = $cand;
+                    break;
+                }
+            }
+
+
+
+        if ($clienteEncontrado) {
+            // 2. EXTRAEMOS LA INFO DE LA MEMBRESÍA Y EL ID DEL GIMNASIO DONDE PAGÓ
+                $datosMembresia = $RegistroMembresiaModel->obtenerMembresiaKiosko($IdCandidato);
+                
+                if(!$datosMembresia) {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'No se encontró una membresía registrada.']);
+                }
+
+            $fechaFin = $datosMembresia['Fecha_Fin'];
+            $nombreMembresia = mb_strtolower($datosMembresia['NombreMembresia']);
+            $idGimnasioPago = $datosMembresia['id_gimnasio'];
+
+
+            // =========================================================
+                // TRADUCTOR DE SUCURSAL PARA LOS MENSAJES
+                // =========================================================
+                $nombresSucursales = [
+                    1 => 'La Paz',
+                    2 => 'Xoxo'
+                ];
+                $nombreSucursalCliente = $nombresSucursales[$idGimnasioPago] ?? 'Otra Sucursal';
+
+         // =========================================================
+                // 3. LÓGICA MULTI-SUCURSAL (EL PORTERO LOGICO)
+                // =========================================================
+                // Buscamos si el nombre del servicio incluye "global" o "ambas"
+                $esGlobal = (strpos($nombreMembresia, 'global') !== false || strpos($nombreMembresia, 'ambas') !== false);
+
+                // Si NO es membresía global Y el usuario logueado NO es el superadmin ('TODOS')...
+                if (!$esGlobal && $id_gimnasio_fisico !== 'TODOS') {
+                    // Validamos que el ID del pago coincida con la sucursal del cajero actual
+                    if ($idGimnasioPago != $id_gimnasio_fisico) {
+                        return $this->response->setJSON([
+                            'status' => 'error',
+                            'message' => 'Acceso denegado: Tu membresía es exclusiva de la sucursal ' . strtoupper($nombreSucursalCliente) . '.',
+                            'token' => csrf_hash()
+                        ]);
+                    }
+                }
+
+                // =========================================================
+                // 4. SI PASA AL PORTERO, VALIDAMOS FECHAS 
+                // =========================================================
+                $diasRestantes = $this->calcularDiasRestantes($fechaFin, $IdCandidato);
 
             // ¡ENCONTRADO! Devolvemos los datos del usuario
             return $this->response->setJSON([
@@ -47,14 +117,17 @@ class Kiosko extends Controller {//el controlador tenia en principio extends Con
                 'nombre' => $candidato['Nombre'],
                 'apellido_paterno' => $candidato['ApellidoP'],
                 'dias_restantes' => $diasRestantes['dias_restantes'], // Esto es lo que calculamos en el método calcularDiasRestantes
+                // AQUÍ MANDAMOS EL NOMBRE DE LA SUCURSAL PARA QUE LO MUESTRES EN LA PANTALLA VERDE
+                    'sucursal_origen' => strtoupper($nombreSucursalCliente),
                 'token' => csrf_hash() // Refrescar token
             ]);
         }
-    }
     
+   }  
+   // Si no hubo match en Python
     return $this->response->setJSON([
         'status' => 'error', 
-        'message' => 'Huella no encontrada',
+        'message' => 'Huella no encontrada o acceso inválido',
         'token' => csrf_hash()
     ]);
 }
@@ -131,19 +204,6 @@ private function calcularDiasRestantes($fechaFin,$IdCliente) {
                 'Motivo'           => $motivoAcceso,
             ];
        
-            // 5. GUARDAR EN EL HISTORIAL (Fuera del if para que guarde ambos casos)
-    // Este arreglo SÍ coincide exactamente con los campos de tu tabla
-    $datosGuardar = [
-        'Clientes_IDClientes' => $IdCliente,
-        'FechaHora_Acceso'    => $FechaHora_Acceso,
-        'Estatus_idEstatus'      => $estatusAcceso,
-        'Motivo'              => $motivoAcceso
-    ];
-
-
-      $HistorialAccesos->insert($datosGuardar);
-
-
         } else {
             // --- ESCENARIO B: DÍAS NEGATIVOS (VENCIDO) ---
             $diasVencidos  = abs($diasRestantes); // Convertimos el negativo a positivo (ej. -3 a 3)
@@ -159,9 +219,15 @@ private function calcularDiasRestantes($fechaFin,$IdCliente) {
             ];
         }
 
-
+// CORRECCIÓN: Guardar en el historial sin importar si entró o fue denegado
+        $datosGuardar = [
+            'Clientes_IDClientes' => $IdCliente,
+            'FechaHora_Acceso'    => $FechaHora_Acceso,
+            'Estatus_idEstatus'   => $estatusAcceso,
+            'Motivo'              => $motivoAcceso
+        ];
         // 5. GUARDAR EN HISTORIAL DE ACCESOS (SI QUIERES)
-
+        $HistorialAccesos->insert($datosGuardar);
 
 
         

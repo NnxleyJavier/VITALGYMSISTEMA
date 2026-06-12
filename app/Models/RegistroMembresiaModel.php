@@ -319,4 +319,18 @@ public function obtenerClientesParaRenovacion($busqueda = null, $estado = 'todas
                     ->orderBy('pago.Fecha_Pago', 'DESC')
                     ->findAll();
     }
+
+// ====================================================================
+    // EXTRAER DATOS DEL KIOSKO PARA VALIDACIÓN MULTI-SUCURSAL
+    // ====================================================================
+    public function obtenerMembresiaKiosko($idCliente)
+    {
+        return $this->select('registros_membresia.Fecha_Fin, servicios.NombreMembresia, pago.id_gimnasio')
+                    ->join('servicios', 'servicios.IDServicios = registros_membresia.Servicios_IDServicios', 'left')
+                    ->join('pago', 'pago.idPago = registros_membresia.Pago_idPago', 'left')
+                    ->where('Clientes_IDClientes', $idCliente)
+                    ->orderBy('registros_membresia.Fecha_Fin', 'DESC')
+                    ->first(); 
+    }
+    
 }
