@@ -207,8 +207,8 @@ class Cliente extends Model
         $this->where('clientes.Huella !=', '');
         $this->where('clientes.Huella IS NOT NULL');
         
-        // 4. EL NUEVO FILTRO: Solo estatus 1 (Activos)
-        $this->where('registros_membresia.Estatus_idEstatus', 1);
+       // 4. EL NUEVO FILTRO: Solo estatus 1 (Activos)
+       // $this->where('registros_membresia.Estatus_idEstatus', 1);
         
         // 5. Agrupamos por ID del cliente por si hay algún error y tiene 2 pagos activos, 
         // no nos traiga la misma huella dos veces y haga trabajar a PHP el doble.

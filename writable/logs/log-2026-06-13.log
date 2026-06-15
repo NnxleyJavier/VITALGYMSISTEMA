@@ -1,0 +1,187 @@
+CRITICAL - 2026-06-13 12:37:59 --> Error: Call to undefined method App\Controllers\Kiosko::consultarMicroservicioBatch()
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 50.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 12:38:09 --> Error: Call to undefined method App\Controllers\Kiosko::consultarMicroservicioBatch()
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 50.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 12:38:42 --> Error: Call to undefined method App\Controllers\Kiosko::consultarMicroservicioBatch()
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 50.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 12:38:51 --> Error: Call to undefined method App\Controllers\Kiosko::consultarMicroservicioBatch()
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 50.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 12:38:56 --> Error: Call to undefined method App\Controllers\Kiosko::consultarMicroservicioBatch()
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 50.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 12:39:01 --> Error: Call to undefined method App\Controllers\Kiosko::consultarMicroservicioBatch()
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 50.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:03:15 --> Error: Call to undefined method App\Controllers\Kiosko::consultarMicroservicioBatch()
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 50.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:03:30 --> Error: Call to undefined method App\Controllers\Kiosko::consultarMicroservicioBatch()
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 50.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:03:35 --> Error: Call to undefined method App\Controllers\Kiosko::consultarMicroservicioBatch()
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 50.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:03:43 --> Error: Call to undefined method App\Controllers\Kiosko::consultarMicroservicioBatch()
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 50.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:03:53 --> Error: Call to undefined method App\Controllers\Kiosko::consultarMicroservicioBatch()
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 50.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 7 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:07:36 --> ErrorException: Undefined array key "IDClientes"
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 55.
+ 1 APPPATH\Controllers\Kiosko.php(55): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "IDClientes"', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Controllers\\Kiosko.php', 55)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:11:06 --> ErrorException: Undefined array key "IDClientes"
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 55.
+ 1 APPPATH\Controllers\Kiosko.php(55): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "IDClientes"', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Controllers\\Kiosko.php', 55)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:11:56 --> ErrorException: Undefined array key "IDClientes"
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 55.
+ 1 APPPATH\Controllers\Kiosko.php(55): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "IDClientes"', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Controllers\\Kiosko.php', 55)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:12:08 --> ErrorException: Undefined array key "IDClientes"
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 55.
+ 1 APPPATH\Controllers\Kiosko.php(55): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "IDClientes"', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Controllers\\Kiosko.php', 55)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:12:16 --> ErrorException: Undefined array key "IDClientes"
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 55.
+ 1 APPPATH\Controllers\Kiosko.php(55): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "IDClientes"', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Controllers\\Kiosko.php', 55)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:13:17 --> ErrorException: Undefined array key "IDClientes"
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 55.
+ 1 APPPATH\Controllers\Kiosko.php(55): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "IDClientes"', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Controllers\\Kiosko.php', 55)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-13 13:13:29 --> ErrorException: Undefined array key "IDClientes"
+[Method: POST, Route: verificarHuella]
+in APPPATH\Controllers\Kiosko.php on line 55.
+ 1 APPPATH\Controllers\Kiosko.php(55): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "IDClientes"', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Controllers\\Kiosko.php', 55)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Kiosko->verificarHuella()
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Kiosko))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')

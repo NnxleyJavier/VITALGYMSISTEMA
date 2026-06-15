@@ -14,7 +14,7 @@ class Kiosko extends Controller {//el controlador tenia en principio extends Con
 
 
 
-   public function verificarHuella() {
+      public function verificarHuella() {
     $huellaRecibida = $this->request->getPost('huella_feature_set');
     
     if (!$huellaRecibida) {
@@ -41,10 +41,9 @@ class Kiosko extends Controller {//el controlador tenia en principio extends Con
             ]);
         }
 
+        // FALTABA ESTO: Traer los candidatos de la base de datos
+        $candidatos = $clienteModel->ObtenerclientesActivos();
 
-    // OPTIMIZACIÓN: Solo traer usuarios que tengan huella registrada y membresía activa 
-
-        $candidatos = $clienteModel->ObtenerclientesActivos(); // Usamos el método que ya definimos en Cliente.php
 
    // ¡EL CAMBIO MÁGICO!: Mandamos todo el arreglo de candidatos a Python en una sola petición
         $resultado = $this->consultarMicroservicioBatch($huellaRecibida, $candidatos);
@@ -52,7 +51,9 @@ class Kiosko extends Controller {//el controlador tenia en principio extends Con
            // Python nos va a devolver "match: true" y el ID del cliente si lo encontró
         if (isset($resultado['match']) && $resultado['match'] === true) {
 
-            $IdCandidato= $resultado['IDClientes'] ; // Aquí empezamos a vincular las fechas o consultar por ID
+             // OPTIMIZACIÓN: Solo traer usuarios que tengan huella registrada y membresía activa 
+
+       $IdCandidato = $resultado['IDClientes'] ?? $resultado['id_cliente']; // Usamos el método que ya definimos en Cliente.php
 
 
             // Buscamos los datos completos de ese cliente específico en nuestro arreglo
@@ -73,10 +74,16 @@ class Kiosko extends Controller {//el controlador tenia en principio extends Con
                 if(!$datosMembresia) {
                     return $this->response->setJSON(['status' => 'error', 'message' => 'No se encontró una membresía registrada.']);
                 }
+                // ==============================================================
+                // ESCUDO ANTI-CRASH: Detectar si CodeIgniter mandó la fila en [0]
+                // ==============================================================
+                $filaMembresia = isset($datosMembresia[0]) ? $datosMembresia[0] : $datosMembresia;
+                
 
-            $fechaFin = $datosMembresia['Fecha_Fin'];
-            $nombreMembresia = mb_strtolower($datosMembresia['NombreMembresia']);
-            $idGimnasioPago = $datosMembresia['id_gimnasio'];
+            $fechaFin = $filaMembresia['Fecha_Fin'] ?? date('Y-m-d');
+            $conceptoCrudo = $filaMembresia['NombreMembresia'] ?? ''; // Si es nulo, lo vuelve texto vacío
+            $conceptoMembresia = mb_strtolower($conceptoCrudo);
+            $idGimnasioPago = $filaMembresia['id_gimnasio']?? null;
 
 
             // =========================================================
@@ -92,7 +99,7 @@ class Kiosko extends Controller {//el controlador tenia en principio extends Con
                 // 3. LÓGICA MULTI-SUCURSAL (EL PORTERO LOGICO)
                 // =========================================================
                 // Buscamos si el nombre del servicio incluye "global" o "ambas"
-                $esGlobal = (strpos($nombreMembresia, 'global') !== false || strpos($nombreMembresia, 'ambas') !== false);
+                $esGlobal = (strpos($conceptoMembresia, 'global') !== false || strpos($conceptoMembresia, 'ambas') !== false);
 
                 // Si NO es membresía global Y el usuario logueado NO es el superadmin ('TODOS')...
                 if (!$esGlobal && $id_gimnasio_fisico !== 'TODOS') {
@@ -107,16 +114,26 @@ class Kiosko extends Controller {//el controlador tenia en principio extends Con
                 }
 
                 // =========================================================
-                // 4. SI PASA AL PORTERO, VALIDAMOS FECHAS 
+                // 4. SI PASA AL PORTERO, VALIDAMOS FECHAS Y VENCIMIENTO
                 // =========================================================
-                $diasRestantes = $this->calcularDiasRestantes($fechaFin, $IdCandidato);
-
+                // OJO: Le cambié el nombre a $diasRestantesData para no confundirla con el número suelto
+            $diasRestantesData = $this->calcularDiasRestantes($fechaFin, $IdCandidato);
+            
+            // CORRECCIÓN VITAL: ¡Bloquear si ya está vencido! (Días negativos)
+            if ($diasRestantesData['dias_restantes'] < 0) {
+                return $this->response->setJSON([
+                    'status' => 'error',
+                    'message' => $diasRestantesData['Motivo'], // Mostrará: "Membresía vencida hace X días"
+                    'token' => csrf_hash()
+                ]);
+            }
+            
             // ¡ENCONTRADO! Devolvemos los datos del usuario
             return $this->response->setJSON([
                 'status' => 'success',
-                'nombre' => $candidato['Nombre'],
-                'apellido_paterno' => $candidato['ApellidoP'],
-                'dias_restantes' => $diasRestantes['dias_restantes'], // Esto es lo que calculamos en el método calcularDiasRestantes
+                'nombre' => $clienteEncontrado['Nombre'],
+                'apellido_paterno' => $clienteEncontrado['ApellidoP'],
+                'dias_restantes' => $diasRestantesData['dias_restantes'], // Esto es lo que calculamos en el método calcularDiasRestantes
                 // AQUÍ MANDAMOS EL NOMBRE DE LA SUCURSAL PARA QUE LO MUESTRES EN LA PANTALLA VERDE
                     'sucursal_origen' => strtoupper($nombreSucursalCliente),
                 'token' => csrf_hash() // Refrescar token
@@ -133,7 +150,39 @@ class Kiosko extends Controller {//el controlador tenia en principio extends Con
 }
 
 
+// NUEVA FUNCIÓN: Envía todo el lote (Batch) de una vez
+    private function consultarMicroservicioBatch($huellaNueva, $listaCandidatos) {
+        $url = "https://hardysoft.net/verificar_batch"; // Nueva ruta en Python
+        
+        $data = [
+            'huella_nueva' => $huellaNueva, 
+            'candidatos'   => $listaCandidatos // Mandamos TODO el arreglo
+        ];
 
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        // Le damos 10 segundos de colchón, aunque Python tardará 2.
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10); 
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        
+        // Evitar problemas de certificados SSL internos en cURL
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode === 200) {
+            return json_decode($response, true);
+        }
+        
+        return ['match' => false];
+    }
+    
+    
 
 
 private function consultarMicroservicio($huellaNueva, $huellaBD) {

@@ -14,14 +14,33 @@ DPFJ_SUCCESS = 0
 DPFJ_E_MORE_DATA = 96075789 # Código específico de DigitalPersona para "Requiere más varianza"
 
 # --- CARGA Y TIPADO ESTRICTO DE DLLS ---
+import platform
+
 lib = None
 try:
-    if os.name == 'nt':
+    # Definimos la ruta absoluta donde estamos ejecutando el código
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+
+    if platform.system() == 'Windows':
         for dll in ["dpfpdd.dll", "dpfr6.dll", "dpfr7.dll"]:
             try: ctypes.WinDLL(dll)
             except OSError: pass
         lib = ctypes.WinDLL("dpfj.dll")
+        
+    elif platform.system() == 'Linux':
+        # En Linux usamos CDLL en lugar de WinDLL y apuntamos a los .so
+        
+        # Opcional: Cargar dependencias de hardware por si acaso
+        try:
+            ctypes.CDLL(os.path.join(base_dir, "libdpfpdd5000.so.3.0.50"))
+        except OSError:
+            pass 
+            
+        # Cargar el motor principal FingerJet (el que hace el match)
+        lib = ctypes.CDLL(os.path.join(base_dir, "libdpfj.so.2"))
 
+except Exception as e:
+    print(f"Error al cargar las librerías biométricas: {e}")
     # Firmas estrictas para prevenir corrupción de segmentación
     lib.dpfj_create_fmd_from_raw.argtypes = [
         ctypes.POINTER(ctypes.c_ubyte), ctypes.c_uint, ctypes.c_uint, ctypes.c_uint, 
@@ -215,8 +234,16 @@ def verificar():
             ctypes.byref(score)
         )
         
+
+        print("=== DEBUG BIOMETRIA ===")
+        print(f"Tamaño Huella Kiosko (Bytes): {fmd_size.value}")
+        print(f"Tamaño Template BD (Bytes): {len(tpl_bd)}")
+        print(f"Codigo de respuesta DP: {res_compare}")
+        print(f"Score Obtenido: {score.value}")
+        print("=======================")
+        UMBRAL_TOLERANCIA = 45474
+        match = (res_compare == DPFJ_SUCCESS) and (score.value < UMBRAL_TOLERANCIA)
         # Tolerancia comercial recomendada para gimnasios/kioskos
-        UMBRAL_TOLERANCIA = 45474 
         match = (res_compare == DPFJ_SUCCESS and score.value < UMBRAL_TOLERANCIA)
         
         if match:
@@ -230,5 +257,69 @@ def verificar():
         print(f"Error Verif: {e}")
         return jsonify({"status": "error", "match": False})
 
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, threaded=True)
+
+# =================================================================
+#  ENDPOINT 3: VERIFICACIÓN MASIVA EN LOTE (BATCH) 
+# =================================================================
+@app.route('/verificar_batch', methods=['POST'])
+def verificar_batch():
+    data = request.get_json()
+    try:
+        json_str = data.get('huella_nueva')
+        lista_candidatos = data.get('candidatos', []) 
+
+        sample = json.loads(json_str)
+        raw_b64 = sample['Data'].replace('-', '+').replace('_', '/')
+        img_data = base64.b64decode(raw_b64 + "===")
+
+        image = Image.open(io.BytesIO(img_data)).convert('L')
+        img_bytes = image.tobytes()
+        width, height = image.size
+        
+        fmd_size = ctypes.c_uint(2048)
+        
+        fmd_buf = (ctypes.c_ubyte * 2048)()
+
+        res_extract = lib.dpfj_create_fmd_from_raw(
+            ctypes.cast(img_bytes, ctypes.POINTER(ctypes.c_ubyte)), len(img_bytes),
+            width, height, 500, 0, 0, DPFJ_FMD_ANSI_378, fmd_buf, ctypes.byref(fmd_size)
+        )
+
+        if res_extract != DPFJ_SUCCESS:
+             return jsonify({"status": "error", "match": False})
+
+        UMBRAL_TOLERANCIA = 45474
+        score = ctypes.c_uint(0)
+
+        for candidato in lista_candidatos:
+            huella_bd_b64 = candidato.get('Huella')
+            id_cliente = candidato.get('IDClientes')
+
+            if not huella_bd_b64:
+                continue
+
+            tpl_bd = base64.b64decode(huella_bd_b64)
+
+            res_compare = lib.dpfj_compare(
+                DPFJ_FMD_ANSI_378, fmd_buf, fmd_size.value, 0,
+                DPFJ_FMD_ANSI_378, ctypes.create_string_buffer(tpl_bd), len(tpl_bd), 0,
+                ctypes.byref(score)
+            )
+
+            if res_compare == DPFJ_SUCCESS and score.value < UMBRAL_TOLERANCIA:
+                print(f"🔍 MATCH EXITOSO: Cliente {id_cliente} - Score={score.value}")
+                return jsonify({"status": "success", "match": True, "id_cliente": id_cliente, "score": score.value})
+
+        print("⛔ DENEGADO: Huella no encontrada en la base de datos.")
+        return jsonify({"status": "success", "match": False})
+
+    except Exception as e:
+        print(f"Error Batch: {e}")
+        return jsonify({"status": "error", "match": False})
+
+
+# TUS ÚLTIMAS DOS LÍNEAS ORIGINALES:
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, threaded=True)

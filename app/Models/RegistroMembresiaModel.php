@@ -325,6 +325,7 @@ public function obtenerClientesParaRenovacion($busqueda = null, $estado = 'todas
     // ====================================================================
     public function obtenerMembresiaKiosko($idCliente)
     {
+        // ¡Se eliminó la coma al final de id_gimnasio!
         return $this->select('registros_membresia.Fecha_Fin, servicios.NombreMembresia, pago.id_gimnasio')
                     ->join('servicios', 'servicios.IDServicios = registros_membresia.Servicios_IDServicios', 'left')
                     ->join('pago', 'pago.idPago = registros_membresia.Pago_idPago', 'left')
