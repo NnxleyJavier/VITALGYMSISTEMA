@@ -1,0 +1,1842 @@
+ERROR - 2026-06-17 14:28:10 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14 in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('\n            SE...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('\n            SE...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('\n            SE...')
+#3 C:\xampp\htdocs\VitalGymSistema\app\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('\n            SE...', Array)
+#4 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', NULL)
+#5 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+#6 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+#7 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#12 {main}
+CRITICAL - 2026-06-17 14:28:10 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14
+[Method: GET, Route: reportediario]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 2 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:28:10 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 3 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 4 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:28:10 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 4 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 5 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+ERROR - 2026-06-17 14:35:23 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14 in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('\n            SE...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('\n            SE...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('\n            SE...')
+#3 C:\xampp\htdocs\VitalGymSistema\app\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('\n            SE...', Array)
+#4 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', NULL)
+#5 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+#6 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+#7 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#12 {main}
+CRITICAL - 2026-06-17 14:35:23 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14
+[Method: GET, Route: reportediario]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 2 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:35:23 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 3 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 4 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:35:23 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 4 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 5 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:35:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-06-17 14:35:40 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14 in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('\n            SE...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('\n            SE...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('\n            SE...')
+#3 C:\xampp\htdocs\VitalGymSistema\app\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('\n            SE...', Array)
+#4 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', NULL)
+#5 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+#6 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+#7 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#12 {main}
+CRITICAL - 2026-06-17 14:35:40 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14
+[Method: GET, Route: reportediario]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 2 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:35:40 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 3 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 4 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:35:40 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 4 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.Nombre as sucursal, 
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago = \'Tarjeta\' THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) BETWEEN ? AND ?
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 5 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:40:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-06-17 14:40:54 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p...' at line 14 in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('\n            SE...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('\n            SE...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('\n            SE...')
+#3 C:\xampp\htdocs\VitalGymSistema\app\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('\n            SE...', Array)
+#4 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', NULL)
+#5 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+#6 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+#7 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#12 {main}
+CRITICAL - 2026-06-17 14:40:54 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p...' at line 14
+[Method: GET, Route: reportediario]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 2 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:40:54 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p...' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 3 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 4 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:40:54 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p...' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id')
+ 4 APPPATH\Models\PagoModel.php(188): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = ? AND p.users_id = ? GROUP BY p.users_id', [...])
+ 5 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:41:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-06-17 14:41:31 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: A...' at line 14 in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('\n            SE...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('\n            SE...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('\n            SE...')
+#3 C:\xampp\htdocs\VitalGymSistema\app\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('\n            SE...', Array)
+#4 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', NULL)
+#5 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+#6 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+#7 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#12 {main}
+CRITICAL - 2026-06-17 14:41:31 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: A...' at line 14
+[Method: GET, Route: reportediario]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 APPPATH\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: AND p.users_id = :user: GROUP BY p.users_id', [...])
+ 2 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:41:31 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: A...' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: AND p.users_id = :user: GROUP BY p.users_id')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: AND p.users_id = :user: GROUP BY p.users_id')
+ 3 APPPATH\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: AND p.users_id = :user: GROUP BY p.users_id', [...])
+ 4 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:41:31 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: A...' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: AND p.users_id = :user: GROUP BY p.users_id', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: AND p.users_id = :user: GROUP BY p.users_id')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: AND p.users_id = :user: GROUP BY p.users_id')
+ 4 APPPATH\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :gym: AND p.users_id = :user: GROUP BY p.users_id', [...])
+ 5 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:42:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-06-17 14:42:27 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym:...' at line 14 in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('\n            SE...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('\n            SE...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('\n            SE...')
+#3 C:\xampp\htdocs\VitalGymSistema\app\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('\n            SE...', Array)
+#4 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', NULL)
+#5 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+#6 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+#7 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#12 {main}
+CRITICAL - 2026-06-17 14:42:27 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym:...' at line 14
+[Method: GET, Route: reportediario]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 APPPATH\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id', [...])
+ 2 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:42:27 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym:...' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id')
+ 3 APPPATH\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id', [...])
+ 4 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:42:27 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym:...' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id')
+ 4 APPPATH\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id', [...])
+ 5 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:44:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-06-17 14:44:07 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym:...' at line 14 in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('\n            SE...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('\n            SE...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('\n            SE...')
+#3 C:\xampp\htdocs\VitalGymSistema\app\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('\n            SE...', Array)
+#4 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', NULL)
+#5 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+#6 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+#7 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#12 {main}
+CRITICAL - 2026-06-17 14:44:07 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym:...' at line 14
+[Method: GET, Route: reportediario]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 APPPATH\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id', [...])
+ 2 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:44:07 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym:...' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id')
+ 3 APPPATH\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id', [...])
+ 4 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:44:07 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym:...' at line 14
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id')
+ 4 APPPATH\Models\PagoModel.php(191): CodeIgniter\Database\BaseConnection->query('
+            SELECT
+                p.users_id,
+                u.username as encargado,
+                g.NombreSucursal as sucursal,
+                SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo,
+                SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta,
+                SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia,
+                SUM(p.Monto) as total_membresias,
+                SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones,
+                SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+            FROM pago p
+            JOIN users u ON u.id = p.users_id
+            LEFT JOIN gymnasios g ON g.idGymnasios = p.id_gimnasio
+            WHERE DATE(p.Fecha_Pago) >= :inicio: AND DATE(p.Fecha_Pago) <= :fin:
+         AND p.id_gimnasio = :idGym: AND p.users_id = :idUsuario: GROUP BY p.users_id', [...])
+ 5 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:46:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-17 14:46:45 --> ErrorException: Undefined variable $fechaInicio
+[Method: GET, Route: reportediario]
+in APPPATH\Models\PagoModel.php on line 174.
+ 1 APPPATH\Models\PagoModel.php(174): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $fechaInicio', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Models\\PagoModel.php', 174)
+ 2 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:48:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-06-17 14:48:28 --> mysqli_sql_exception: Unknown column 'g.NombreSucursal' in 'field list' in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `p`.`use...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`use...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`use...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`use...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\app\Models\PagoModel.php(189): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+#7 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+#8 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#13 {main}
+CRITICAL - 2026-06-17 14:48:28 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'g.NombreSucursal' in 'field list'
+[Method: GET, Route: reportediario]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 2 APPPATH\Models\PagoModel.php(189): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:48:28 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'g.NombreSucursal' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-17\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-17\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 4 APPPATH\Models\PagoModel.php(189): CodeIgniter\Database\BaseBuilder->get()
+ 5 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:48:28 --> [Caused by] mysqli_sql_exception: Unknown column 'g.NombreSucursal' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-17\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-17\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-17\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 5 APPPATH\Models\PagoModel.php(189): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:50:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-06-17 14:50:43 --> mysqli_sql_exception: Unknown column 'g.NombreSucursal' in 'field list' in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `p`.`use...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`use...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`use...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`use...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\app\Models\PagoModel.php(189): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\app\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+#7 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+#8 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#13 {main}
+CRITICAL - 2026-06-17 14:50:43 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'g.NombreSucursal' in 'field list'
+[Method: GET, Route: reportediario]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 2 APPPATH\Models\PagoModel.php(189): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:50:43 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'g.NombreSucursal' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-17\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-17\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 4 APPPATH\Models\PagoModel.php(189): CodeIgniter\Database\BaseBuilder->get()
+ 5 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 14:50:43 --> [Caused by] mysqli_sql_exception: Unknown column 'g.NombreSucursal' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-17\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-17\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-17\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `u`.`username` as `encargado`, `g`.`NombreSucursal` as `sucursal`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+LEFT JOIN `gymnasios` `g` ON `g`.`idGymnasios` = `p`.`id_gimnasio`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 5 APPPATH\Models\PagoModel.php(189): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\Dashboard.php(285): App\Models\PagoModel->getResumenTurnosAgrupado('2026-06-17', '2026-06-17', 'TODOS', null)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:51:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-17 14:51:44 --> ErrorException: Undefined variable $fechaInicio
+[Method: GET, Route: reportediario]
+in APPPATH\Models\VentasproductosModel.php on line 109.
+ 1 APPPATH\Models\VentasproductosModel.php(109): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $fechaInicio', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Models\\VentasproductosModel.php', 109)
+ 2 APPPATH\Controllers\Dashboard.php(286): App\Models\VentasproductosModel->getResumenTiendaTurnosAgrupado('2026-06-17', '2026-06-17', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:51:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-17 14:51:56 --> ErrorException: Undefined variable $fechaInicio
+[Method: GET, Route: reportediario]
+in APPPATH\Models\VentasproductosModel.php on line 109.
+ 1 APPPATH\Models\VentasproductosModel.php(109): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $fechaInicio', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Models\\VentasproductosModel.php', 109)
+ 2 APPPATH\Controllers\Dashboard.php(286): App\Models\VentasproductosModel->getResumenTiendaTurnosAgrupado('2026-06-17', '2026-06-17', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:52:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-17 14:52:01 --> ErrorException: Undefined variable $fechaInicio
+[Method: GET, Route: reportediario]
+in APPPATH\Models\VentasproductosModel.php on line 109.
+ 1 APPPATH\Models\VentasproductosModel.php(109): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $fechaInicio', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Models\\VentasproductosModel.php', 109)
+ 2 APPPATH\Controllers\Dashboard.php(286): App\Models\VentasproductosModel->getResumenTiendaTurnosAgrupado('2026-06-17', '2026-06-17', null)
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:52:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-06-17 14:52:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-06-17 14:52:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-17 14:52:56 --> ErrorException: Undefined variable $fecha
+[Method: GET, Route: reportediario]
+in APPPATH\Views\html\ReporteDiario.php on line 127.
+ 1 APPPATH\Views\html\ReporteDiario.php(127): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $fecha', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php', 127)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/ReporteDiario', [], true)
+ 5 APPPATH\Controllers\Dashboard.php(355): view('html/ReporteDiario', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:52:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-06-17 14:52:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-17 14:53:42 --> ErrorException: Undefined variable $fecha
+[Method: GET, Route: reportediario]
+in APPPATH\Views\html\ReporteDiario.php on line 127.
+ 1 APPPATH\Views\html\ReporteDiario.php(127): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $fecha', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php', 127)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/ReporteDiario', [], true)
+ 5 APPPATH\Controllers\Dashboard.php(355): view('html/ReporteDiario', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:54:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-17 14:54:02 --> ErrorException: Undefined variable $fecha
+[Method: GET, Route: reportediario]
+in APPPATH\Views\html\ReporteDiario.php on line 127.
+ 1 APPPATH\Views\html\ReporteDiario.php(127): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $fecha', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php', 127)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/ReporteDiario', [], true)
+ 5 APPPATH\Controllers\Dashboard.php(355): view('html/ReporteDiario', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:55:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-17 14:55:06 --> ErrorException: Undefined variable $fecha
+[Method: GET, Route: reportediario]
+in APPPATH\Views\html\ReporteDiario.php on line 127.
+ 1 APPPATH\Views\html\ReporteDiario.php(127): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $fecha', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php', 127)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/ReporteDiario', [], true)
+ 5 APPPATH\Controllers\Dashboard.php(355): view('html/ReporteDiario', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:56:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-17 14:56:32 --> ErrorException: Undefined variable $fecha
+[Method: GET, Route: reportediario]
+in APPPATH\Views\html\ReporteDiario.php on line 136.
+ 1 APPPATH\Views\html\ReporteDiario.php(136): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $fecha', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php', 136)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/ReporteDiario', [], true)
+ 5 APPPATH\Controllers\Dashboard.php(355): view('html/ReporteDiario', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:56:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-17 14:56:41 --> ErrorException: Undefined variable $fecha
+[Method: GET, Route: reportediario]
+in APPPATH\Views\html\ReporteDiario.php on line 136.
+ 1 APPPATH\Views\html\ReporteDiario.php(136): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $fecha', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php', 136)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/ReporteDiario', [], true)
+ 5 APPPATH\Controllers\Dashboard.php(355): view('html/ReporteDiario', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-17 14:58:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-06-17 14:58:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-17 15:02:51 --> ErrorException: Undefined variable $fechainicio
+[Method: GET, Route: reportediario]
+in APPPATH\Views\html\ReporteDiario.php on line 127.
+ 1 APPPATH\Views\html\ReporteDiario.php(127): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $fechainicio', 'C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php', 127)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Views\\html\\ReporteDiario.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('html/ReporteDiario', [], true)
+ 5 APPPATH\Controllers\Dashboard.php(355): view('html/ReporteDiario', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Dashboard->reportediario()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Dashboard))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+ERROR - 2026-06-17 15:39:18 --> mysqli_sql_exception: Unknown column 'g.Nombre' in 'field list' in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `p`.`use...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`use...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`use...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`use...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\app\Models\PagoModel.php(232): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\app\Controllers\ReporteRango.php(28): App\Models\PagoModel->getResumenTurnosPorRango('2026-06-01', '2026-06-17', 'TODOS', NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\ReporteRango->index()
+#7 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ReporteRango))
+#8 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#13 {main}
+CRITICAL - 2026-06-17 15:39:18 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'g.Nombre' in 'field list'
+[Method: GET, Route: reporterangos]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 2 APPPATH\Models\PagoModel.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\ReporteRango.php(28): App\Models\PagoModel->getResumenTurnosPorRango('2026-06-01', '2026-06-17', 'TODOS', null)
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ReporteRango->index()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ReporteRango))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 15:39:18 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'g.Nombre' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-01\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-01\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 4 APPPATH\Models\PagoModel.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 5 APPPATH\Controllers\ReporteRango.php(28): App\Models\PagoModel->getResumenTurnosPorRango('2026-06-01', '2026-06-17', 'TODOS', null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ReporteRango->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ReporteRango))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 15:39:18 --> [Caused by] mysqli_sql_exception: Unknown column 'g.Nombre' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-01\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-01\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-01\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 5 APPPATH\Models\PagoModel.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\ReporteRango.php(28): App\Models\PagoModel->getResumenTurnosPorRango('2026-06-01', '2026-06-17', 'TODOS', null)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ReporteRango->index()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ReporteRango))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+ERROR - 2026-06-17 15:39:21 --> mysqli_sql_exception: Unknown column 'g.Nombre' in 'field list' in C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\VitalGymSistema\system\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `p`.`use...', 0)
+#1 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`use...')
+#2 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`use...')
+#3 C:\xampp\htdocs\VitalGymSistema\system\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`use...', Array, false)
+#4 C:\xampp\htdocs\VitalGymSistema\app\Models\PagoModel.php(232): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\VitalGymSistema\app\Controllers\ReporteRango.php(28): App\Models\PagoModel->getResumenTurnosPorRango('2026-06-01', '2026-06-17', 'TODOS', NULL)
+#6 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(933): App\Controllers\ReporteRango->index()
+#7 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ReporteRango))
+#8 C:\xampp\htdocs\VitalGymSistema\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(334): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\VitalGymSistema\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\VitalGymSistema\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 C:\xampp\htdocs\VitalGymSistema\system\rewrite.php(44): require_once('C:\\xampp\\htdocs...')
+#13 {main}
+CRITICAL - 2026-06-17 15:39:21 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'g.Nombre' in 'field list'
+[Method: GET, Route: reporterangos]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 2 APPPATH\Models\PagoModel.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 3 APPPATH\Controllers\ReporteRango.php(28): App\Models\PagoModel->getResumenTurnosPorRango('2026-06-01', '2026-06-17', 'TODOS', null)
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ReporteRango->index()
+ 5 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ReporteRango))
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 15:39:21 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'g.Nombre' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-01\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-01\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 4 APPPATH\Models\PagoModel.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 5 APPPATH\Controllers\ReporteRango.php(28): App\Models\PagoModel->getResumenTurnosPorRango('2026-06-01', '2026-06-17', 'TODOS', null)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ReporteRango->index()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ReporteRango))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 15:39:21 --> [Caused by] mysqli_sql_exception: Unknown column 'g.Nombre' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-01\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-01\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= \'2026-06-01\'
+AND DATE(p.Fecha_Pago) <= \'2026-06-17\'
+GROUP BY `p`.`users_id`')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1644): CodeIgniter\Database\BaseConnection->query('SELECT `p`.`users_id`, `g`.`Nombre` as `sucursal`, `u`.`username` as `encargado`, SUM(CASE WHEN p.Tipo_Pago = \'Efectivo\' THEN p.Monto ELSE 0 END) as total_efectivo, SUM(CASE WHEN p.Tipo_Pago IN (\'Tarjeta\', \'TarjetaCredito\') THEN p.Monto ELSE 0 END) as total_tarjeta, SUM(CASE WHEN p.Tipo_Pago = \'Transferencia\' THEN p.Monto ELSE 0 END) as total_transferencia, SUM(p.Monto) as total_membresias, SUM(CASE WHEN p.Concepto LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_inscripciones, SUM(CASE WHEN p.Concepto NOT LIKE \'%Inscrip%\' THEN 1 ELSE 0 END) as total_renovaciones
+FROM `pago` `p`
+JOIN `users` `u` ON `u`.`id` = `p`.`users_id`
+WHERE DATE(p.Fecha_Pago) >= :DATE(p.Fecha_Pago):
+AND DATE(p.Fecha_Pago) <= :DATE(p.Fecha_Pago).1:
+GROUP BY `p`.`users_id`', [...], false)
+ 5 APPPATH\Models\PagoModel.php(232): CodeIgniter\Database\BaseBuilder->get()
+ 6 APPPATH\Controllers\ReporteRango.php(28): App\Models\PagoModel->getResumenTurnosPorRango('2026-06-01', '2026-06-17', 'TODOS', null)
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ReporteRango->index()
+ 8 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ReporteRango))
+ 9 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+CRITICAL - 2026-06-17 15:47:35 --> ParseError: syntax error, unexpected single-quoted string ",", expecting "]"
+[Method: GET, Route: reporterangos]
+in APPPATH\Controllers\ReporteRango.php on line 76.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\VitalGymSistema\\app\\Controllers\\ReporteRango.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\ReporteRango')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\ReporteRango')
+ 4 SYSTEMPATH\CodeIgniter.php(887): class_exists('\\App\\Controllers\\ReporteRango', true)
+ 5 SYSTEMPATH\CodeIgniter.php(496): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')

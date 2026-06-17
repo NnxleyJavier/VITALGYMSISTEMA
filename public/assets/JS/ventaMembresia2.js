@@ -57,77 +57,85 @@ $(document).ready(function() {
 
 
     // --- ENVÍO DEL FORMULARIO Y TICKET ---
+ $('#formProcesarPago').submit(function(e) {
+    e.preventDefault();
     
-    $('#formProcesarPago').submit(function(e) {
-        e.preventDefault();
-        
-        // Deshabilitar botón para evitar dobles cobros accidentales
-        let btnSubmit = $(this).find('button[type="submit"]');
-        let btnOriginalText = btnSubmit.html();
-        btnSubmit.prop('disabled', true).html('<span class="glyphicon glyphicon-refresh fast-spin"></span> Procesando...');
+    // Deshabilitar botón para evitar dobles cobros accidentales
+    let btnSubmit = $(this).find('button[type="submit"]');
+    let btnOriginalText = btnSubmit.html();
+    btnSubmit.prop('disabled', true).html('<span class="glyphicon glyphicon-refresh fast-spin"></span> Procesando...');
 
-        let formData = $(this).serialize();
+    let formData = $(this).serialize();
 
-        $.ajax({
-            // Usamos la constante BASE_URL que definiremos en la vista
-            url: BASE_URL + 'guardarPagoEInscripcion', 
-            type: 'POST',
-            data: formData,
-            dataType: 'json',
-            success: function(response) {
-                btnSubmit.prop('disabled', false).html(btnOriginalText);
+    $.ajax({
+        url: BASE_URL + 'guardarPagoEInscripcion', 
+        type: 'POST',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            btnSubmit.prop('disabled', false).html(btnOriginalText);
 
-                if(response.status === 'success') {
-                    // Cerrar modal y recargar tabla
-                    $('#modalProcesar').modal('hide');
-                    if (typeof tabla !== 'undefined') {
-                        tabla.ajax.reload();
-                    }
-                    
-                   // Lógica de impresión silenciosa (Heredada de tu código original)
-                    if (response.valoresdata) {
-                        var queryString = $.param(response.valoresdata);
-                        let urlTicket = 'http://localhost/sistema/' + 'vendor/ticket14.php?' + queryString; 
-                        
-                        var nuevaVentana = window.open(urlTicket, '_blank');
-                        setTimeout(function() {
-                            if (nuevaVentana) {
-                                nuevaVentana.close();
-                            }
-                        }, 5000);
-                    }
-
-                    // --- NUEVA LÓGICA DE WHATSAPP ---
-                    // Si el servidor nos devolvió una URL de WhatsApp, la abrimos en otra pestaña
-                    if (response.url_whatsapp) {
-                        window.open(response.url_whatsapp, '_blank');
-                    }
-                    
-                    // Preguntar por el enrolamiento biométrico
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Inscripción Exitosa',
-                        text: 'El pago se procesó y el ticket se envió a impresión. ¿Deseas proceder al enrolamiento de huella ahora?',
-                        showCancelButton: true,
-                        confirmButtonText: '<i class="glyphicon glyphicon-hand-up"></i> Enrolar Huella',
-                        cancelButtonText: 'Más tarde',
-                        confirmButtonColor: '#4a90e2'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = BASE_URL + '/enrolar/' + $('#idClienteProcesar').val();
-                        }
-                    });
-                } else {
-                    Swal.fire('Error', response.mensaje || 'Hubo un problema con el registro', 'error');
+            if(response.status === 'success') {
+                
+                // 1. Cerrar modal y recargar tabla de fondo
+                $('#modalProcesar').modal('hide');
+                if (typeof tabla !== 'undefined') {
+                    tabla.ajax.reload();
                 }
-            },
-            error: function(xhr) {
-                btnSubmit.prop('disabled', false).html(btnOriginalText);
-                Swal.fire('Error', 'Error de conexión con el servidor.', 'error');
-                console.log(xhr.responseText);
+                
+                // 2. Armar el diseño de los botones para el SweetAlert
+                let htmlBotones = '<div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px; margin-bottom: 10px;">';
+                
+                // Botón para Ticket Físico (Localhost)
+                if (response.valoresdata) {
+                    let queryString = $.param(response.valoresdata);
+                    let urlTicket = 'http://localhost/sistema/vendor/ticket14.php?' + queryString; 
+                    
+                    htmlBotones += `<a href="${urlTicket}" target="_blank" class="btn btn-info btn-lg" style="border-radius: 8px; font-weight: bold; color: white; padding: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <i class="fas fa-print fa-lg"></i> Imprimir Ticket
+                    </a>`;
+                }
+
+                // Botón para WhatsApp
+                if (response.url_whatsapp) {
+                    htmlBotones += `<a href="${response.url_whatsapp}" target="_blank" class="btn btn-success btn-lg" style="border-radius: 8px; font-weight: bold; color: white; padding: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <i class="fab fa-whatsapp fa-lg"></i> Enviar Recibo por WhatsApp
+                    </a>`;
+                }
+                
+                htmlBotones += '</div>';
+
+                // 3. Mostrar la alerta TODO EN UNO (Ticket, WA y Huella)
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Inscripción Exitosa!',
+                    html: 'El pago se procesó correctamente. ¿Qué deseas hacer ahora?' + htmlBotones,
+                    showCancelButton: true,
+                    confirmButtonText: '<i class="fas fa-fingerprint"></i> Enrolar Huella',
+                    cancelButtonText: 'Terminar (Más tarde)',
+                    confirmButtonColor: '#4a90e2',
+                    cancelButtonColor: '#7e8299',
+                    allowOutsideClick: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si hace clic en "Enrolar Huella", lo mandamos a la ruta de biometría
+                        window.location.href = BASE_URL + 'enrolar/' + $('#idClienteProcesar').val();
+                    }
+                });
+
+            } else {
+                Swal.fire('Error', response.message || response.mensaje || 'Hubo un problema con el registro', 'error');
             }
-        });
+        },
+        error: function(xhr) {
+            btnSubmit.prop('disabled', false).html(btnOriginalText);
+            Swal.fire('Error', 'Error de conexión con el servidor.', 'error');
+            console.log(xhr.responseText);
+        }
     });
+});
+
+
 });
 
 // --- NUEVA FUNCIÓN PARA AUTOMATIZAR EL PRECIO DEL EXTRA ---

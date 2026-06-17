@@ -108,3 +108,6 @@ $routes->post('/actualizar-datos-cliente', 'Home::actualizarDatosClienteAjax', [
 $routes->get('/generarCartaResponsiva/(:num)', 'Home::generarCartaResponsivaPDF/$1', ['filter' => 'permission:admin.access']);
 
 $routes->get('/regenerar-pdf-faltante/(:num)', 'Recepcion::regenerarReciboFaltante/$1', ['filter' => 'permission:admin.access']);
+
+$routes->get('/reporterangos', 'ReporteRango::index', ['filter' => 'permission:superadmin.vista']);
+$routes->get('/detallesRangoAjax', 'ReporteRango::detallesRangoAjax', ['filter' => 'permission:superadmin.vista']);

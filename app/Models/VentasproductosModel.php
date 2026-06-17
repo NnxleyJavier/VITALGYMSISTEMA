@@ -122,4 +122,21 @@ public function procesarVenta(array $productos, int $idUsuario): bool
         
         return $this->db->query($sql, $bindings)->getResultArray();
     }
+
+    public function getResumenTiendaPorRango($fechaInicio, $fechaFin, $idUsuarioFiltro = null)
+    {
+        $builder = $this->db->table('ventas_productos');
+        
+        $builder->select("users_id, SUM(Total_Venta) as total_tienda");
+        $builder->where('DATE(Fecha_Venta) >=', $fechaInicio);
+        $builder->where('DATE(Fecha_Venta) <=', $fechaFin);
+
+        if ($idUsuarioFiltro !== null) {
+            $builder->where('users_id', $idUsuarioFiltro);
+        }
+
+        $builder->groupBy('users_id');
+
+        return $builder->get()->getResultArray();
+    }
 }

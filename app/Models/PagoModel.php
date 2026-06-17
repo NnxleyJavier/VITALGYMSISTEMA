@@ -197,4 +197,41 @@ class PagoModel extends Model
             ->where('u.id', $userId)
             ->get()->getRowArray();
     }
+
+
+    public function getResumenTurnosPorRango($fechaInicio, $fechaFin, $idGym, $idUsuarioFiltro = null)
+    {
+        $builder = $this->db->table('pago p');
+        
+        $builder->select("
+            p.users_id,
+            u.username as encargado,
+            g.nombre as sucursal,
+            SUM(CASE WHEN p.Tipo_Pago = 'Efectivo' THEN p.Monto ELSE 0 END) as total_efectivo,
+            SUM(CASE WHEN p.Tipo_Pago IN ('Tarjeta', 'TarjetaCredito') THEN p.Monto ELSE 0 END) as total_tarjeta,
+            SUM(CASE WHEN p.Tipo_Pago = 'Transferencia' THEN p.Monto ELSE 0 END) as total_transferencia,
+            SUM(p.Monto) as total_membresias,
+            SUM(CASE WHEN p.Concepto LIKE '%Inscrip%' THEN 1 ELSE 0 END) as total_inscripciones,
+            SUM(CASE WHEN p.Concepto NOT LIKE '%Inscrip%' THEN 1 ELSE 0 END) as total_renovaciones
+        ");
+        
+        $builder->join('users u', 'u.id = p.users_id');
+        $builder->join('gymnasios g', 'g.idGymnasios = p.id_gimnasio', 'left');
+        $builder->where('DATE(p.Fecha_Pago) >=', $fechaInicio);
+        $builder->where('DATE(p.Fecha_Pago) <=', $fechaFin);
+
+        if ($idGym !== 'TODOS' && !empty($idGym)) {
+            $builder->where('p.id_gimnasio', $idGym);
+        }
+
+        if ($idUsuarioFiltro !== null) {
+            $builder->where('p.users_id', $idUsuarioFiltro);
+        }
+
+        $builder->groupBy('p.users_id');
+
+        return $builder->get()->getResultArray();
+    }
+
+    
 }

@@ -333,5 +333,20 @@ public function obtenerClientesParaRenovacion($busqueda = null, $estado = 'todas
                     ->orderBy('registros_membresia.Fecha_Fin', 'DESC')
                     ->first(); 
     }
+
+
+    public function getDetalleTurnoPorRango($fechaInicio, $fechaFin, $userId)
+    {
+        return $this->select('registros_membresia.*, clientes.Nombre, clientes.ApellidoP, clientes.ApellidoM, clientes.Telefono, pago.idPago, pago.Tipo_Pago, pago.Concepto, pago.Monto, pago.Fecha_Pago, pago.id_gimnasio')
+                    ->join('clientes', 'clientes.IDClientes = registros_membresia.Clientes_IDClientes')
+                    ->join('pago', 'pago.idPago = registros_membresia.Pago_idPago')
+                    ->where('DATE(pago.Fecha_Pago) >=', $fechaInicio)
+                    ->where('DATE(pago.Fecha_Pago) <=', $fechaFin)
+                    ->where('pago.users_id', $userId)
+                    ->orderBy('pago.Fecha_Pago', 'DESC')
+                    ->findAll();
+    }
+
+    
     
 }
