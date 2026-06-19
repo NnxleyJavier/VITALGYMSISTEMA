@@ -51,6 +51,7 @@ class ReporteRango extends BaseController
                 'caja'          => [
                     'Efectivo'        => floatval($caja['total_efectivo']),
                     'Tarjeta'         => floatval($caja['total_tarjeta']),
+                    'TarjetaCredito'  => floatval($caja['total_tarjeta_credito']), // <-- NUEVA LÍNEA
                     'Transferencia'   => floatval($caja['total_transferencia']),
                     'TotalMembresias' => floatval($caja['total_membresias']),
                 ],
@@ -74,7 +75,7 @@ class ReporteRango extends BaseController
                     'users_id'      => $userId,
                     'encargado'     => strtoupper($detallesUser['username'] ?? 'DESCONOCIDO'),
                     'sucursal'      => $detallesUser['sucursal'] ?? 'Matriz',
-                    'caja'          => ['Efectivo' => 0, 'Tarjeta' => 0, 'Transferencia' => 0, 'TotalMembresias' => 0],
+                    'caja'          => ['Efectivo' => 0, 'Tarjeta' => 0, 'TarjetaCredito' => 0, 'Transferencia' => 0, 'TotalMembresias' => 0],
                     'inscripciones' => 0,
                     'renovaciones'  => 0,
                     'tienda'        => floatval($t['total_tienda']),

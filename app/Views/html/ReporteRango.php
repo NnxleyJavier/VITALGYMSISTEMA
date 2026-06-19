@@ -94,7 +94,8 @@
     .badge-tarjeta { background-color: #2f80ed; } 
     /* Naranja/Fuego */
     .badge-transfer { background-color: #f2994a; } 
-    
+
+    .badge-credito { background-color: #6f42c1; }
     /* Enlace de usuario consultable */
     .user-link {
         color: #2f80ed;
@@ -175,17 +176,17 @@
     <div class="panel panel-custom">
         <div class="table-responsive">
             <table class="table table-custom">
-                <thead>
-                    <tr>
-                        <th>Encargado / Cajero</th>
-                        <th>Sucursal</th>
-                        <th class="text-right">Efectivo</th>
-                        <th class="text-right">Tarjeta</th>
-                        <th class="text-right">Transferencia</th>
-                        <th class="text-right">Venta Tienda</th>
-                        <th class="text-right" style="background-color: #f7fafc; color: #4b6cb7; font-weight: 700;">Total Recaudado</th>
-                    </tr>
-                </thead>
+            <thead>
+        <tr>
+            <th>Encargado / Cajero</th>
+            <th>Sucursal</th>
+            <th class="text-right">Efectivo</th>
+            <th class="text-right">Tarjeta Débito</th>
+            <th class="text-right" style="color: #bc92ff;">Tarjeta Crédito</th> <th class="text-right">Transferencia</th>
+            <th class="text-right">Venta Tienda</th>
+            <th class="text-right" style="background-color: #f7fafc; color: #4b6cb7; font-weight: 700;">Total Recaudado</th>
+        </tr>
+    </thead>
                 <tbody>
                     <?php foreach($reporte as $item): ?>
                         <tr>
@@ -197,6 +198,7 @@
                             <td><span class="badge" style="background-color: #edf2f7; color: #4a5568; font-weight: 500; font-size: 11px; padding: 4px 8px;"><?= esc($item['sucursal']) ?></span></td>
                             <td class="text-right text-success" style="font-weight: 500;">$<?= number_format($item['caja']['Efectivo'], 2) ?></td>
                             <td class="text-right text-primary" style="font-weight: 500;">$<?= number_format($item['caja']['Tarjeta'], 2) ?></td>
+                            <td class="text-right" style="font-weight: 500; color: #bc92ff;">$<?= number_format($item['caja']['TarjetaCredito'], 2) ?></td> 
                             <td class="text-right text-warning" style="font-weight: 500;">$<?= number_format($item['caja']['Transferencia'], 2) ?></td>
                             <td class="text-right">$<?= number_format($item['tienda'], 2) ?></td>
                             <td class="text-right font-weight-bold" style="color: #4b6cb7; font-weight: 700; font-size: 14px;">$<?= number_format($item['corte_total'], 2) ?></td>
@@ -280,6 +282,7 @@ $(document).ready(function() {
                             
                             let claseBadge = 'badge-efectivo';
                             if(item.Tipo_Pago === 'Tarjeta') claseBadge = 'badge-tarjeta';
+                            else if(item.Tipo_Pago === 'TarjetaCredito') claseBadge = 'badge-credito'; // <-- NUEVO CANDADO
                             else if(item.Tipo_Pago === 'Transferencia') claseBadge = 'badge-transfer';
 
                             // Formateador Estricto de Fecha Mexicana (DD/MM/YYYY)
