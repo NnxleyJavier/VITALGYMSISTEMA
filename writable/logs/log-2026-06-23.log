@@ -1,0 +1,40 @@
+DEBUG - 2026-06-23 15:03:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-06-23 15:03:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-06-23 15:03:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-06-23 15:03:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-06-23 15:03:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-06-23 15:03:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-06-23 15:04:07 --> ErrorException: ini_set(): Session ini settings cannot be changed after headers have already been sent
+[Method: GET, Route: __hot-reload]
+in SYSTEMPATH\Session\Handlers\FileHandler.php on line 74.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'ini_set(): Session ini settings cannot be changed after headers have already been sent', 'C:\\xampp\\htdocs\\VitalGymSistema\\system\\Session\\Handlers\\FileHandler.php', 74)
+ 2 SYSTEMPATH\Session\Handlers\FileHandler.php(74): ini_set('session.save_path', 'C:\\xampp\\htdocs\\VitalGymSistema\\writable\\session')
+ 3 SYSTEMPATH\Config\Services.php(697): CodeIgniter\Session\Handlers\FileHandler->__construct(Object(Config\Session), '::1')
+ 4 SYSTEMPATH\Config\BaseService.php(312): CodeIgniter\Config\Services::session(Object(Config\Session), false)
+ 5 SYSTEMPATH\Config\BaseService.php(251): CodeIgniter\Config\BaseService::__callStatic('session', [...])
+ 6 SYSTEMPATH\Config\Services.php(668): CodeIgniter\Config\BaseService::getSharedInstance('session', null)
+ 7 SYSTEMPATH\Config\BaseService.php(321): CodeIgniter\Config\Services::session()
+ 8 SYSTEMPATH\Config\BaseService.php(202): CodeIgniter\Config\BaseService::__callStatic('session', [])
+ 9 SYSTEMPATH\Common.php(998): CodeIgniter\Config\BaseService::get('session')
+10 SYSTEMPATH\Common.php(971): service('session')
+11 VENDORPATH\codeigniter4\shield\src\Authentication\Authenticators\Session.php(682): session('user')
+12 VENDORPATH\codeigniter4\shield\src\Authentication\Authenticators\Session.php(700): CodeIgniter\Shield\Authentication\Authenticators\Session->getSessionUserInfo()
+13 VENDORPATH\codeigniter4\shield\src\Authentication\Authenticators\Session.php(387): CodeIgniter\Shield\Authentication\Authenticators\Session->getSessionUserKey('id')
+14 VENDORPATH\codeigniter4\shield\src\Authentication\Authenticators\Session.php(371): CodeIgniter\Shield\Authentication\Authenticators\Session->checkUserState()
+15 VENDORPATH\codeigniter4\shield\src\Auth.php(189): CodeIgniter\Shield\Authentication\Authenticators\Session->loggedIn()
+16 VENDORPATH\codeigniter4\shield\src\Collectors\Auth.php(76): CodeIgniter\Shield\Auth->__call('loggedIn', [])
+17 SYSTEMPATH\Debug\Toolbar\Collectors\BaseCollector.php(228): CodeIgniter\Shield\Collectors\Auth->display()
+18 SYSTEMPATH\Debug\Toolbar.php(95): CodeIgniter\Debug\Toolbar\Collectors\BaseCollector->getAsArray()
+19 SYSTEMPATH\Debug\Toolbar.php(390): CodeIgniter\Debug\Toolbar->run(1782248633.774274, 13.8143, Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response))
+20 SYSTEMPATH\Filters\DebugToolbar.php(43): CodeIgniter\Debug\Toolbar->prepare(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response))
+21 SYSTEMPATH\Filters\Filters.php(241): CodeIgniter\Filters\DebugToolbar->after(Object(CodeIgniter\HTTP\IncomingRequest), Object(CodeIgniter\HTTP\Response), null)
+22 SYSTEMPATH\Filters\Filters.php(291): CodeIgniter\Filters\Filters->runAfter([...])
+23 SYSTEMPATH\CodeIgniter.php(409): CodeIgniter\Filters\Filters->runRequired('after')
+24 SYSTEMPATH\CodeIgniter.php(372): CodeIgniter\CodeIgniter->runRequiredAfterFilters(Object(CodeIgniter\Filters\Filters))
+25 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+26 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+27 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+28 SYSTEMPATH\rewrite.php(44): require_once('C:\\xampp\\htdocs\\VitalGymSistema\\public\\index.php')
+DEBUG - 2026-06-23 15:04:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-06-23 15:04:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-06-23 15:04:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

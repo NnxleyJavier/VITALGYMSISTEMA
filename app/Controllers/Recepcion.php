@@ -59,51 +59,106 @@ class Recepcion extends BaseController
   
     }
 
-public function obtenerPendientesAJAX()
+public function streamPendientesSSE()
     {
-        if ($this->request->isAJAX()) {
-            
-            // Usamos el Query Builder para hacer un LEFT JOIN con la tabla de membresías
-            $db = \Config\Database::connect();
-            $builder = $db->table('clientes c');
-            
-            // Seleccionamos los datos del cliente y el ID de su membresía (si es que ya tiene)
-            $builder->select('c.IDClientes, c.Nombre, c.ApellidoP, c.ApellidoM, c.Telefono, c.Firma, rm.idRegistros_Membresia');
-            $builder->join('registros_membresia rm', 'rm.Clientes_IDClientes = c.IDClientes', 'left');
-            
-            // La regla principal: Aún no tienen huella
-            $builder->where('c.Huella IS NULL');
-            
-            // Agrupamos por si acaso hay algún registro duplicado
-            $builder->groupBy('c.IDClientes');
-            
-            $pendientes = $builder->get()->getResultArray();
-            
-            $data = [];
-            foreach ($pendientes as $cliente) {
-                
-                // --- LA LÓGICA DE LOS BOTONES ---
-                if (!empty($cliente['idRegistros_Membresia'])) {
-                    // SÍ TIENE MEMBRESÍA (Ya pagó) -> Mostrar botón verde para Enrolar
-                    $btnAccion = '<a href="'.base_url('enrolar/'.$cliente['IDClientes']).'" class="btn btn-sm btn-success"><i class="fas fa-fingerprint"></i> Enrolar Huella</a>';
-                } else {
-                    // NO TIENE MEMBRESÍA (No ha pagado) -> Mostrar botón azul para Procesar Pago
-                    $btnAccion = '<button class="btn btn-sm btn-primary" onclick="abrirModalProcesar(' . $cliente['IDClientes'] . ', \'' . addslashes($cliente['Nombre'] . ' ' . $cliente['ApellidoP']) . '\')"><i class="fas fa-check-circle"></i> Procesar</button>';
-                }
-                
-                // Formateamos la firma para mostrar una previsualización pequeña si existe
-                $firmaHtml = $cliente['Firma'] ? '<img src="'.base_url($cliente['Firma']).'" height="30" alt="Firma">' : '<span class="badge bg-warning text-dark">Sin firma</span>';
+        // 1. Cabeceras estrictas SSE
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
+        header('Connection: keep-alive');
+        
+        // 2. Apagar el buffering de Nginx / Apache
+        header('X-Accel-Buffering: no'); 
 
-                $data[] = [
-                    $cliente['IDClientes'],
-                    $cliente['Nombre'] . ' ' . $cliente['ApellidoP'] . ' ' . $cliente['ApellidoM'],
-                    $cliente['Telefono'],
-                    $firmaHtml,
-                    $btnAccion
-                ];
+        // 3. Liberar la sesión para no bloquear el sistema
+        session_write_close(); 
+
+        // 4. Apagar y vaciar TODOS los buffers internos de PHP
+        while (ob_get_level() > 0) {
+            ob_end_flush();
+        }
+        ob_implicit_flush(true);
+
+        $db = \Config\Database::connect();
+        
+        // VERIFICACIÓN DE ROL (Solo evaluamos una vez por conexión)
+        // Usamos \Config\Services::auth() en caso de que auth() falle en contexto de SSE
+        $usuarioLogueado = auth()->user();
+        $esSuperAdmin = $usuarioLogueado ? $usuarioLogueado->inGroup('superadmin') : false;
+
+        $ultimoHash = '';
+        $ciclos = 0;
+        $primeraCarga = true;
+
+        while (true) {
+            if (connection_aborted()) {
+                break;
             }
 
-            return $this->response->setJSON(['data' => $data]);
+            $builder = $db->table('clientes c');
+            // AGREGAMOS u.username para extraer quién cobró
+            $builder->select('c.IDClientes, c.Nombre, c.ApellidoP, c.ApellidoM, c.Telefono, c.Firma, rm.idRegistros_Membresia, u.username as cobrado_por');
+            $builder->join('registros_membresia rm', 'rm.Clientes_IDClientes = c.IDClientes', 'left');
+            
+            // NUEVOS JOINS: Conectamos la membresía con su pago, y el pago con el usuario
+            $builder->join('pago p', 'p.idPago = rm.Pago_idPago', 'left');
+            $builder->join('users u', 'u.id = p.users_id', 'left');
+
+            $builder->where('c.Huella IS NULL');
+            $builder->groupBy('c.IDClientes');
+            $builder->orderBy('c.IDClientes', 'DESC');
+            
+            $pendientes = $builder->get()->getResultArray();
+            $hashActual = md5(json_encode($pendientes));
+
+            if ($hashActual !== $ultimoHash || $primeraCarga) {
+                $data = [];
+                foreach ($pendientes as $cliente) {
+                    
+                    // LÓGICA DE BOTONES Y AUDITORÍA
+                    if (!empty($cliente['idRegistros_Membresia'])) {
+                        // Botón normal de enrolar
+                        $btnAccion = '<a href="'.base_url('enrolar/'.$cliente['IDClientes']).'" class="btn btn-sm btn-success"><i class="fas fa-fingerprint"></i> Enrolar Huella</a>';
+                        
+                        // Si el usuario actual es SuperAdmin y sabemos quién cobró, le agregamos la etiqueta debajo
+                        if ($esSuperAdmin && !empty($cliente['cobrado_por'])) {
+                            $btnAccion .= '<br><div style="margin-top: 6px;"><span class="badge" style="background-color: #f8f9fa; color: #4b6cb7; border: 1px solid #4b6cb7; font-size: 10px; padding: 4px 8px;"><i class="fas fa-user-tag"></i> Cobró: ' . esc(strtoupper($cliente['cobrado_por'])) . '</span></div>';
+                        }
+                    } else {
+                        // Botón de procesar (Aún no pagan)
+                        $btnAccion = '<button class="btn btn-sm btn-primary" onclick="abrirModalProcesar(' . $cliente['IDClientes'] . ', \'' . addslashes($cliente['Nombre'] . ' ' . $cliente['ApellidoP']) . '\')"><i class="fas fa-check-circle"></i> Procesar</button>';
+                    }
+                    
+                    // Lógica de Firma (Blindada)
+                    if (!empty($cliente['Firma'])) {
+                        $rutaLimpia = ltrim($cliente['Firma'], '/');
+                        $urlFirma = (strpos($rutaLimpia, 'http') === 0) ? $rutaLimpia : base_url($rutaLimpia);
+                        $firmaHtml = '<img src="' . $urlFirma . '" height="50" style="border: 1px solid #e2e8f0; border-radius: 6px; background: #fff; padding: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);" alt="Firma">';
+                    } else {
+                        $firmaHtml = '<span class="badge" style="background-color: #f1f3f5; color: #6c757d; border: 1px solid #dee2e6;">Sin firma</span>';
+                    }
+
+                    $data[] = [
+                        $cliente['IDClientes'],
+                        $cliente['Nombre'] . ' ' . $cliente['ApellidoP'] . ' ' . $cliente['ApellidoM'],
+                        $cliente['Telefono'],
+                        $firmaHtml,
+                        $btnAccion
+                    ];
+                }
+
+                echo "data: " . json_encode(['data' => $data]) . "\n\n";
+                flush(); 
+                
+                $ultimoHash = $hashActual;
+                $primeraCarga = false;
+            }
+
+            sleep(2);
+
+            $ciclos++;
+            if ($ciclos >= 30) {
+                exit();
+            }
         }
     }
 

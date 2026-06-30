@@ -209,31 +209,58 @@
     
     // Convertimos el arreglo PHP de extras a un objeto JavaScript
     const EXTRAS_DISPONIBLES = <?= json_encode($extras ?? []) ?>;
-    
-    let tabla;
-    $(document).ready(function() {
-        // 1. Inicializamos la tabla
-        tabla = $('#tablaPendientes').DataTable({
-            "ajax": BASE_URL + "/obtenerPendientesAJAX",
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
-            },
-            "order": [[ 0, "desc" ]],
-            "pageLength": 10
-        });
 
-        // =========================================================
-        // 2. ACTUALIZACIÓN AUTOMÁTICA SILENCIOSA CADA 5 SEGUNDOS
-        // =========================================================
-        setInterval(function() {
-            if(tabla) {
-                // El parámetro 'null' mantiene los datos actuales si falla, 
-                // y el 'false' evita que la paginación o búsqueda se reinicien.
-                tabla.ajax.reload(null, false); 
-            }
-        }, 5000);
-        // =========================================================
+    
+// Variable global para nuestra conexión SSE
+let sseReceptor;
+let miTablaPendientes; 
+
+$(document).ready(function() {
+    // 1. Inicializamos DataTable apuntando al ID real de tu tabla HTML
+    miTablaPendientes = $('#tablaPendientes').DataTable({ // <-- CAMBIA ESTO POR EL ID DE TU TABLA
+        data: [],
+        language: { url: "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json" },
+        destroy: true,
+        order: []
     });
+
+    iniciarSSE();
+});
+
+function iniciarSSE() {
+    sseReceptor = new EventSource('<?= base_url("/streamPendientesSSE") ?>');
+
+    sseReceptor.onmessage = function(event) {
+        try {
+            // 1. Convertimos el texto recibido a un objeto de JavaScript
+            let respuesta = JSON.parse(event.data);
+            
+            // 2. Verificamos que la información venga dentro del arreglo "data"
+            if (respuesta && respuesta.data) {
+                
+                // 3. Limpiamos la tabla, inyectamos los arreglos y redibujamos
+                miTablaPendientes.clear();
+                miTablaPendientes.rows.add(respuesta.data);
+                miTablaPendientes.draw(false);
+                
+                console.log("Tabla actualizada correctamente con " + respuesta.data.length + " clientes.");
+            }
+        } catch (error) {
+            console.error("Hubo un error al intentar dibujar la tabla:", error);
+            console.log("Datos crudos que causaron el error:", event.data);
+        }
+    };
+
+    sseReceptor.onerror = function(event) {
+        if (event.target.readyState === EventSource.CLOSED) {
+            console.log("Conexión SSE cerrada, el navegador reconectará automáticamente.");
+        }
+    };
+}
+
+
+
+
 
     function buscarSocioRapido() {
     let termino = $('#inputBusquedaSocio').val();

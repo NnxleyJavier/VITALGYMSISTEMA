@@ -74,7 +74,7 @@ $routes->post('/GuardarResponsiva', 'Home::GuardarResponsiva');
 
 
 $routes->get('/recepcion', 'Recepcion::index',['filter'=>'permission:admin.access']);
-$routes->get('/obtenerPendientesAJAX', 'Recepcion::obtenerPendientesAJAX',['filter'=>'permission:admin.access']);
+$routes->get('/streamPendientesSSE', 'Recepcion::streamPendientesSSE');
 $routes->post('/guardarPagoEInscripcion', 'Recepcion::guardarPagoEInscripcion',['filter'=>'permission:admin.access']);
 $routes->get('/enrolar/(:num)', 'Biometrico::enrolar/$1',['filter'=>'permission:admin.access']);
 $routes->post('/guardarHuellaCliente', 'Biometrico::guardarHuellaCliente',['filter'=>'permission:admin.access']);
